@@ -1,0 +1,59 @@
+<HTML>
+<HEAD>
+	<TITLE>Listado de Pacientes</TITLE>
+	<script src="js/angular.min.js"></script>
+
+	<!-- jQuery library -->
+	<link rel="stylesheet" href="js/jquery-2.1.3.js">
+	<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/main.css">
+	<!-- Latest compiled JavaScript -->
+	<script src="js/main.js"></script>
+</HEAD>
+<body>
+<BODY ng-app="MainApp" ng-controller="pedidoController" >
+	Filtrar: <input  type="text" ng-model="criterio"/> <br/>
+	<table class="table table-striped" ng-init="getPedidos()">
+		<thead>
+		 <tr>
+				<td>Numero</td>
+				<td>Fecha</td>
+				<td>Paciente</td>
+				<td>Estado</td>
+				<td>Derivador</td>
+			</tr>
+		</thead>
+		<tbody ng-repeat="pedido in pedidosList">
+			<tr>
+				<td>{{pedido.numero}}</td>
+				<td>{{pedido.fecha}}</td>
+				<td>{{pedido.paciente.apellido}}, {{pedido.paciente.nombre}}</td>
+				<td>{{pedido.estado}}</td>
+				<td>{{pedido.derivadorDescripcion}}</td>
+				<td ><a href ng-click="findAnalysisByPedido(pedido.numero)" data-toggle="collapse" data-target="#row{{$index}}"><span class="glyphicon glyphicon-pencil"></span></a></td>
+			
+			</tr>
+			<tr id="row{{$index}}" class="collapse" >
+				<td colspan="5">
+					<table>
+						<tbody ng-repeat="analysis in analysisByPedido">
+						<tr>
+							<td>{{analysis.analysis.codigo}} &nbsp;</td>
+							<td>{{analysis.analysis.determinaciones}} &nbsp;</td>
+							<td><input type="text" ng-model="analysis.valorHallado"/></td>
+							
+						</tr>
+						</tbody>
+						
+					</table>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</BODY>
+
+</body>
+</HTML>

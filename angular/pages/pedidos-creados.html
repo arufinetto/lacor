@@ -1,0 +1,62 @@
+<h4><b>LISTA DE PEDIDOS CREADOS</b></h4>
+ <a href="#pedido"><span class="btn btn-primary pull-right">Nuevo Pedido</span></a>
+<br/>
+<div ng-controller="pedidoController" >
+	<!--Filtrar: <input class="ani" type="text" ng-model="criterio"/> <br/>-->
+	<table class="table table-striped">
+		<thead>
+		 <tr>
+				<!--<td>Numero</td>-->
+				<td>Fecha</td>
+				<td>Estado</td>
+				<td>Paciente</td>
+			</tr>
+		</thead>
+		<tbody ng-repeat="pedido in pedidosCreadosList" >
+			<tr>
+				<!--<td>{{pedido.numero}}</td>-->
+				<td>{{pedido.fecha}}</td>
+				<td>{{pedido.estado}}</td>
+				<td>{{pedido.paciente.apellido}}, {{pedido.paciente.nombre}}</td>
+	
+				<td><button ng-click="updateEstadoPedido(pedido._id,'Abierto')" class="btn btn-xs  btn-info" data-toggle="collapse" >Procesar</button></td>
+				<td><button ng-click="confirmCambiarEstado(pedido,'Invalido')" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Invalidar</button></td>
+				<td><button ng-click="#row($index)" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Editar</button></td>
+				
+			</tr>
+			<tr id="row{{$index}}" class="collapse" >
+			
+				<td colspan="10">
+
+					<table class="table table-responsive" style="font-family: Verdana;font-size:12px;">
+						
+					<tbody>
+						<tr>
+		
+							<td><input class="form-control" name="newReferenceValue" required type="text" style="width:400px" ng-model="nuevoValorReferencia" placeholder="Analisis"/></td>
+							<td><button type="button" class="btn btn-info" ng-disabled="nuevoValorReferencia == undefined"  ng-click="addValorReferencia(analisis,nuevoValorReferencia)">+</button></td>
+
+						</tr>
+
+						<tr>
+							<table class="table table-responsive">
+								<tbody ng-repeat="lab in pedido.analisisList track by $index" ng-init="rowIndex=$index">
+									<td>{{lab.analisis.codigo}}</td>
+									<td>{{lab.analisis.determinaciones}}</td>
+									<td><button ng-click="physicalRemoveAnalisis(pedido._id,lab.analisis._id)" class="btn btn-xs  btn-danger" data-toggle="collapse" >Eliminar!</button></td>
+								</tbody>
+							</table>
+						</tr>
+						
+					</tbody>
+					
+					</table>
+					
+					
+				</td>
+			</tr>
+		</tbody>			
+	</table>
+</div>
+
+

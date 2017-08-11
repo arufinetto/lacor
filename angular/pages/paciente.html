@@ -1,0 +1,91 @@
+<!--<HTML>
+<HEAD>
+	<TITLE>Listado de Examenes</TITLE>
+	<script src="js/angular.min.js"></script>
+
+	
+	<!-- jQuery library 
+	<link rel="stylesheet" href="js/jquery-2.1.3.js">
+	<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/main.css">
+	<!-- Latest compiled JavaScript
+	<script src="js/main.js"></script>
+</HEAD>
+<body>
+<!--BODY ng-app="MainApp" ng-controller="pacienteController">-->
+<div class="container" ng-app="MainApp" ng-controller="pacienteController">
+<div>
+<form data-toggle="validator" role="form"> 
+ <div class="form-group row">
+  <label  for="name">* Nombre:</label>
+  <input type="text"  class="form-control" id="name" ng-model="newPaciente.nombre" required class="form-control">
+  <!--<div class="form-control-feedback">Success! You've done it.</div>
+  <small class="form-text text-muted">Example help text that remains unchanged.</small>-->
+  
+</div> 
+ 
+  <div class="form-group row">
+    <label  for="apellido">* Apellido:</label>
+    <input type="text" required class="form-control" id="apellido" ng-model="newPaciente.apellido">
+	  <div class="help-block with-errors"></div>
+  </div>
+  <div class="form-group row">
+    <label  for="edad">Fecha de Nacimiento:</label>
+	<input type="date"  id="edad" class="form-control"  ng-model="newPaciente.fechaNacimiento">
+  </div>
+  <div class="form-group row">
+    <label  for="tipo">Tipo Documento:</label>
+    <select class="form-control" id="tipo" ng-model="newPaciente.tipoDocumento">
+	  <option>DNI</option>
+	  <option>LC</option>
+	  <option>LE</option>
+     </select>
+  </div>
+  <div class="form-group row">
+    <label  for="numDoc">Numero de Documento:</label>
+    <input type="text"  class="form-control" id="numDoc" ng-model="newPaciente.documento">
+  </div>
+  <div class="form-group row">
+    <label  for="domicilio">Domicilio:</label>
+    <input type="text"  class="form-control" id="domicilio" ng-model="newPaciente.domicilio">
+  </div>
+  <div class="form-group row">
+    <label  for="ciudad">Localidad:</label>
+    <select  ng-options="ciudad.nombre as ciudad.nombre for ciudad in ciudades"  class="form-control" id="ciudad" ng-model="newPaciente.ciudad">
+	  <option ng-value={{ciudad.nombre}}>{{ciudad.nombre}}</option>
+     </select>
+  </div>
+  <div class="form-group row">
+    <label  for="email">Email:</label>
+    <input type="email" class="form-control" id="email" ng-model="newPaciente.email">
+  </div>
+	
+	
+  <div class="form-group row">
+    <label  for="telefono">Telefono:</label>
+    <input type="text" class="form-control" id="telefono" ng-model="newPaciente.telefono">
+  </div>
+   <div class="form-group row">
+    <label for="celular">Celular:</label>
+    <input type="text" class="form-control" id="celular" ng-model="newPaciente.celular">
+  </div>
+  <div class="form-group row">
+		<label for="prestador">Obras Social/Prepaga:</label>
+		<select  ng-options="prestador.nombre as prestador.nombre for prestador in prestadores"   class="form-control" id="prestador" ng-model="newPaciente.prestador">
+		  <option ng-value={{prestador.nombre}}>{{prestador.nombre}}</option>
+		 </select>
+	</div>
+	<div class="form-group row">
+		<label for="afiliado">Numero de Afiliado:</label>
+		<input type="text" id="afiliado"  maxlength="40" ng-model="newPaciente.afiliado" class="form-control"/>
+	</div>
+  <div class="form-group row">
+    <label  for="medicacion">Medicacion:</label>
+    <input type="text" class="form-control" id="medicacion" ng-model="newPaciente.medicacion">
+  </div>
+  <button type="submit" style="float:right" class="btn btn-primary" ng-disabled="newPaciente.nombre == '' || newPaciente.apellido == ''" ng-click="createPaciente()">Guardar</button>
+  <p>(*) Campo Obligatorio a cargar</p>
+</form>
+</div>
+</div>

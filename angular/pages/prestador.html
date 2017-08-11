@@ -1,0 +1,27 @@
+<div ng-controller="pedidoController">
+	
+	
+	<div>
+	<form>
+	<div class="input-group">
+	  <input type="text" class="form-control" placeholder="Nombre de la obra social/prepaga" aria-describedby="basic-addon2" ng-model="prestador.nombre">
+	  <span class="btn btn-info input-group-addon" id="basic-addon2" ng-click="createPrestador()">Agregar</span>
+	</div>
+	</form>
+	</div>
+	Filtrar: <input  class="form-control" placeholder="Ingrese el nombre del prestador" type="text" ng-model="criterio"/> <br/>
+	<table class="table table-striped ">
+		<thead>
+				<td>#</td>
+				<td>Prestador</td>
+				
+		</thead>
+		<tbody ng-repeat="prestador in prestadores | filter:criterio">
+			<tr>
+				<td>{{$index+1}}</td>
+				<td>{{prestador.nombre}}</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</div>

@@ -1,0 +1,64 @@
+
+<div ng-init="getPedido(getVarsUrl())" class="page" style="font-family:Verdana;font-size:10.5px" ng-controller="pedidoController">
+ <div id="pdfContent" style="font-family:Verdana;font-size:11px">
+   Protocolo: {{pedido[0].protocolo}} <br/>
+   Paciente: <b>{{pedido[0].paciente.apellido}}  {{pedido[0].paciente.nombre}}</b> <br/>
+   Solicitado por : DR. {{pedido[0].medico.nombre}} <br/>
+   Fecha recepcion: {{pedido[0].fecha}}
+ </div>
+<br/>
+<br/>
+<div  class="export-table" ng-repeat="item in pedido[0].analisisList">
+<div>
+<div>
+   Determinacion o dosaje: <b>{{ item.analisis.determinaciones }}</b>
+ </div>
+<div >
+   Método: {{ item.metodo}}
+  </div>
+<div>
+   Muestra: {{ item.muestra}}
+</div>
+</div>
+
+<div ng-show="item.analisis.formula.length == 0" >
+<table  border="0"  style="font-family:Verdana;font-size:10px">
+	<tr>
+		<td>RANGOS DE REFERENCIA</td>
+		<td><b>VALOR HALLADO:</b> {{item.resultado[0].valorHallado[0]}} {{item.analisis.unidad}}</td>
+
+		<tbody ng-repeat="val in item.analisis.valorReferencia track by $index" >
+			<td> {{val}}</td>
+		</tbody>
+	</tr>
+</table>	
+</div>
+
+
+<div ng-show="item.analisis.formula.length > 0" >
+<table  border="0"  style="font-family:Verdana;font-size:10px">
+	<tr>
+		<td>RANGOS DE REFERENCIA</td>
+		<tbody ng-repeat="val in item.analisis.valorReferencia track by $index" >
+			<td> {{val}}</td>
+		</tbody>
+		 <td><b>VALOR HALLADO:</b></td>
+		<tbody ng-repeat="res in item.resultado track by $index" >
+			<td>{{res.formula}} {{res.valorHallado[0]}} {{item.analisis.formula[$index].unidad}}</td>
+		</tbody>
+	</tr>
+</table>	
+</div>
+
+
+
+
+
+
+<br/>
+<br/>
+</div>
+<p style="font-family:Verdana;font-size:9px; text-align:center" >Bioquimica: Ethel Pedernera M.P:4556</p>
+</div>
+
+ <button data-ng-click="HTMLclick()">Download Pdf</button>

@@ -1,0 +1,172 @@
+
+<!--<body style="background-color:red;">
+<div>
+<h2 style="font-family:Verdana,fantasy;text-align:center;color:blue">Laboratorio de Analisis Clinicos Ordoñez</h2>
+
+<img src="images.jpg" class="img-circle img-thumbnail center-block" alt="Cinque Terre" style="width:25%">
+
+
+
+</div>
+
+</div>-->
+
+
+    <div id="wrapper" ng-controller="pedidoController as crtl" >
+
+        <!-- Navigation -->
+
+        <div id="page-wrapper">
+        
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            LACOR <small>Acceso Directo a Pedidos</small>
+                        </h1>
+
+                    </div>
+                </div>
+                <!-- /.row -->
+
+               
+
+                <div class="row">
+				  <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-newspaper-o fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                       <div class="huge" style="font-size:32px"><b>{{pedidosCreadosList.length}}</b></div>
+                                        <div>Pedidos Creados!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#pedidos-creados">
+                                <div class="panel-footer">
+                                    <span class="pull-left">Ver Detalle</span>
+                                    <span class="pull-right"><i class="glyphicon glyphicon-arrow-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-bars fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                       <div class="huge" style="font-size:32px"><b>{{pedidosAbiertosList.length}}</b></div>
+                                        <div>Pedidos en Proceso!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#save-results">
+                                <div class="panel-footer">
+                                    <span class="pull-left">Ver Detalle</span>
+                                    <span class="pull-right"><i class="glyphicon glyphicon-arrow-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+          
+		    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-check fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge" style="font-size:32px"><b>{{pedidosCompletosList.length}}</b></div>
+                                        <div>Pedidos para Entregar!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#pedidos-entregar">
+                                <div class="panel-footer">
+                                    <span class="pull-left">Ver Detalle</span>
+                                    <span class="pull-right"><i class="glyphicon glyphicon-arrow-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+					  <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-history fa-5x"></i>
+                                    </div>
+                                  <div class="col-xs-9 text-right">
+                                        <div class="huge" style="font-size:32px"><b>{{pedidosEntregadosList.length}}</b></div>
+                                        <div>Pedidos Entregados!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#pedidos-entregados">
+                                <div class="panel-footer">
+                                    <span class="pull-left">Ver Detalle</span>
+                                    <span class="pull-right"><i class="glyphicon glyphicon-arrow-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+		  
+		 
+                </div>
+                <!-- /.row -->
+                
+                   <div class="row" >
+                    <div class="col-lg-4">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Grafico de Torta</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="flot-chart">
+                                    <div class="flot-chart-content" id="flot-pie-chart" >
+												
+									</div>
+									
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Grafico de Barras</h3>
+								
+                            </div>
+                            <div class="panel-body">
+                                <div class="flot-chart" >
+                                    <div id="flot-bar-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+        </div>
+        <!-- /#page-wrapper -->
+	
+ 
+
+    </div>
+	
+
+
+

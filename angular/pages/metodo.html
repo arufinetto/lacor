@@ -1,0 +1,36 @@
+
+
+<div ng-controller="muestraMetodoController">
+	
+	
+	<div>
+	<form>
+	<div class="input-group">
+	  <input type="text" class="form-control" placeholder="Nombre del nuevo metodo" aria-describedby="basic-addon2" ng-model="metodo.nombre">
+	  <span class="btn btn-info input-group-addon" id="basic-addon2" ng-click="createMetodo()">Agregar</span>
+	</div>
+	</form>
+
+	</div>
+	Filtrar: <input class="form-control" type="text" ng-model="criterio"/> <br/>
+	<table class="table table-striped ani">
+		<thead>
+				<td>#</td>
+				<td>Nombre</td>
+				
+		</thead>
+		<tbody ng-repeat="metodo in metodos | filter:criterio">
+			<tr>
+				<td>{{$index+1}}</td>
+				<td>{{metodo.nombre}}</td>
+				<td>
+				<button class="btn btn-xs  btn-danger" ng-click="confirmDeleteMetodo(metodo)">
+				Eliminar!
+				</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	
+</div>

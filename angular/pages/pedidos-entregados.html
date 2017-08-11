@@ -1,0 +1,32 @@
+<h4><b>LISTA DE PEDIDOS ENTREGADOS</b></h4>
+<br/>
+<div ng-controller="pedidoController" >
+	<!--Filtrar: <input class="ani" type="text" ng-model="criterio"/> <br/>-->
+	<table class="table table-striped">
+		<thead>
+		 <tr>
+				<!--<td>Numero</td>-->
+				<td>Protocolo</td>
+				<td>Fecha</td>
+				<td>Estado</td>
+				<td>Paciente</td>
+			</tr>
+		</thead>
+		<tbody ng-repeat="pedido in pedidosEntregadosList" >
+			<tr>
+				<!--<td>{{pedido.numero}}</td>-->
+				<td>{{pedido.protocolo}}</td>
+				<td>{{pedido.fecha}}</td>
+				<td>{{pedido.estado}}</td>
+				<td>{{pedido.paciente.apellido}}, {{pedido.paciente.nombre}}</td>
+
+				<td><button ng-click="generatePDF(pedido)" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Informe</button></td>
+				
+			</tr>
+			
+
+		</tbody>
+	</table>
+	</div>
+
+

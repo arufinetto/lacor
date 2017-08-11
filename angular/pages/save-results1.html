@@ -1,0 +1,203 @@
+
+<h4><b>LISTA DE PEDIDOS EN PROCESO</b></h4>
+<br/>
+<div ng-controller="pedidoController" >
+
+	<!--Filtrar: <input class="ani" type="text" ng-model="criterio"/> <br/>-->
+	<table id="pedidosAbiertos" class="table table-striped" cellspacing="0">
+		<thead >
+		 <tr>
+				<!--<td>Numero</td>-->
+				<th>Protocolo</th>
+				<th>Fecha</th>
+				<th>Estado</th>
+				<th>Derivador</th>
+				<th>Paciente</th>
+				
+			</tr>
+		</thead> <!--ng-class-odd="'odd'" ng-class-even="'even'"-->
+		<tbody ng-repeat="pedido in pedidosAbiertosList" >
+			<tr>
+				<!--<td>{{pedido.numero}}</td>-->
+				<td>{{pedido.protocolo}}</td>
+				<td>{{pedido.fecha}}</td>
+				<td>{{pedido.estado}}</td>
+				<td>{{pedido.derivadorDescripcion}}</td>
+				<td>{{pedido.paciente.apellido}}, {{pedido.paciente.nombre}}</td>
+				<td><button ng-click="#row($index)" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Editar</button></td>
+				
+				
+				<td><button class="btn btn-xs  btn-info" ng-click="confirmCambiarEstado(pedido,'Para Entregar')">Completar</button></td>
+				
+				<td><button ng-click="confirmCambiarEstado(pedido,'Invalido')" class="btn btn-xs  btn-info" >Invalidar</button></td>
+				<td><button ng-click="generatePDF(pedido)" class="btn btn-xs  btn-info">Informe</button></td>
+				
+				<!--<td><button ng-click="generatePDF(pedido)" class="btn btn-xs  btn-info">Informe</button></td>
+				<!--<td><a href="#/informe" data-target="#/informe" class="btn btn-xs  btn-info" target="_blank" data-toggle="collapse" >Informe</a></td>-->
+			</tr>
+			
+			<tr id="row{{$index}}" class="collapse" >
+				<td colspan="10">
+					<table class="table table-responsive" style="font-family: Verdana;font-size:12px;">
+						<thead>
+						<th>Codigo</th>
+						<th>Determinacion o Dosaje</th>
+						<th>Metodo</th>
+						<th>Muestra</th>
+						<th>Valor Hallado</th>
+						</thead>
+						<tbody ng-repeat="lab in pedido.analisisList track by $index" ng-init="rowIndex=$index">
+						<tr>
+							<td>{{lab.analisis.codigo}} &nbsp;</td>
+							<td>{{lab.analisis.determinaciones}}&nbsp;</td>
+							<td>
+							<select ng-controller="muestraMetodoController" style="width:200px;font-size:12px" class="btn dropdown-toggle selectpicker btn-default" ng-options="metodo.nombre as metodo.nombre for metodo in metodos" ng-model="lab.metodo">
+								<option ng-value={{metodo.nombre}}>{{metodo.nombre}}</option>
+							</select>
+							&nbsp;
+							</td>
+							<td>
+							<select ng-controller="muestraMetodoController" style="width:200px;font-size:12px" class="btn dropdown-toggle selectpicker btn-default" ng-options="muestra.nombre as muestra.nombre for muestra in muestras" required class="form-control" id="muestra" ng-model="lab.muestra">
+							  <option ng-value={{muestra.nombre}}>{{muestra.nombre}}</option>
+							 </select>
+							&nbsp;
+							</td>
+							
+							<td ng-show="lab.analisis.formula.length > 0">
+								<div class="dropdown" style="font-size:12px;font:Verdana">
+									 <div class='btn-group'>
+									
+									 <!-- Configurar el botón dropdown -->
+									
+									<button class="btn btn-default dropdown-toggle" style="font-size:12px;font:Verdana" type="button" data-toggle="dropdown">Seleccione...
+									<span class="caret"></span></button>
+										<!-- Configurar el botón dropdown -->
+									 
+									 <!-- Lista de opciones -->
+									<ul class="dropdown-menu" >
+									<li class="dropdown-header"></li>
+									<li>
+									<table style="font-size:12px;font:Verdana" class='table' ng-repeat="formula in lab.analisis.formula track by $index" ng-init="rowIndex1=$index">
+									<tr><td>{{formula.nombre}}</td>
+									<td style="text-align: right">
+									<table>
+									<tbody ng-repeat="vr in lab.resultado[rowIndex1].valorHallado track by $index" ng-init="rowIndex2=$index" >
+									<td><input style="border-radius: 10px 10px" type="text" ng-model="lab.resultado[rowIndex1].valorHallado[rowIndex2]" ng-click="$event.stopPropagation()" />
+									
+									</td>
+									<td>{{formula.unidad}}</td>
+									</tbody>
+									</table>
+									</td>
+									
+									<td ng-show="lab.analisis.multiple==true"><button ng-click="add(lab,rowIndex1)" class='btn btn-sm btn-primary'>+</button></td>
+									
+									</tr>
+									 
+									</table>
+									
+									</li>
+									<li style="text-align: right" class="dropdown-header"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.resultado.valorHallado)" class='btn btn-sm btn-primary'>Guardar</button>
+									</li>
+									</ul>
+									<!-- Lista de opciones -->
+									
+									</div>
+								  </div>		   
+							</td>
+							
+							<td ng-show="lab.analisis.multiple && lab.analisis.formula.length == 0">
+								<div class="dropdown" >
+									 <div class='btn-group' >
+									
+									 <!-- Configurar el botón dropdown -->
+									
+									<button class="btn btn-default dropdown-toggle" style="font-size:12px;font:Verdana" type="button" data-toggle="dropdown">Seleccione...
+									<span class="caret"></span></button>
+										<!-- Configurar el botón dropdown -->
+									 
+									 <!-- Lista de opciones -->
+									<ul class="dropdown-menu" style="font-size:12px;font:Verdana">
+									<li class="dropdown-header"></li>
+									<li>
+									<table >
+										<tr>
+										<td style="text-align: right">
+										<table >
+										<tbody ng-repeat="re in lab.resultado[0].valorHallado track by $index" ng-init="rowIndex3=$index" >
+										<td><input style="border-radius: 10px 10px" type="text" ng-model="lab.resultado[0].valorHallado[rowIndex3]" ng-click="$event.stopPropagation()" />
+										
+										</td>
+										
+										</tbody>
+										</table>
+										</td>
+										
+										<td ng-show="lab.analisis.multiple==true"><button ng-click="add(lab,0)" class='btn btn-sm btn-primary'>+</button></td>
+										
+										</tr>
+									 
+									</table>
+									
+									</li>
+									<li style="text-align: right" class="dropdown-header"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.resultado[0].valorHallado)" class='btn btn-sm btn-primary'>Guardar</button>
+									</li>
+									</ul>
+									<!-- Lista de opciones -->
+									
+									</div>
+								  </div>
+							</td>
+							
+							
+							
+							<td ng-show="lab.analisis.formula.length == 0 && !lab.analisis.multiple"><input style="border-radius: 10px 10px" type="text"  ng-model="lab.resultado[0].valorHallado[0]" />{{lab.analisis.unidad}}&nbsp;&nbsp;&nbsp;</td>
+							<td ng-show="lab.analisis.formula.length == 0  && !lab.analisis.multiple"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.resultado[0].valorHallado)" class='btn btn-sm btn-primary'>Guardar</button></td>
+							</td>
+							
+						
+							
+						
+						
+						</tr>
+					</tbody>	
+				</table>
+					
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	
+<!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog" onload="getLabo()">
+	<div class="modal-dialog">
+	
+	  <!-- Modal content-->
+	  <div class="modal-content" >
+		<div class="modal-header">
+		  <button type="button" class="close" data-dismiss="modal">&times;</button>
+		  <h4 class="modal-title">Valor Hallado</h4>
+		</div>
+		<div class="modal-body">
+		  <textarea ng-model="labo.resultado[0].valorHallado[0]" class="form-control"></textarea>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-sm btn-primary" ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.resultado[0].valorHallado)" data-dismiss="modal">Guardar</button>
+		  <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+		</div>
+	  </div>
+	  
+	</div>
+  </div>
+ </div>
+<script>
+function = getLabo(){
+var labo = document.getAttribute('data-id');
+console.log("Labo"+labo.determinaciones)
+return labo
+}
+
+</script>
+</div>
+
+

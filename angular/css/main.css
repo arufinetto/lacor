@@ -1,0 +1,207 @@
+
+
+/*table tr.fila:hover td {
+	background-color: rgba(0,128,192,.4) !important;
+}*/
+
+/*nth es una psudo clase que permite seleccionar el enésimo elemento hijo de un elemento padre, siendo el número del elemento el argumento x, odd:impar, even:par*/
+
+
+.table-striped>tbody>tr:nth-child(even)>th{
+   background-color: green; 
+ }
+.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color: red; 
+ }
+
+div label {
+  width: 15%;
+  float: left;
+  display: block;
+  margin: .5em 0 0 0;
+}
+
+.ani{
+	position: relative;
+	top: 60px;
+	left:0px;
+}
+
+body {
+	/*background-color: #D7D7D7;*/
+}
+hr {
+	background-color: blue; 
+}
+
+
+.btn.btn-primary {
+	background-color:#5DADE2;
+	border:#5DADE2;
+		
+}
+
+.modal-backdrop {
+    /* bug fix - no overlay */    
+    display: none;    
+}
+
+.form-control {
+	background-color: white;
+}
+
+input : active {
+	border: #5a2d8a;
+}
+
+
+table{
+	
+	font-family: Verdana;
+	font-size: 14px;
+	/*font-style: normal;*/
+	/*color:#5DADE2*/
+}
+
+.panel-heading {
+	background-color:#5a2d8a;
+	
+}
+
+/* Credit to bootsnipp.com for the css for the color graph */
+.colorgraph {
+  height: 5px;
+  border-top: 0;
+  background: #c4e17f;
+  border-radius: 5px;
+  background-image: -webkit-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: -moz-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: -o-linear-gradient(left, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+  background-image: linear-gradient(to right, #c4e17f, #c4e17f 12.5%, #f7fdca 12.5%, #f7fdca 25%, #fecf71 25%, #fecf71 37.5%, #f0776c 37.5%, #f0776c 50%, #db9dbe 50%, #db9dbe 62.5%, #c49cde 62.5%, #c49cde 75%, #669ae1 75%, #669ae1 87.5%, #62c2e4 87.5%, #62c2e4);
+}
+
+
+.page {
+    width: 21cm;
+    min-height: 29.7cm;
+    padding: 2cm;
+    margin: 1cm auto;
+    border: 1px #D3D3D3 solid;
+    border-radius: 5px;
+  /**  background-image: url('reporte.jpg');**/
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+	
+}
+
+/*td {
+    line-height: 20px;
+    padding: 0 20px;
+    text-align: justify;
+    vertical-align: top;
+    width: 60%;
+}*/
+
+
+/*odd-impar, even-par*/
+
+
+.even {
+  background-color: rgb(132,134,136);
+}
+.odd {
+  background-color: rgb(52,193,216);
+}
+   
+   
+.icon
+{
+display:none;
+}
+
+#about
+{
+display:none;
+}`
+
+
+.panel-green {
+    border-color: #5cb85c;
+}
+
+.panel-green > .panel-heading {
+    border-color: #5cb85c;
+    color: #fff;
+    background-color: #5cb85c;
+}
+
+.panel-green > a {
+    color: #5cb85c;
+}
+
+.panel-green > a:hover {
+    color: #3d8b3d;
+}
+
+.panel-red {
+    border-color: #d9534f;
+}
+
+.panel-red > .panel-heading {
+    border-color: #d9534f;
+    color: #fff;
+    background-color: #d9534f;
+}
+
+.panel-red > a {
+    color: #d9534f;
+}
+
+.panel-red > a:hover {
+    color: #b52b27;
+}
+
+.panel-yellow {
+    border-color: #f0ad4e;
+}
+
+.panel-yellow > .panel-heading {
+    border-color: #f0ad4e;
+    color: #fff;
+    background-color: #f0ad4e;
+}
+
+.panel-yellow > a {
+    color: #f0ad4e;
+}
+
+.panel-yellow > a:hover {
+    color: #df8a13;
+}
+
+
+
+.container{
+    margin-top:20px;
+}
+.image-preview-input {
+    position: relative;
+	overflow: hidden;
+	margin: 0px;    
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;    
+}
+.image-preview-input input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+.image-preview-input-title {
+    margin-left:2px;
+}

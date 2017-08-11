@@ -1,0 +1,84 @@
+<div id="exportthis" class="page" >
+<h1 class="ani" style="margin-left:100px;margin-right:100px; background-color:#6490e8; color:#fff; padding:10px" ng-init="getPedido(getVarsUrl())" >
+	LACOR
+ 
+ <span style="font-size:50%; font-style:italic">
+   Laboratorio de Analisis Clinicos Ordoñez
+ </span>
+</h1>
+<!-- report body -->
+<h3 class="ani" style="margin-left:100px; margin-right:100px; background-color:#6490e8; color:#fff; padding:10px" style="margin-left:25px">
+ <span style="font-size:50%; font-style:italic">
+   Paciente: <b>{{pedido[0].paciente.apellido}}  {{pedido[0].paciente.nombre}}</b> <br/>
+   Solicitado por : DR. {{pedido[0].medico.nombre}} <br/>
+   Fecha recepcion: {{pedido[0].fecha}}
+ </span>
+</h3>
+<br/>
+<div class="ani" style="margin-left:100px; margin-right:100px;">
+<div  ng-repeat="item in pedido[0].analisisList" style="page-break-inside:avoid">
+<div style="border-bottom:6pt solid #6490e8; display:flex">
+<div style="width:700px">
+   Determinación o dosaje: <b>{{ item.analisis.determinaciones }}</b>
+  </div>
+<div style="width:600px; text-align:right">
+   Método: {{ item.metodo}}
+  </div>
+  <div style="width:400px; text-align:right">
+   Muestra: {{ item.muestra}}
+  </div>
+</div>
+
+<table ng-show="item.analisis.formula.length == 0">
+	<tbody>
+	<tr>
+		<td><b>Rangos de Referencia:</b>&nbsp;&nbsp;{{item.analisis.valorReferencia}}</td>
+	</tr>
+	<tr><br/></tr>
+	<tr><br/>
+		<td><b>Valor Hallado:</b>&nbsp;&nbsp;{{item.resultado[0].valorHallado}}</td>
+	</tr>
+	</tbody>
+</table>
+
+
+
+<table ng-show="item.analisis.formula.length > 0">
+<thead>
+<tr>
+<td><b>Rangos de Referencia:</b></td>
+<td></td>
+<td><b>Valor Hallado:</b></td>
+<tr>
+
+</thead>
+<br/>
+<tbody ng-repeat="formula in item.analisis.formula" >
+
+<tr>
+<td style="width:400px; padding-left:0.5in">
+<table>
+   <tbody ng-repeat="val in formula.valorReferencia" >
+		<td> {{val}}
+		</td>
+		<br/>
+	</tbody>
+</table>
+ </td>
+ 
+  <td style="width:250px; text-align:left">
+   {{ formula.nombre }}
+</td>
+  <td style="width:250px; text-align:left">
+	{{item.resultado[$index].valorHallado }} {{formula.unidad}}
+  </td> 
+  </tr>
+  </tbody>
+ </table>
+
+
+<hr/>
+<br/>
+</div>
+</div>
+</div>

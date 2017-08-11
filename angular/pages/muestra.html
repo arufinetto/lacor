@@ -1,0 +1,30 @@
+<div ng-controller="muestraMetodoController">
+	
+	
+	<div>
+	<form>
+	<div class="input-group">
+	  <input type="text" class="form-control" placeholder="Nombre de la nueva muestra" aria-describedby="basic-addon2" ng-model="muestra.nombre">
+	  <span class="btn btn-info input-group-addon" id="basic-addon2" ng-click="createMuestra()">Agregar</span>
+	</div>
+	</form>
+	</div>
+	Filtrar: <input  class="form-control" placeholder="Ingrese el nombre de la muestra" type="text" ng-model="criterio"/> <br/>
+	<table class="table table-striped ">
+		<thead>
+				<td>#</td>
+				<td>Muestra</td>
+				
+		</thead>
+		<tbody ng-repeat="muestra in muestras | filter:criterio">
+			<tr>
+				<td>{{$index+1}}</td>
+				<td>{{muestra.nombre}}</td>
+				<td><button class="btn btn-xs  btn-danger" ng-click="confirmDeleteMuestra(muestra)">
+				Eliminar!
+				</button></td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</div>

@@ -1,0 +1,68 @@
+<div ng-controller="pacienteController">
+	
+	Filtrar: <input class="form-control" type="text" ng-model="criterio" placeholder="Ingrese el nombre o apellido del paciente"/> 
+	<br/>
+	<table class="table table-striped">
+		<thead>
+		 <tr>
+				<td><b>Apellido</b></td>
+				<td><b>Nombre</b></td>
+				<td><b>Edad</b></td>
+				<td><b>Tipo de Documento</b></td>
+				<td><b>Numero de Documento</b></td>
+			</tr>
+		</thead>
+		<tbody ng-repeat="paciente in pacienteList | filter:criterio track by $index">
+			<tr>
+				<td>{{paciente.apellido}}</td>
+				<td>{{paciente.nombre}}</td>
+				<td>{{calcularEdad(paciente.fechaNacimiento)}} años</td>
+				<td>{{paciente.tipoDocumento}}</td>
+				<td>{{paciente.documento}}</td>
+				<td><button ng-click="#row($index)" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Editar</button></td>
+				<td><button ng-click="confirmRemovePaciente(paciente)" class="btn btn-xs  btn-danger" data-toggle="collapse" >Eliminar!</button></td>
+			</tr>
+			<tr id="row{{$index}}" class="collapse">
+				<td colspan="5">
+					<table class="table table-responsive"> 
+					<tbody>
+						<tr>
+						
+							
+							<td><input placeholder="Apellido"  class="form-control" type="text" ng-model="paciente.apellido"/></td>
+							<td><input placeholder="Nombre"  class="form-control" type="text" ng-model="paciente.nombre"/></td>
+							
+							<td><select style="width:200px" class="btn dropdown-toggle btn-default" ng-model="paciente.tipoDocumento">
+								<option ng-value={{tipoDocumento.nombre}}></option>
+								<option ng-value={{tipoDocumento.nombre}}>DNI</option>
+								<option ng-value={{tipoDocumento.nombre}}>LC</option>
+								<option ng-value={{tipoDocumento.nombre}}>LE</option>
+							</select></td>
+							<td><input placeholder="Documento"  class="form-control" type="text" ng-model="paciente.documento"/></td>
+							<td><input placeholder="Medicacion"  class="form-control" type="text" ng-model="paciente.medicacion"/></td>
+							<td><input placeholder="Fecha de Nacimiento"  class="form-control" type="date" ng-model="paciente.fechaNacimiento"/></td>
+						    <td><input placeholder="Telefono"  class="form-control" type="text" ng-model="paciente.telefono"/></td>
+							
+							</tr>
+							<tr>
+							
+							<td><select style="width:200px" class="btn dropdown-toggle btn-default" ng-options="ciudad.nombre as ciudad.nombre for ciudad in ciudades" ng-model="paciente.ciudad">
+								<option ng-value={{ciudad.nombre}}>{{ciudad.nombre}}</option>
+							</select></td>
+							<td><input placeholder="Domicilio" class="form-control" type="text" ng-model="paciente.domicilio"/></td>
+							<td><input placeholder="Celular" class="form-control" type="text" ng-model="paciente.celular"/></td>							
+							<td><input placeholder="Email" class="form-control" type="text" ng-model="paciente.email"/></td>
+							<td><select style="width:200px" class="btn dropdown-toggle btn-default" ng-options="prestador.nombre as prestador.nombre for prestador in prestadores" ng-model="paciente.prestador">
+								<option ng-value={{prestador.nombre}}>{{prestador.nombre}}</option>
+							</select></td>
+							<td><input placeholder="Numero de afiliado" class="form-control" type="text" ng-model="paciente.afiliado"/></td>
+							<td><button type="button" class="btn btn-primary" ng-click="updatePaciente(paciente)" data-toggle="collapse" data-target="#row{{$index}}">Guardar</button></td>
+							</tr>
+					</table>
+					</tbody>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</div>

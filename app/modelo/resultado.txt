@@ -1,0 +1,10 @@
+var mongoose = require('mongoose'); 
+var Schema = mongoose.Schema; 
+
+
+var resultadosSchema = new Schema({   
+	nombre: String,
+	vallorHallado: String 
+});
+
+module.exports = mongoose.model("resultados", medicoSchema); 

@@ -1,0 +1,27 @@
+<div ng-controller="pedidoController">
+
+	<div>
+
+	<form>
+		<div class="input-group">
+		  <input type="text" class="form-control" placeholder="Nombre de la nueva localidad" aria-describedby="basic-addon2" ng-model="ciudad.nombre">
+		  <span class="btn btn-info input-group-addon" id="basic-addon2" ng-click="createCiudad()">Agregar</span>
+		</div>
+		</form>
+
+	</div>
+	Filtrar: <input class="form-control" type="text" ng-model="criterio"/> <br/>
+	<table class="table table-striped ani">
+		<thead>
+				<td>#</td>
+				<td>Localidad</td>	
+		</thead>
+		<tbody ng-repeat="ciudad in ciudades | filter:criterio">
+			<tr>
+				<td>{{$index+1}}</td>
+				<td>{{ciudad.nombre}}</td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</div>

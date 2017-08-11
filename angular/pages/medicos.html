@@ -1,0 +1,33 @@
+<div ng-controller="muestraMetodoController">
+	
+	
+	<div>
+	<form>
+	<div >
+	  <input type="text" class="form-control" placeholder="Matricula del nuevo medico"  ng-model="medico.matricula">
+	  <input type="text" class="form-control" placeholder="Nombre y Apellido del nuevo medico"  ng-model="medico.nombre">
+	  <button class="btn btn-sm btn-info " id="basic-addon2" ng-click="createMedico()">Agregar</button>
+	</div>
+	</form>
+	</div>
+	Filtrar: <input class="form-control" type="text" ng-model="criterio"/> <br/>
+	<table class="table table-striped ani">
+		<thead>
+				<td>#</td>
+				<td>Matrícula</td>
+				<td>Nombre</td>
+				
+		</thead>
+		<tbody ng-repeat="medico in medicosList | filter:criterio">
+			<tr>
+				<td>{{$index+1}}</td>
+				<td>{{medico.matricula}}</td>
+				<td>{{medico.nombre}}</td>
+				<!--<td><button class="btn btn-xs  btn-danger" ng-click="confirmDeleteMedico(medico)">
+				Eliminar!
+				</button><td>-->
+			</tr>
+		</tbody>
+	</table>
+	</div>
+</div>
