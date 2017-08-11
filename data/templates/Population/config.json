@@ -1,0 +1,16 @@
+{
+    "phantom": {},
+    "recipe": "xlsx",
+    "engine": "handlebars",
+    "data": {
+        "shortid": "SJzJyv829e"
+    },
+    "xlsxTemplate": {
+        "shortid": "BkJt9tnql"
+    },
+    "shortid": "r18kyD83ce",
+    "modificationDate": {
+        "$$date": 1495907603733
+    },
+    "_id": "wqjWvYTMVFicMx60"
+}

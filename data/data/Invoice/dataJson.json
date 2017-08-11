@@ -1,0 +1,15 @@
+{
+    "_id": "58eadce26aac22901c000001",
+    "nombre": "Analia Veronica",
+    "apellido": "Rufinetto",
+    "fechaNacimiento": "1987-02-06T00:00:00.000Z",
+    "domicilio": "calle 10 numero 156",
+    "tipoDocumento": "DNI",
+    "documento": "32965859",
+    "medicacion": "t4",
+    "telefono": "153289374",
+    "celular": "153289374",
+    "email": "anirufinetto@gmail.com",
+    "ciudad": "Ordoñez",
+    "__v": 0
+  }
