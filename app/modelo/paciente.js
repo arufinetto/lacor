@@ -3,20 +3,20 @@ var Schema = mongoose.Schema;
 
 
 var pacienteSchema = new Schema({  
-		nombre: {type: String,require:true},
-		apellido: {type: String,require:true},
-		fechaNacimiento: {type:Date,require:false
+		nombre: {type: String},
+		apellido: {type: String},
+		fechaNacimiento: {type:Date
 		},
-		domicilio: {type:String,require:false
+		domicilio: {type:String
 		},
 		tipoDocumento:  { type: String, enum: ['DNI','LE','LC','']},
 		obraSocial: [{"obraSocial":{type:String},"afiliado":{type:String}}],
-		documento: {type:String,require:false},
-		medicacion: {type:String,require:false},
-		telefono: {type:String,require:false},
-		celular:{type:String,require:false},
-		email:{type:String,require:false},
-		ciudad: {type:String,require:false}
+		documento: {type:String},
+		medicacion: {type:String},
+		telefono: {type:String},
+		celular:{type:String},
+		email:{type:String},
+		ciudad: {type:String}
 });
 
 module.exports = mongoose.model("paciente", pacienteSchema); 
