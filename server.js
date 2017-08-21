@@ -51,7 +51,7 @@ app.configure(function() {
 
 
 require('./app/routes.js')(app);
-mongoose.connect('mongodb://localhost:27017/laboratorios',function(err,res){
+mongoose.connect('mongodb://127.0.0.1:27017/laboratorios',function(err,res){
 
 	if(err){console.log("Error al conectarse a la db:"+err);}
     app.listen(3000,function(){

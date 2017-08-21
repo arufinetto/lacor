@@ -1,5 +1,7 @@
 var Paciente = require('./modelo/paciente');
 var dateFormat = require('dateformat');
+//var moment = require('m');
+
 //GET - Return all paciente in the DB
 // con exports conseguimos modularizarlo y que pueda ser llamado desde el archivo principal de la aplicación.
 exports.findAll = function(req, res) {  
@@ -11,10 +13,9 @@ exports.findAll = function(req, res) {
 
 /*exports.findAll = function(req, res) {  
     Paciente.aggregate([
-	{},
 	{
        $project: {
-        fechaNacimiento: { $dateToString: { format: "%d/%m/%Y", date: "$fechaNacimiento" } },
+        fechaNacimiento:  { $dateToString: { format: "%d/%m/%Y", date: "$fechaNacimiento" } },
 		nombre:1,
 		apellido:1,
 		domicilio :1 ,
@@ -37,8 +38,7 @@ exports.add = function(req, res) {
 		nombre: req.body.nombre,
 		apellido: req.body.apellido,
 		fechaNacimiento: req.body.fechaNacimiento,
-		prestador: req.body.prestador,
-		afiliado: req.body.afiliado,
+		obraSocial: req.body.obraSocial,
 		domicilio: req.body.domicilio,
 		tipoDocumento: req.body.tipoDocumento,
 		documento: req.body.documento,
@@ -66,8 +66,7 @@ exports.update = function(req, res) {
 			fechaNacimiento: req.body.fechaNacimiento,
 			ciudad:req.body.ciudad,
 			email:req.body.email,
-			prestador:req.body.prestador,
-			afiliado:req.body.afiliado,
+			obraSocial:req.body.obraSocial,
 			documento: req.body.documento,
 			tipoDocumento: req.body.tipoDocumento,
 			medicacion: req.body.medicacion,

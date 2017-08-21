@@ -837,14 +837,15 @@
 		celular:'',
 		email:'',
 		ciudad:'',
-		prestador:'',
-		afiliado:''
+		obraSocial:[]
 		
 	};
 	$scope.pacienteSelected = null;
 	$scope.pacienteList = {};
 	$scope.pacienteListFilter = {};
 	$scope.nombrePaciente= null;
+	$scope.obraSocialPacienteSelected = null;
+	$scope.pacienteEdited = null;
 	
 	$scope.removePaciente = function(id){
 		$http.delete('/api/paciente/'+id).success(function(data){
@@ -899,20 +900,27 @@
 		});
 	};
 	
+	$scope.agregarObraSocial = function(paciente,obraSocial,afiliado){
+		$scope.obraSocial = {"obraSocial":obraSocial,"afiliado":afiliado};
+		paciente.obraSocial.push($scope.obraSocial)
+	}
+	
 	$scope.agregarPaciente = function (paciente){
 		servicio.data.paciente = paciente
 		$scope.pacienteSelected = paciente.nombre+" "+paciente.apellido
-	if(paciente.prestador !="" && paciente.afiliado != ""){
+		$scope.obraSocialPacienteSelected = paciente.obraSocial;
+		console.log("obra social para paciente:"+paciente.obraSocial)
+	/*if(paciente.prestador !="" && paciente.afiliado != ""){
 			$scope.pacienteSelectedAfiliado = paciente.prestador+" - Numero de Afiliado: "+paciente.afiliado
 		}else{
 			if((paciente.prestador != null || paciente.prestador !=""))
 			{$scope.pacienteSelectedAfiliado = paciente.prestador}
-		}
+		}*/
 		
 	}
 	
 	$scope.updatePaciente = function (paciente) {
-		$http.put('/api/paciente/' + paciente._id, {nombre:paciente.nombre,apellido:paciente.apellido,fechaNacimiento:paciente.fechaNacimiento,ciudad:paciente.ciudad, email:paciente.email,prestador:paciente.prestador,afiliado:paciente.afiliado,
+		$http.put('/api/paciente/' + paciente._id, {nombre:paciente.nombre,apellido:paciente.apellido,fechaNacimiento:paciente.fechaNacimiento,ciudad:paciente.ciudad, email:paciente.email,obraSocial:paciente.obraSocial,
 		documento:paciente.documento,tipoDocumento:paciente.tipoDocumento,telefono:paciente.telefono,medicacion:paciente.medicacion,celular:paciente.celular,domicilio:paciente.domicilio})
 		.success(function(data) {
 			$scope.pacienteList = data;

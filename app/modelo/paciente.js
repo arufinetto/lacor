@@ -10,8 +10,7 @@ var pacienteSchema = new Schema({
 		domicilio: {type:String,require:false
 		},
 		tipoDocumento:  { type: String, enum: ['DNI','LE','LC','']},
-		prestador: {type:String,require:false},
-		afiliado:{type:String,require:false},
+		obraSocial: [{"obraSocial":{type:String},"afiliado":{type:String}}],
 		documento: {type:String,require:false},
 		medicacion: {type:String,require:false},
 		telefono: {type:String,require:false},
