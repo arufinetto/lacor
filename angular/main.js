@@ -116,16 +116,19 @@
 		}
 		
 		$scope.calcularEdad = function(birthday){
-			var hoy = new Date();
-			var cumpleanos = new Date(birthday);
-			var edad = hoy.getFullYear() - cumpleanos.getFullYear();
-			var m = hoy.getMonth() - cumpleanos.getMonth();
+			if(birthday !=null){
+				var hoy = new Date();
+				var cumpleanos = new Date(birthday);
+				var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+				var m = hoy.getMonth() - cumpleanos.getMonth();
 
-			if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
-				edad--;
+				if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+					edad--;
+				}
+
+				return edad;	
 			}
-
-			return edad;
+			
 		}
 	
 	$scope.insertImage = function(doc){
@@ -164,8 +167,10 @@
 			doc.text(10,53,"Paciente: "+ pedido.paciente.apellido+','+pedido.paciente.nombre)
 			doc.text(10,58,"Solicitado por: "+ "DR/A. "+ pedido.medico.nombre)
 			doc.text(120,58,"Fecha de Recepción: "+ pedido.fecha)
-			if(pedido.paciente.fechaNacimiento != undefined && pedido.paciente.fechaNacimiento != "" )
-			doc.text(120,53,"Edad: "+$scope.calcularEdad(pedido.paciente.fechaNacimiento)+" años")
+			if(pedido.paciente.fechaNacimiento != undefined && pedido.paciente.fechaNacimiento != "" && pedido.paciente.fechaNacimiento != null){
+				doc.text(120,53,"Edad: "+$scope.calcularEdad(pedido.paciente.fechaNacimiento)+" años")
+			}
+			
 			//doc.setLineWidth(0.65);
 			//doc.setDrawColor(107, 255, 212);
 			//doc.line(10, 63, 202, 63);
