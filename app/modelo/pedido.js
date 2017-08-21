@@ -9,7 +9,6 @@ var pedidoSchema = new Schema({
 	medico: { type: Schema.Types.ObjectId, ref:"medico", required:true},
 	protocolo: { type:Number, unique:true},
 	fecha:  { type: Date },
-	afiliado:  { type: String },
 	obrasocial:  { type: String },
 	derivador: {type:String,enum:['Ambulatorio','Derivado','Internado'],required:true},
 	derivadorDescripcion:{type:String},

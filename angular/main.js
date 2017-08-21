@@ -578,7 +578,6 @@
 			derivadorDescripcion:'',
 			diagnostico: '',
 			obrasocial:'',
-			afiliado:'',
 			analisisList : []
 		
 		};
@@ -616,8 +615,10 @@
 			
 			$scope.newPedido.paciente = servicio.data.paciente._id
 			$scope.newPedido.medico = servicio.data.medico._id
-			$scope.newPedido.obrasocial = servicio.data.paciente.prestador
-			$scope.newPedido.afiliado= servicio.data.paciente.afiliado
+			if(servicio.data.paciente.prestador!=null){
+				$scope.newPedido.obrasocial = servicio.data.paciente.prestador + "-" +servicio.data.paciente.afiliado;
+			}
+			
 			
 			$http.post('/api/pedidos', $scope.newPedido)
 			.success(function(data) {
