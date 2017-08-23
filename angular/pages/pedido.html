@@ -37,13 +37,43 @@
 		</div>
 
 </div> 
- <div class="form-group row">
+ <!--<div class="form-group row">
 	<label class="control-label" for="obrasocial">Obra Social/Prepaga:</label>
 		  <div class="form-group">
 			<input readonly style="background-color:rgba(126, 203, 235,0.15)" type="text" id="obrasocial"  maxlength="40" ng-model="pacienteSelectedAfiliado" class="form-control"/>
 		 </div>
 	</div>
-</div> 	
+</div> 	-->
+
+ <!--<div class="form-group row" ng-show="obraSocialPacienteSelected !=null">
+ <label class="control-label" for="obrasocial">Obra Social:</label>
+ <div id="obrasocial">
+ <table class="table table-striped">
+    <thead>
+		
+	</thead>
+	<tbody ng-repeat="ob in obraSocialPacienteSelected" >
+		
+	<tr>
+		<td><input type="checkbox" ng-select="selectObraSocial(ob)" value="os" name="op"></td>
+		<td>{{ob.obraSocial}}</td>
+		<td>{{ob.afiliado}}</td>
+	</tr>
+	</tbody>
+  </table>
+</div>
+</div>-->
+
+	<div class="form-group row" ng-show="obraSocialPacienteSelected !=null">
+	<label class="control-label" for="obrasocial">Obra Social:</label>
+	<div id="obrasocial" >
+		
+		<select class="form-control" ng-change="selectObraSocial(ob)" ng-options="ob.obraSocial for ob in obraSocialPacienteSelected"  ng-model="ob" >
+       
+      </select>
+	</div>
+	</div>
+
  	<div class="form-group row">
 	<label class="control-label" for="derivador">Derivador:</label>
 	  <div id="derivador" class="col-sm-10">

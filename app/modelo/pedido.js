@@ -10,6 +10,7 @@ var pedidoSchema = new Schema({
 	protocolo: { type:Number, unique:true},
 	fecha:  { type: Date },
 	obrasocial:  { type: String },
+	afiliado:  { type: String },
 	derivador: {type:String,enum:['Ambulatorio','Derivado','Internado'],required:true},
 	derivadorDescripcion:{type:String},
 	diagnostico:{type:String},

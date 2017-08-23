@@ -611,8 +611,12 @@
 				console.log('Error: '+err);
 			});
 		};
-			
 		
+		$scope.obra =null;
+			$scope.selectObraSocial = function(ob){
+				$scope.obra=ob;
+			}
+			
 		$scope.createPedido = function () {
 			for(var i=0; i< servicio.data.analisisListPedido.length;i++){
 				$scope.newPedido.analisisList.push(servicio.data.analisisListPedido[i]);
@@ -620,8 +624,10 @@
 			
 			$scope.newPedido.paciente = servicio.data.paciente._id
 			$scope.newPedido.medico = servicio.data.medico._id
-			if(servicio.data.paciente.prestador!=null){
-				$scope.newPedido.obrasocial = servicio.data.paciente.prestador + "-" +servicio.data.paciente.afiliado;
+			if($scope.obra != null){
+				$scope.newPedido.obrasocial = $scope.obra.obraSocial;
+				$scope.newPedido.afiliado = $scope.obra.afiliado;
+				
 			}
 			
 			
