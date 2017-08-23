@@ -411,7 +411,7 @@
 			doc.text(92,273, 'Bioquímica');
 			doc.text(92,276, 'M.P. 4659');
 			//window.open(doc.output('datauristring'));
-		doc.save('descarga');
+			doc.save('descarga');
 			
 		}
 	
