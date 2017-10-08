@@ -1,7 +1,10 @@
 <h4><b>LISTA DE PEDIDOS ENTREGADOS</b></h4>
 <br/>
+
 <div ng-controller="pedidoController" >
-	<!--Filtrar: <input class="ani" type="text" ng-model="criterio"/> <br/>-->
+	Filtrar: <input class="form-control" type="text" ng-model="search" placeholder="Ingrese el nombre o apellido del paciente y/o del medico"/> 
+
+	<br/>
 	<table class="table table-striped">
 		<thead>
 		 <tr>
@@ -12,7 +15,7 @@
 				<td>Paciente</td>
 			</tr>
 		</thead>
-		<tbody ng-repeat="pedido in pedidosEntregadosList" >
+		<tbody ng-repeat="pedido in pedidosEntregadosList | filter:search" >
 			<tr>
 				<!--<td>{{pedido.numero}}</td>-->
 				<td>{{pedido.protocolo}}</td>
