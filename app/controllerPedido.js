@@ -55,6 +55,17 @@ exports.filter = function(req, res) {
     });
 };
 
+exports.getPedidoByPaciente = function(req, res) {  
+    Pedido.find({paciente:req.params.paciente}, function(err, pedido) {
+		//Paciente.populate(pedido, {path: "paciente"},function(err,pedido){
+			res.status(200).jsonp(pedido);
+		//})
+		
+    });
+};
+
+
+
 
 exports.getPedido = function(req, res) {  
  Pedido.aggregate([
@@ -288,4 +299,16 @@ exports.saveResults = function(req, res) {
     
 }
 
+
+exports.deletePedido = function(req, res) {  
+    Pedido.remove({
+     _id:req.params.id,
+	 estado: "Invalido"
+
+	},function(err,data){
+		Pedido.find({estado:"Invalido"},function(err,data){
+    			res.json(data);
+    	});
+	});
+};
   

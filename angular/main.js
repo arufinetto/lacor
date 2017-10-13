@@ -28,7 +28,9 @@
             }).when("/pedido", {
                 controller: "pedidoController",
                 templateUrl: "pages/pedido.html"
-            })
+            }).when("/pedidos-invalidos",{
+				templateUrl :"pages/pedidos-invalidos.html"
+			})
 			.when("/muestras", {
                 controller: "muestraMetodoController",
                 templateUrl: "pages/muestra.html"
@@ -76,22 +78,21 @@
 			  });
 			};
 		  }).controller("pedidoController",  function($route,$scope, $http,servicio,$ngBootbox) {
-				$scope.pedidosAbiertosList = {}
-				$scope.pedidosCompletosList = {}
-				$scope.created=false
-				$scope.valorHalladoList = []
-				$scope.pedidoActual = {}
-				$scope.pedidosList = {}
-				$scope.logged =false;
-				$scope.pedido = {},
-				$scope.ciudades ={},
-				$scope.ciudad={},
-				$scope.prestadores={},
-		$scope.prestador={}
-		$scope.pedidosEntregadosList={}
-		$scope.pedidosCreadosList ={}
-		
-		
+			$scope.pedidosAbiertosList = {}
+			$scope.pedidosCompletosList = {}
+			$scope.created=false
+			$scope.valorHalladoList = []
+			$scope.pedidoActual = {}
+			$scope.pedidosList = {}
+			$scope.logged =false;
+			$scope.pedido = {},
+			$scope.ciudades ={},
+			$scope.ciudad={},
+			$scope.prestadores={},
+			$scope.prestador={},
+			$scope.pedidosEntregadosList={},
+			$scope.pedidosCreadosList ={},
+	
 		
 		
 		$http.get('/api/ciudades')
@@ -457,7 +458,13 @@
 			console.log('Error: '+err);
 		});
 		
-		
+		$scope.pedidosInvalidosList = {};
+		$http.get('/api/pedidos?estado=Invalido')
+		.success(function(data) {
+			$scope.pedidosInvalidosList = data; 
+		}).error(function(err) {
+			console.log('Error: '+err);
+		});
 		
 		$http.get('/api/pedidos?estado=Para Entregar')
 		.success(function(data) {
@@ -528,7 +535,26 @@
 		});
 		}
 		
+		$scope.confirmDeletePedido = function(id) {
+			
+		  $ngBootbox.confirm('Desea ELIMINAR el pedido? UNA VEZ ELIMINADO, NO PODRÁ SER RECUPERADO')
+			.then(function() {
+			  $scope.deletePedido(id)
+			},
+			function() {
+			  //Confirm was cancelled, don't delete customer
+			  console.log('Confirm was cancelled');
+			});
+		};
 		
+		$scope.deletePedido = function(id){
+			$http.delete('/api/pedido/'+id)
+			.success(function(data) {
+				$scope.pedidosInvalidosList = data;
+			}).error(function(err) {
+				console.log('Error: '+err);
+			});
+		}
 		
 		
 			$scope.confirmEntregar = function(pedido,estado) {
@@ -866,6 +892,32 @@
 		}).error(function(err){
 			$ngBootbox.alert(err)
 		})
+	}
+	
+	
+	$scope.pedidosByPacienteList = {}
+		
+	$scope.getPedidoByPaciente = function(paciente){
+	$http.get('api/pedidosByPaciente/' + paciente._id)
+		.success(function(data) {
+			$scope.pedidosByPacienteList = data; 
+			//data.listaPedidoPorPaciente = $scope.pedidosByPacienteList;
+		}).error(function(err) {
+			console.log('Error: '+err);
+		});
+	}
+	
+	$scope.validatePaciente = function(paciente){
+		$scope.getPedidoByPaciente(paciente);
+		if($scope.pedidosByPacienteList.length > 0){
+			$scope.confirmRemovePaciente(paciente)
+		}else{
+			$ngBootbox.confirm('El paciente no puede ser eliminado porque tiene pedidos.'+ '\n' +
+			'Si realmente desea eliminar el paciente, realice los siguientes pasos: ' + '\n' +
+			' 1. INVALIDE los pedidos (cualquier pedido que no se haya entregado puede ser invalidado)' + '\n' +
+			' 2. ELIMINE  los pedidos'+ '\n' +
+			' 3.VUELVA a la lista de pacientes e intente eliminar el paciente.')
+			}
 	}
 	
 	$scope.confirmRemovePaciente = function(paciente) {

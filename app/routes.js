@@ -68,6 +68,10 @@ module.exports = function(app) {
 	
 	app.post('/api/ciudad', ControllerPedidos.createCiudad);
 
+	app.delete('/api/pedido/:id',ControllerPedidos.deletePedido);
+	
+	app.get('/api/pedidosByPaciente/:paciente', ControllerPedidos.getPedidoByPaciente);
+	
 	app.get('/api/pedidos/:id', ControllerPedidos.getPedido);
 	
 	app.get('/api/ciudades', ControllerPedidos.getCiudades);
