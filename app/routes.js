@@ -5,6 +5,7 @@ var ControllerPedidos= require('./controllerPedido');
 var ControllerMedico= require('./controllerMedico');
 var ControllerMuestraMetodo= require('./controllerMuestraMetodo');
 var ControllerLogin= require('./controllerLogin');
+var ControllerPerfil= require('./controllerPerfil');
 
 module.exports = function(app) {
 	
@@ -27,6 +28,7 @@ module.exports = function(app) {
 	
 	app.get('/api/excel', ControllerAnalisis.convertExcelToJson);
 	
+	
 	/**Fin Controler Analisis**/
 	
 	 /**Controler Muestra Metodos**/
@@ -41,7 +43,14 @@ module.exports = function(app) {
 	app.delete('/api/metodo/:id', ControllerMuestraMetodo.deleteMetodo);
 	
 	app.delete('/api/muestra/:id', ControllerMuestraMetodo.deleteMuestra);
-
+	
+	/**Controler perfil **/
+	
+	 app.post('/api/perfil', ControllerPerfil.createPerfil);
+	 
+	 app.get('/api/perfils', ControllerPerfil.findPerfils);
+	 
+	 app.get('/api/perfil', ControllerPerfil.findPerfil);
 
 	 /**Controler Paciente**/
 	app.get('/api/pacientes', ControllerPacientes.findAll);
@@ -86,6 +95,7 @@ module.exports = function(app) {
 	
 	app.put('/api/pedidos/:id/remove-analisis', ControllerPedidos.removeAnalisis);
 	
+
 	/**fin controler pedido**/
 	
 	/**Controler Medico**/

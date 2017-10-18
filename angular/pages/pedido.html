@@ -117,8 +117,32 @@
     <label  for="diagnostico">Diagnostico:</label>
     <input type="text"  class="form-control" id="diagnostico" ng-model="newPedido.diagnostico">
   </div>
- 
- <div ng-controller="analisisController">
+  
+  
+  <div ng-controller="analisisController">
+	<div class="form-group row" ng-controller="perfilController">
+		<label class="control-label" for="perfil">Perfil:</label>
+		<div id="perfil" ng-init="getPerfils()">
+			<select class="form-control"  ng-change="searchAnalisis(p.nombre)" ng-options="p.nombre for p in perfils"  ng-model="p" >
+		  </select>
+		</div>
+	</div>
+	
+	<!--<div ng-controller="analisisController">
+		<div class="form-group row" ng-controller="perfilController">
+			<label class="control-label" for="perfil">Perfil:</label>
+			<div id="perfil" ng-init="getPerfils()" >
+				<table >
+				<tbody ng-repeat="p in perfils">
+					
+					<td><input type="checkbox" ng-model="p"/></td>
+					<td>{{p.nombre}}</td>
+				</tbody>
+				</table>
+			</div>
+	</div>-->
+	
+
  <div class="form-group row"  >
         <label  class="control-label" for="analisis">Estudios:</label>
 		
@@ -168,7 +192,7 @@
  
  
   <a href="#/pedidos-creados" type="submit" style="float:right" class="btn btn-primary" ng-click="createPedido()">Generar Pedido</a>
-  <a href="#/pedidos-creados" type="submit" style="float:right" class="btn btn-primary" ng-click="createPedidoRutina()">Generar Pedido Rutina</a>
+
 </form>
 </div>
 </div>

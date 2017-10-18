@@ -17,6 +17,12 @@ exports.find = function(req, res) {
     });
 };
 
+/*exports.findByProfile = function(req, res) {  
+    Analisis.find({perfil:req.params.perfil}, function(err, analisis) {
+			res.status(200).jsonp(analisis);
+		})
+};*/
+
 exports.findByCode = function(req, res) {  
     Analisis.find({codigo:req.params.codigo}, function(err, analisis) {
 			res.status(200).jsonp(analisis);

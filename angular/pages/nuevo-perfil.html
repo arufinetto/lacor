@@ -1,0 +1,85 @@
+<!--<HTML>
+<HEAD>
+	<TITLE>Listado de Examenes</TITLE>
+	<script src="js/angular.min.js"></script>
+
+	
+	<!-- jQuery library 
+	<link rel="stylesheet" href="js/jquery-2.1.3.js">
+	<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/main.css">
+	<!-- Latest compiled JavaScript
+	<script src="js/main.js"></script>
+</HEAD>
+<body>
+<!--BODY ng-app="MainApp" ng-controller="pacienteController">-->
+<div class="container" ng-app="MainApp" ng-controller="perfilController">
+<div>
+<form data-toggle="validator" role="form"> 
+ 
+
+
+  
+  <div class="form-group row">
+    <label  for="nombre">Nombre:</label>
+    <input type="text"  class="form-control" id="nombre" ng-model="newPerfil.nombre">
+  </div>
+  
+
+ <div class="form-group row" ng-controller="analisisController" >
+        <label  class="control-label" for="analisis">Estudios:</label>
+		
+        <input type="text" class="form-control" ng-model="miFilter" id="analisis" placeholder="Ingrese el nombre/codigo del analisis...">
+		<div class="form-group row" ng-show="!isEmpty(miFilter)">
+			<table class="table table-striped">
+				<thead>
+				</thead>
+				<tbody ng-repeat="lab in analisisList | filter:miFilter | limitTo:5">
+				<tr>
+					<td>{{lab.codigo}}</td>
+					<td>{{lab.determinaciones}}</td>
+					<td><a href ng-click="agregarAnalisis(lab)" data-toggle="collapse"><span class="glyphicon glyphicon-plus"></span></a>
+				</tr>
+				</tbody>
+				</tbody>
+			</table>
+		</div>
+		
+		<br/>
+ 
+
+	<div class="form-group row">
+	<label  class="control-label " for="analisisfilter"></label>
+	
+				<div class="panel panel-info" id="analisisfilter">
+					<div class="panel-heading">
+						<h3 class="panel-title">Listado de Estudios</h3>
+					</div>
+					<table class="table table-hover" >
+						<thead>
+							<tr>
+								<th>Codigo</th>
+								<th>Determinaciones</th>
+							</tr>
+						</thead>
+						<tbody ng-repeat="an in analisisPerfil track by $index">
+							<tr>
+								<td>{{an.codigo}}</td>
+								<td>{{an.determinaciones}}</td>
+								<td><button ng-click="removeAnalisis($index)" class="btn btn-xs  btn-danger" data-toggle="collapse">Eliminar!</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+	</div>
+
+ </div>
+ 
+ 
+  <a href="#/perfil" type="submit" style="float:right" class="btn btn-primary" ng-click="createPerfil()">Guardar</a>
+
+</form>
+</div>
+</div>
