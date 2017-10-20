@@ -473,7 +473,7 @@
 						hallado=position;
 					 	c=0;
 					}else{
-						doc.text(45,position-5,item[i].resultado[z].formula+"   "+item[i].resultado[z].valorHallado[0])
+						doc.text(45,position-5,item[i].resultado[z].formula+"   "+item[i].resultado[z].valorHallado[0] + "  "+item[i].analisis.unidad)
 						//position = position+5;
 						hallado=position;
 					}
