@@ -18,8 +18,9 @@ var pedidoSchema = new Schema({
 	analisisList : [{"analisis": { type: Schema.Types.ObjectId, ref: "analisis"},
 	"metodo":{type:String},
 	"muestra":{type:String},
-	"resultado": [{"formula":{type:String},"valorHallado":{type:Array}}]
+	"resultado": [{"formula":{type:String},"valorHallado":{type:Array}}],
 	//si el analisis no tiene formula, entonces formula en resultado va a ser null.
+	"repetido": {type: Boolean}
 	}]
 	
 });

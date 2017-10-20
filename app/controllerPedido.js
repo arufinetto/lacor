@@ -24,6 +24,7 @@ exports.findAll = function(req, res) {
 		medico:1,
 		estado:1,
 		protocolo:1,
+		diagnostico:1,
 		derivadorDescripcion:1
 		  }
        } 
@@ -77,6 +78,7 @@ exports.getPedido = function(req, res) {
 		analisisList:1,
 		paciente:1,
 		protocolo:1,
+		diagnostico:1,
 		derivadorDescripcion:1
 		  }
        } 
@@ -285,7 +287,8 @@ exports.saveResults = function(req, res) {
 
 		{$set : {"analisisList.$.resultado": req.body.resultado,
 		"analisisList.$.muestra": req.body.muestra,
-		"analisisList.$.metodo": req.body.metodo}
+		"analisisList.$.metodo": req.body.metodo,
+		"analisisList.$.repetido": req.body.repetido}
 			
    		},function(err,pedido){
 			

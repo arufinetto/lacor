@@ -315,6 +315,12 @@
 		
 				if(item[i].analisis.formula.length == 0){
 					doc.text(150,position,item[i].resultado[0].valorHallado+"  "+item[i].analisis.unidad);
+					if(item[i].repetido){
+						doc.setFontType("bold");
+						doc.text(150,position+5, '**REPETIDO**')
+						doc.setFontType("normal");
+					}
+					
 				}else{
 					position=position+5
 					for(var y=0;y<item[i].resultado.length;y++){
@@ -357,10 +363,19 @@
 							
 							
 						}
+					
 						}
 						
 
-						position=initial;
+							
+						if(item[i].repetido){
+						doc.setFontType("bold");
+						doc.text(150,position+5, '**REPETIDO**')
+						doc.setFontType("normal");
+						
+					}
+					
+					position=initial;
 					
 				}
 				
@@ -423,6 +438,12 @@
 						
 						
 					}
+					if(item[i].repetido){
+						doc.setFontType("bold");
+						doc.text(150,position+5, '**REPETIDO**')
+						doc.setFontType("normal");
+						
+					}
 					
 				}else{
 				doc.setFontSize(9.5);
@@ -459,6 +480,14 @@
 					
 					
 				}
+				
+				if(item[i].repetido){
+						doc.setFontType("bold");
+						doc.text(45,position+4, '**REPETIDO**')
+						doc.setFontType("normal");
+						hallado=hallado+7;
+						
+					}
 					position=hallado;
 				
 			}
@@ -657,11 +686,11 @@
 			//$scope.saveResult(pedido,id_analisis,orden,metodo,muestra,valorHallado)
 		}
 		
-		$scope.saveResult = function (pedido,id_analisis,orden,metodo,muestra,valorHallado) {
+		$scope.saveResult = function (pedido,id_analisis,orden,metodo,muestra,repetido,valorHallado) {
 			
 		pedido.analisisList[orden].resultados = valorHallado
 
-		$http.put('/api/loadResults/pedido/'+pedido._id+'/analisis/'+id_analisis,{'metodo':metodo,'muestra':muestra,'resultado':pedido.analisisList[orden].resultado})
+		$http.put('/api/loadResults/pedido/'+pedido._id+'/analisis/'+id_analisis,{'metodo':metodo,'muestra':muestra,'repetido': repetido,'resultado':pedido.analisisList[orden].resultado})
 		.success(function(data) {
 		})
 		.error(function(err) {
@@ -742,7 +771,12 @@
 				console.log('Error: '+err);
 			});
 		};
+
+		$scope.repetido = false;
 		
+		$scope.selectRepetido = function(value){
+			$scope.repetido =value
+		}
 		
 		$scope.agregarNuevoAnalisis = function(analisis){
 			$scope.resultado = [];
@@ -758,7 +792,7 @@
 					$scope.resultado.push($scope.obj);
 				}
 			}
-			$scope.objeto = {"analisis":analisis._id,"metodo":analisis.metodoDefault,"muestra":analisis.muestraDefault,"resultado":$scope.resultado};
+			$scope.objeto = {"analisis":analisis._id,"metodo":analisis.metodoDefault,"muestra":analisis.muestraDefault,"repetido":false,"resultado":$scope.resultado};
 		$http.put('/api/pedidos/'+servicio.data.pedidoId+'/add-analisis',$scope.objeto)
 		.success(function(data) {
 		})
@@ -907,7 +941,7 @@
 				$scope.resultado.push($scope.obj);
 			}
 		}
-		$scope.objeto = {"analisis":analisis._id,"metodo":analisis.metodoDefault,"muestra":analisis.muestraDefault,"resultado":$scope.resultado};
+		$scope.objeto = {"analisis":analisis._id,"metodo":analisis.metodoDefault,"muestra":analisis.muestraDefault,"repetido":false,"resultado":$scope.resultado};
 		$scope.analisisListFiltered.push(analisis); //lo necesito para la UI que muestre todo
 		$scope.analisisListFilteredObject.push($scope.objeto);
 		servicio.data.analisisListPedido = $scope.analisisListFilteredObject;

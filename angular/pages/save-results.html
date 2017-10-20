@@ -13,6 +13,7 @@
 				<th>Estado</th>
 				<th>Derivador</th>
 				<th>Paciente</th>
+				<th>Diagnostico</th>
 				
 			</tr>
 		</thead> <!--ng-class-odd="'odd'" ng-class-even="'even'"-->
@@ -24,6 +25,7 @@
 				<td>{{pedido.estado}}</td>
 				<td>{{pedido.derivadorDescripcion}}</td>
 				<td>{{pedido.paciente.apellido}}, {{pedido.paciente.nombre}}</td>
+				<td>{{pedido.diagnostico}}</td>
 				
 				<td><button ng-click="#row($index)" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Editar</button></td>
 				
@@ -100,7 +102,7 @@
 									</table>
 									
 									</li>
-									<li style="text-align: right" class="dropdown-header"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.resultado.valorHallado)" class='btn btn-sm btn-primary'>Guardar</button>
+									<li style="text-align: right" class="dropdown-header"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.repetido,lab.resultado.valorHallado)" class='btn btn-sm btn-primary'>Guardar</button>
 									</li>
 									</ul>
 									<!-- Lista de opciones -->
@@ -143,7 +145,7 @@
 									</table>
 									
 									</li>
-									<li style="text-align: right" class="dropdown-header"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.resultado[0].valorHallado)" class='btn btn-sm btn-primary'>Guardar</button>
+									<li style="text-align: right" class="dropdown-header"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.repetido,lab.resultado[0].valorHallado)" class='btn btn-sm btn-primary'>Guardar</button>
 									</li>
 									</ul>
 									<!-- Lista de opciones -->
@@ -155,7 +157,10 @@
 							
 							
 							<td ng-show="lab.analisis.formula.length == 0 && !lab.analisis.multiple"><input style="border-radius: 10px 10px" type="text"  ng-model="lab.resultado[0].valorHallado[0]" />{{lab.analisis.unidad}}&nbsp;&nbsp;&nbsp;</td>
-							<td ng-show="lab.analisis.formula.length == 0  && !lab.analisis.multiple"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.resultado[0].valorHallado)" class='btn btn-sm btn-primary'>Guardar</button></td>
+							
+							<td><input type="checkbox" class="checkbox checkbox-primary"  ng-model="lab.repetido"  ng-checked="lab.repetido"/>Repetido</td>
+							
+							<td ng-show="lab.analisis.formula.length == 0  && !lab.analisis.multiple"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.repetido,lab.resultado[0].valorHallado)" class='btn btn-sm btn-primary'>Guardar</button></td>
 
 							<td><button ng-click="confirmDeleteAnalisis(pedido._id,lab.analisis._id)"  class='btn btn-xs btn-danger'>Eliminar!</button></td>
 
