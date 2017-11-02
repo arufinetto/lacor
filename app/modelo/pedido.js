@@ -20,7 +20,8 @@ var pedidoSchema = new Schema({
 	"muestra":{type:String},
 	"resultado": [{"formula":{type:String},"valorHallado":{type:Array}}],
 	//si el analisis no tiene formula, entonces formula en resultado va a ser null.
-	"repetido": {type: Boolean}
+	"repetido": {type: Boolean},
+	"observacion": {type:String}
 	}]
 	
 });

@@ -288,7 +288,8 @@ exports.saveResults = function(req, res) {
 		{$set : {"analisisList.$.resultado": req.body.resultado,
 		"analisisList.$.muestra": req.body.muestra,
 		"analisisList.$.metodo": req.body.metodo,
-		"analisisList.$.repetido": req.body.repetido}
+		"analisisList.$.repetido": req.body.repetido,
+		"analisisList.$.observacion": req.body.observacion}
 			
    		},function(err,pedido){
 			

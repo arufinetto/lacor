@@ -315,11 +315,6 @@
 		
 				if(item[i].analisis.formula.length == 0){
 					doc.text(150,position,item[i].resultado[0].valorHallado+"  "+item[i].analisis.unidad);
-					if(item[i].repetido){
-						doc.setFontType("bold");
-						doc.text(150,position+5, '**REPETIDO**')
-						doc.setFontType("normal");
-					}
 					
 				}else{
 					position=position+5
@@ -339,7 +334,8 @@
 								//if(item[i].analisis.codigo!="0481" || (item[i].analisis.codigo=="0481"&&item[i].analisis.formula[y].nombre!="BILIRRUBINA:")){
 									if(item[i].analisis.formula[y].subformula == null){
 										doc.text(115,position,item[i].resultado[y].formula);
-										doc.text(160,position,item[i].resultado[y].valorHallado[x]+"   "+item[i].analisis.formula[y].unidad);
+										doc.text(160,position,item[i].resultado[y].valorHallado[x]);
+										doc.text(180,position,item[i].analisis.formula[y].unidad);
 										position = position+5;
 										hallado=position;
 									}else{
@@ -366,14 +362,7 @@
 					
 						}
 						
-
-							
-						if(item[i].repetido){
-						doc.setFontType("bold");
-						doc.text(150,position+5, '**REPETIDO**')
-						doc.setFontType("normal");
-						
-					}
+					
 					
 					position=initial;
 					
@@ -438,12 +427,7 @@
 						
 						
 					}
-					if(item[i].repetido){
-						doc.setFontType("bold");
-						doc.text(150,position+5, '**REPETIDO**')
-						doc.setFontType("normal");
-						
-					}
+					
 					
 				}else{
 				doc.setFontSize(9.5);
@@ -480,20 +464,52 @@
 					
 					
 				}
-				
-				if(item[i].repetido){
+				if(item[i].analisis.observacion != null){
+					console.log(item[i].analisis.observacion);
+					doc.text(100,position+5, item[i].analisis.observacion);
+					position = position+5;
+				}else{
+						console.log("prueba que pasa por aca");
+				}
+						
+				/*if(item[i].repetido){
 						doc.setFontType("bold");
 						doc.text(45,position+4, '**REPETIDO**')
 						doc.setFontType("normal");
 						hallado=hallado+7;
 						
-					}
+					}*/
 					position=hallado;
 				
 			}
 				
 			} //fin else
 
+				if(item[i].repetido){
+							doc.setFontSize(9);
+						doc.setFontType("bold");
+						doc.text(150,position+5, '**REPETIDO**')
+						doc.setFontType("normal");
+						position=position+5;
+						
+					}	
+			
+				
+				
+				if(item[i].observacion != null && item[i].observacion != ""){
+							
+							doc.setFontSize(10);
+							doc.setFontType("bold");
+							doc.text(15,position+5, "OBSERVACIONES: ");
+							doc.setFontType("normal");
+							doc.text(50,position+5,item[i].observacion);
+							//doc.text(15,position+8.5, item[i].observacion);
+							position = position+9;
+						}
+							
+							
+				
+				
 				doc.setFontSize(7);
 				doc.setTextColor(132,134,136);
 				doc.text(185,275, 'Página ' + page);
@@ -512,7 +528,7 @@
 			
 		}
 	
-
+		
 		$scope.getVarsUrl =function (){
 		var str = window.location.toString();
 		var res = str.split("=");
@@ -686,17 +702,18 @@
 			//$scope.saveResult(pedido,id_analisis,orden,metodo,muestra,valorHallado)
 		}
 		
-		$scope.saveResult = function (pedido,id_analisis,orden,metodo,muestra,repetido,valorHallado) {
+		$scope.saveResult = function (pedido,id_analisis,orden,metodo,muestra,repetido,observaciones,valorHallado) {
 			
 		pedido.analisisList[orden].resultados = valorHallado
 
-		$http.put('/api/loadResults/pedido/'+pedido._id+'/analisis/'+id_analisis,{'metodo':metodo,'muestra':muestra,'repetido': repetido,'resultado':pedido.analisisList[orden].resultado})
+		$http.put('/api/loadResults/pedido/'+pedido._id+'/analisis/'+id_analisis,{'metodo':metodo,'muestra':muestra,'repetido': repetido,'observacion':observaciones,'resultado':pedido.analisisList[orden].resultado})
 		.success(function(data) {
 		})
 		.error(function(err) {
 			console.log('Error: '+err);
 		});
 	};
+		
 		
 		$scope.newPedido = {
 			medico: '',
@@ -772,6 +789,18 @@
 			});
 		};
 
+	
+		
+		$scope.agregarObservaciones =function(value){
+			servicio.data.labo.observacion=value;
+		}
+		
+		$scope.observaciones="";
+		$scope.abrirObservaciones =function(lab){
+			$scope.observaciones=lab.observacion;
+			servicio.data.labo=lab;
+		}
+		
 		$scope.repetido = false;
 		
 		$scope.selectRepetido = function(value){
@@ -792,7 +821,7 @@
 					$scope.resultado.push($scope.obj);
 				}
 			}
-			$scope.objeto = {"analisis":analisis._id,"metodo":analisis.metodoDefault,"muestra":analisis.muestraDefault,"repetido":false,"resultado":$scope.resultado};
+			$scope.objeto = {"analisis":analisis._id,"metodo":analisis.metodoDefault,"muestra":analisis.muestraDefault,"repetido":false,"observacion":"","resultado":$scope.resultado};
 		$http.put('/api/pedidos/'+servicio.data.pedidoId+'/add-analisis',$scope.objeto)
 		.success(function(data) {
 		})
@@ -863,6 +892,7 @@
 	$scope.analisisListFiltered = [];
 	$scope.analisisListFilteredObject = [];
     $scope.estudio = {}
+	
 	
 	
 	

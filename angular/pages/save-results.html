@@ -102,7 +102,7 @@
 									</table>
 									
 									</li>
-									<li style="text-align: right" class="dropdown-header"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.repetido,lab.resultado.valorHallado)" class='btn btn-sm btn-primary'>Guardar</button>
+									<li style="text-align: right" class="dropdown-header"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.repetido,lab.observacion,lab.resultado.valorHallado)" class='btn btn-sm btn-primary'>Guardar</button>
 									</li>
 									</ul>
 									<!-- Lista de opciones -->
@@ -145,7 +145,7 @@
 									</table>
 									
 									</li>
-									<li style="text-align: right" class="dropdown-header"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.repetido,lab.resultado[0].valorHallado)" class='btn btn-sm btn-primary'>Guardar</button>
+									<li style="text-align: right" class="dropdown-header"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.repetido,lab.observacion,lab.resultado[0].valorHallado)" class='btn btn-sm btn-primary'>Guardar</button>
 									</li>
 									</ul>
 									<!-- Lista de opciones -->
@@ -159,8 +159,8 @@
 							<td ng-show="lab.analisis.formula.length == 0 && !lab.analisis.multiple"><input style="border-radius: 10px 10px" type="text"  ng-model="lab.resultado[0].valorHallado[0]" />{{lab.analisis.unidad}}&nbsp;&nbsp;&nbsp;</td>
 							
 							<td><input type="checkbox" class="checkbox checkbox-primary"  ng-model="lab.repetido"  ng-checked="lab.repetido"/>Repetido</td>
-							
-							<td ng-show="lab.analisis.formula.length == 0  && !lab.analisis.multiple"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.repetido,lab.resultado[0].valorHallado)" class='btn btn-sm btn-primary'>Guardar</button></td>
+	
+							<td ng-show="lab.analisis.formula.length == 0  && !lab.analisis.multiple"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.repetido,lab.observacion,lab.resultado[0].valorHallado)" class='btn btn-sm btn-primary'>Guardar</button></td>
 
 							<td><button ng-click="confirmDeleteAnalisis(pedido._id,lab.analisis._id)"  class='btn btn-xs btn-danger'>Eliminar!</button></td>
 
@@ -168,9 +168,16 @@
 							</td>
 	
 						</tr>
-						
+						<tr>
+							<td>Observaciones:</td>
+							<td colspan="10"><textarea type="text" cols="40" rows="2"  class="form-control"  ng-model="lab.observacion" aria-describedby="basic-addon2"></textarea></td>
+
+						</tr>
 					</tbody>
-					<tr><td><button class='btn btn-xs btn-info' data-toggle="modal" ng-click="savePedidoId(pedido._id)" data-target="#myModal">Agregar +</button></td></tr>	 
+					
+					<tr>
+					<td><button class='btn btn-xs btn-info' data-toggle="modal" ng-click="savePedidoId(pedido._id)" data-target="#myModal">Agregar +</button></td>
+					</tr>	 
 							
 						
 				</table>
@@ -181,7 +188,7 @@
 	</table>
 	
 <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
+  <div class="modal fade" id="myModal" role="dialog" >
 	<div class="modal-dialog">
 	
 	  <!-- Modal content-->
@@ -205,12 +212,34 @@
 	  
 	</div>
   </div>
+  
+  
+    <div class="modal fade" id="myModalObservaciones"  role="dialog">
+	<div class="modal-dialog">
+	
+	  <!-- Modal content-->
+	  <div class="modal-content" >
+		<div class="modal-header">
+		  <button type="button" class="close" data-dismiss="modal">&times;</button>
+		  <h4 class="modal-title">Observaciones</h4>
+		</div>
+		<div class="modal-body" ng-controller="pedidoController">
+	
+		  <textarea type="text" cols="40" rows="5"  class="form-control"  ng-model="lab.observacion" aria-describedby="basic-addon2"></textarea>
+
+		</div>
+	
+		<div class="modal-footer" >
+			<button type="button" class="btn btn-sm btn-primary" ng-click="agregarObservaciones(observacion)" data-dismiss="modal">Agregar</button>
+		  <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+		</div>
+	  </div>
+	  
+	</div>
+  </div>
+  
  </div>
-<script>
 
-
-
-</script>
 </div>
 
 
