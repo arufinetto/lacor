@@ -971,7 +971,7 @@
 				$scope.resultado.push($scope.obj);
 			}
 		}
-		$scope.objeto = {"analisis":analisis._id,"metodo":analisis.metodoDefault,"muestra":analisis.muestraDefault,"repetido":false,"resultado":$scope.resultado};
+		$scope.objeto = {"analisis":analisis._id,"metodo":analisis.metodoDefault,"muestra":analisis.muestraDefault,"repetido":false,"observacion":"","resultado":$scope.resultado};
 		$scope.analisisListFiltered.push(analisis); //lo necesito para la UI que muestre todo
 		$scope.analisisListFilteredObject.push($scope.objeto);
 		servicio.data.analisisListPedido = $scope.analisisListFilteredObject;

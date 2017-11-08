@@ -247,7 +247,7 @@ exports.addAnalysis = function(req, res) {
 		 
     }, 
 
-		{ $push: { 'analisisList': { analisis: req.body.analisis, muestra:req.body.muestra,metodo:req.body.metodo, resultado:req.body.resultado } }
+		{ $push: { 'analisisList': { analisis: req.body.analisis, muestra:req.body.muestra,metodo:req.body.metodo, observacion:req.body.observacion,resultado:req.body.resultado } }
 			
    		},function(err,pedido){
     		Pedido.find(function(err,pedido){
