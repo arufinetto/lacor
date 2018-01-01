@@ -520,9 +520,9 @@
 				
 				
            doc.setFontSize(8);
-			doc.text(85,270, 'ETHEL A. PEDERNERA');
-			doc.text(92,273, 'Bioquímica');
-			doc.text(92,276, 'M.P. 4659');
+			doc.text(85,270, '');
+			doc.text(88,273, 'BIOQUÍMICA:');
+			//doc.text(90,276, 'CITOLOGA: M.E. 556');
 			//window.open(doc.output('datauristring'));
 			doc.save('descarga');
 			
