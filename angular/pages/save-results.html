@@ -203,9 +203,9 @@
 		  <span class="btn btn-info input-group-addon" id="basic-addon2" ng-click="findAnalisisByName(code)">Buscar</span>
 
 		</div>
-		 <input type="text" readonly class="form-control" ng-model="estudio.determinaciones" aria-describedby="basic-addon2" >
+		 <input type="text" readonly class="form-control" ng-model="estudio[0].determinaciones" aria-describedby="basic-addon2" >
 		<div class="modal-footer" ng-controller="pedidoController">
-			<button type="button" class="btn btn-sm btn-primary" ng-click="agregarNuevoAnalisis(estudio)" data-dismiss="modal">Agregar</button>
+			<button type="button" class="btn btn-sm btn-primary" ng-click="agregarNuevoAnalisis(estudio[0])" data-dismiss="modal">Agregar</button>
 		  <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 		</div>
 	  </div>
