@@ -2,13 +2,19 @@ var Analisis = require('./modelo/analisis');
 
 //GET - Return all analisis in the DB
 // con exports conseguimos modularizarlo y que pueda ser llamado desde el archivo principal de la aplicación.
-exports.findAllAnalysis = function(req, res) {  
-    Analisis.find(function(err, lab) {
-		
-		if(err) res.send(500, err.message);
-			res.status(200).jsonp(lab);
 
-	});
+exports.findAllAnalysis = function(req, res) {  
+	var page = req.params.page || 1;
+	var perPage = 50;
+   Analisis.find({})
+			.sort({codigo:1})
+			.skip((perPage*page)-perPage)
+			.limit(perPage)
+			.exec(function(err, lab) {
+				if(err) res.send(500, err.message);
+				res.status(200).jsonp(lab);
+			})
+			
 };
 
 exports.find = function(req, res) {  

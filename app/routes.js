@@ -16,7 +16,7 @@ module.exports = function(app) {
 	
 	/**Controler Analisis**/
 
-	app.get('/api/analisis', ControllerAnalisis.findAllAnalysis);
+	app.get('/api/analisis/:page', ControllerAnalisis.findAllAnalysis);
 
 	app.get('/api/analisis/:id',  ControllerAnalisis.find);
 	
@@ -53,7 +53,7 @@ module.exports = function(app) {
 	 app.get('/api/perfil', ControllerPerfil.findPerfil);
 
 	 /**Controler Paciente**/
-	app.get('/api/pacientes', ControllerPacientes.findAll);
+	app.get('/api/pacientes/:page', ControllerPacientes.findAll);
 	
 	app.delete('/api/paciente/:id', ControllerPacientes.deletePaciente);
 	
