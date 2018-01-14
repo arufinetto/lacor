@@ -1,6 +1,6 @@
-<div ng-controller="analisisController">
+<div ng-controller="analisisController" ng-init="analisisList=getAnalisis(1)">
 	Filtrar: <input  class="form-control" type="text" ng-model="criterio" placeholder="Ingrese el codigo o nombre del estudio"/> <br/>
-	<table class="table table-striped ani">
+	<table class="table table-striped">
 		<thead>
 		 <tr>
 				<td>Codigo</td>
@@ -104,5 +104,6 @@
 			
 		</tbody>
 	</table>
+	 <ul uib-pagination class="pull-center" total-items="totalItems" items-per-page="page" ng-model="currentPage" previous-text="Anterior" next-text="Siguiente" ng-change="analisisList=getAnalisis(currentPage)" ></ul> 
 	</div>
 </div>

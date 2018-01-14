@@ -1,4 +1,4 @@
-var starter = angular.module("MainApp", ["ngRoute","ngBootbox"])
+var starter = angular.module("MainApp", ["ngRoute","ngBootbox","ui.bootstrap"])
 .config(function($routeProvider){
      $routeProvider
 			.when('/', {

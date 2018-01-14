@@ -3,7 +3,10 @@ starter.controller("analisisController", function($scope, $http,servicio) {
 	$scope.analisisList = {};
 	$scope.analisisListFiltered = [];
 	$scope.analisisListFilteredObject = [];
-    $scope.estudio = {}
+    $scope.estudio = {};
+	$scope.totalItems=1350;
+	$scope.currentPage=1;
+	$scope.page=50;
 	
 	
 	
@@ -18,12 +21,14 @@ starter.controller("analisisController", function($scope, $http,servicio) {
 		});
 	}
     
-		$http.get('/api/analisis')
+	$scope.getAnalisis = function(page){
+		$http.get('/api/analisis/'+ page)
 		.success(function(data) {
 			$scope.analisisList = data;
 		}).error(function(err) {
 			console.log('Error: '+err);
 		});
+	}
 	
 	
 	$scope.isEmpty = function(value){
