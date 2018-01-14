@@ -4,34 +4,18 @@ var dateFormat = require('dateformat');
 
 //GET - Return all paciente in the DB
 // con exports conseguimos modularizarlo y que pueda ser llamado desde el archivo principal de la aplicación.
-exports.findAll = function(req, res) {  
-    Paciente.find(function(err, paciente) {
-    if(err) res.send(500, err.message);
-        res.status(200).jsonp(paciente);
-    });
+exports.findAll = function(req, res) { 
+var page = req.params.page || 1;
+var perPage = 25; 
+    Paciente.find({})
+			.sort({apellido:1})
+			.skip((perPage*page)-perPage)
+			.limit(perPage)
+			.exec(function(err, paciente) {
+				if(err) res.send(500, err.message);
+				res.status(200).jsonp(paciente);
+			})
 };
-
-/*exports.findAll = function(req, res) {  
-    Paciente.aggregate([
-	{
-       $project: {
-        fechaNacimiento:  { $dateToString: { format: "%d/%m/%Y", date: "$fechaNacimiento" } },
-		nombre:1,
-		apellido:1,
-		domicilio :1 ,
-		tipoDocumento :1 ,
-		documento : 1,
-		medicacion : 1,
-		telefono:1 ,
-		celular :1 ,
-		email:1 ,
-		ciudad : 1
-	}
-	}],function(err, paciente) {
-    if(err) res.send(500, err.message);
-        res.status(200).jsonp(paciente);
-    });
-}*/
 
 exports.add = function(req, res) {  
   var paciente = new Paciente({
@@ -84,18 +68,12 @@ exports.update = function(req, res) {
    );
 };
 
- exports.filter = function(req, res) {
-	var filter = {};
-	if(req.query.nombre){
-		filter.nombre = req.query.nombre;
-		//filter.apellido = req.query.apellido;
-	}
-	    Paciente.find({nombre:{$regex:".*"+filter.nombre}},function(err, paciente) {
-			if(err) res.send(500,err.message);
-			res.status(200).jsonp(paciente);
-			console.log(req)
-		});
-
+ exports.filter= function(req, res) {
+	 Paciente.find({$or:[{apellido: {$regex: req.query.apellido}},{nombre: {$regex:req.query.apellido}}]},function(err,paciente){
+					if(err) return res.status(500).send(err.message);
+					res.status(200).jsonp(paciente);
+    		});
+			
 };
 
 
