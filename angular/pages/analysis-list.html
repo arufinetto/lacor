@@ -1,5 +1,10 @@
-<div ng-controller="analisisController" ng-init="analisisList=getAnalisis(1)">
-	Filtrar: <input  class="form-control" type="text" ng-model="criterio" placeholder="Ingrese el codigo o nombre del estudio"/> <br/>
+<div ng-controller="analisisController" >
+	Filtrar: 
+	<div class="input-group" ng-init="analisisList=getAnalisis(1)">
+		<input  class="form-control" type="text" ng-model="criterio" placeholder="Ingrese el codigo o nombre del estudio"/> 
+		<span class="btn btn-info input-group-addon" id="basic-addon2" ng-click="findAnalisisByName(criterio)" ng-disabled="isEmpty(criterio)">Buscar</span>
+   </div>
+	
 	<table class="table table-striped">
 		<thead>
 		 <tr>
@@ -9,7 +14,7 @@
 				<td>Valor</td>
 			</tr>
 		</thead>
-		<tbody ng-repeat="analisis in analisisList | filter:criterio | limitTo:20">
+		<tbody ng-repeat="analisis in analisisList">
 			<tr>
 				<td>{{analisis.codigo}}</td>
 				<td>{{analisis.determinaciones}}</td>

@@ -55,13 +55,14 @@ module.exports = function(app) {
 	 /**Controler Paciente**/
 	app.get('/api/pacientes/:page', ControllerPacientes.findAll);
 	
+	app.get('/api/pacienteBy', ControllerPacientes.filter);
+	
 	app.delete('/api/paciente/:id', ControllerPacientes.deletePaciente);
 	
 	app.post('/api/paciente', ControllerPacientes.add);
 	
 	app.put('/api/paciente/:id', ControllerPacientes.update);
 	
-	app.get('/api/pacientesBy', ControllerPacientes.filter);
 	/**fin controler paciente**/
 	
 	/**Controler pedido**/
