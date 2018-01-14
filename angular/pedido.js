@@ -15,7 +15,7 @@ starter.controller("pedidoController",  function($route,$scope, $http,servicio,$
 			$scope.pedidosCreadosList ={},
 	
 
-		$scope.calcularEdad = function(birthday){
+	$scope.calcularEdad = function(birthday){
 			if(birthday !=null){
 				var hoy = new Date();
 				var cumpleanos = new Date(birthday);
@@ -29,7 +29,7 @@ starter.controller("pedidoController",  function($route,$scope, $http,servicio,$
 				return edad;	
 			}
 			
-		}
+		}	
 	
 	$scope.insertImage = function(doc){
 		var logo = new Image(); logo.src = 'reporte.jpg'; 
@@ -288,7 +288,7 @@ starter.controller("pedidoController",  function($route,$scope, $http,servicio,$
 					doc.text(100,position+5, item[i].analisis.observacion);
 					position = position+5;
 				}else{
-						console.log("prueba que pasa por aca");
+						//console.log("prueba que pasa por aca");
 				}
 						
 				/*if(item[i].repetido){
@@ -339,9 +339,18 @@ starter.controller("pedidoController",  function($route,$scope, $http,servicio,$
 				
 				
            doc.setFontSize(8);
-			doc.text(85,270, '');
-			doc.text(88,273, 'BIOQUÍMICA:');
-			//doc.text(90,276, 'CITOLOGA: M.E. 556');
+			/* CENTRADO
+			doc.text(85,270, 'Dra. MONICA DE SOUTADET');
+			doc.text(88,273, 'BIOQUÍMICA: M.P. 4946');
+			doc.text(90,276, 'CITOLOGA: M.E. 556');
+			*/
+			doc.text(45,270, 'Dra. MONICA DE SOUTADET');
+			doc.text(48,273, 'BIOQUÍMICA: M.P. 4946');
+			doc.text(50,276, 'CITOLOGA: M.E. 556');
+			
+			doc.text(120,270, 'JULIA LOPEZ');
+			doc.text(115,273, 'BIOQUÍMICA: M.P. 4946');
+			
 			//window.open(doc.output('datauristring'));
 			doc.save('descarga');
 			
@@ -380,14 +389,18 @@ starter.controller("pedidoController",  function($route,$scope, $http,servicio,$
 			console.log('Error: '+err);
 		});
 
-		
-		
-		$http.get('/api/pedidos?estado=Entregado')
+		$scope.currentPage=1;
+		$scope.totalItems=573;
+		$scope.page=20
+		$scope.getPedidosEntregados = function(){
+			$http.get('/api/pedidos?estado=Entregado')
 		.success(function(data) {
 			$scope.pedidosEntregadosList = data; 
 		}).error(function(err) {
 			console.log('Error: '+err);
 		});
+		}
+		
 		
 		$scope.pedidosInvalidosList = {};
 		$http.get('/api/pedidos?estado=Invalido')

@@ -4,7 +4,7 @@ starter.factory("servicio", function(){
 					
 				} ;
 }).controller("pacienteController", function($route,$scope, $http,servicio,$ngBootbox) {
-	$scope.totalItems=500;
+	$scope.totalItems=400;
 	$scope.currentPage=1;
 	$scope.page=25;
 	$scope.pacienteSelected = null;
@@ -99,19 +99,18 @@ starter.factory("servicio", function(){
 		$http.get('/api/pacientes/' + page)
 		.success(function(data) {
 			$scope.pacienteList = data;
-			console.log("CANTIDA DE PACIENTES " + $scope.pacienteList[0].apellido)
 		})
 		.error(function(err) {
 			console.log('Error: '+err);
 		});
 	}
 	
-	
 	$scope.search = function() {
-		$http.get('/api/pacientesBy?nombre='+ $scope.nombrePaciente)
+		$http.get('/api/pacienteBy?apellido='+ $scope.nombrePaciente)
 		.success(function(data) {
 			$scope.pacienteListFilter = data;
-			console.log(data)
+			$scope.pacienteList= data; //para el filtro en la lista de pacientes
+			//console.log(data)
 		})
 		.error(function(err) {
 			console.log('Error: '+err);
@@ -141,6 +140,7 @@ starter.factory("servicio", function(){
 		servicio.data.paciente = paciente
 		$scope.pacienteSelected = paciente.nombre+" "+paciente.apellido
 		$scope.obraSocialPacienteSelected = paciente.obraSocial;
+		$scope.nombrePaciente = paciente.apellido + ", " + paciente.nombre;//para que se muestre en el input de pedido cuando se selecciona
 		console.log("obra social para paciente:"+paciente.obraSocial)
 	/*if(paciente.prestador !="" && paciente.afiliado != ""){
 			$scope.pacienteSelectedAfiliado = paciente.prestador+" - Numero de Afiliado: "+paciente.afiliado

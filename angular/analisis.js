@@ -14,7 +14,8 @@ starter.controller("analisisController", function($scope, $http,servicio) {
 	$scope.findAnalisisByName =function(code){
 		$http.get('/api/analisisByCode/'+code)
 		.success(function(data) {
-			$scope.estudio = data[0];
+			$scope.estudio = data; //filtra en pedidos
+			$scope.analisisList = data; //para filtrar en la lista de estudios
 			console.log($scope.estudio.determinaciones)
 		}).error(function(err) {
 			console.log('Error: '+err);

@@ -3,7 +3,7 @@ starter.factory("servicio", function(){
 					data: {}
 					
 				} ;
-}).controller("medicoController", ['$scope','$http','$ngBootbox', function($scope, $http,servicio,$ngBootbox) {
+}).controller("medicoController", function($scope, $http,$ngBootbox,servicio) {
 
 		$scope.medicosList = {}
 		$scope.medicoSelected = null
@@ -58,4 +58,4 @@ starter.factory("servicio", function(){
 	
 	
 	
-	}])
+	})
