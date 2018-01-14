@@ -3,8 +3,10 @@ starter.factory("servicio", function(){
 					data: {}
 					
 				} ;
-}).controller("pacienteController", function($scope, $http,servicio,$ngBootbox) {
-
+}).controller("pacienteController", function($route,$scope, $http,servicio,$ngBootbox) {
+	$scope.totalItems=500;
+	$scope.currentPage=1;
+	$scope.page=25;
 	$scope.pacienteSelected = null;
 	$scope.isEmpty = function(value){
 		return (value == "" || value == null);
@@ -42,6 +44,22 @@ starter.factory("servicio", function(){
 	}
 	
 	
+	$scope.calcularEdad = function(birthday){
+			if(birthday !=null){
+				var hoy = new Date();
+				var cumpleanos = new Date(birthday);
+				var edad = hoy.getFullYear() - cumpleanos.getFullYear();
+				var m = hoy.getMonth() - cumpleanos.getMonth();
+
+				if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
+					edad--;
+				}
+
+				return edad;	
+			}
+			
+		}
+	
 	$scope.pedidosByPacienteList = {}
 		
 	$scope.getPedidoByPaciente = function(paciente){
@@ -77,14 +95,16 @@ starter.factory("servicio", function(){
 			  console.log('Confirm was cancelled');
 			});
 		};
-	
-	$http.get('/api/pacientes')
-	.success(function(data) {
-		$scope.pacienteList = data;
-	})
-	.error(function(err) {
-		console.log('Error: '+err);
-	});
+	$scope.getPacientes = function (page){
+		$http.get('/api/pacientes/' + page)
+		.success(function(data) {
+			$scope.pacienteList = data;
+			console.log("CANTIDA DE PACIENTES " + $scope.pacienteList[0].apellido)
+		})
+		.error(function(err) {
+			console.log('Error: '+err);
+		});
+	}
 	
 	
 	$scope.search = function() {
