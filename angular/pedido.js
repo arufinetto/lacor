@@ -392,14 +392,14 @@ starter.controller("pedidoController",  function($route,$scope, $http,servicio,$
 		$scope.currentPage=1;
 		$scope.totalItems=573;
 		$scope.page=20
-		$scope.getPedidosEntregados = function(){
+		//$scope.getPedidosEntregados = function(){
 			$http.get('/api/pedidos?estado=Entregado')
 		.success(function(data) {
 			$scope.pedidosEntregadosList = data; 
 		}).error(function(err) {
 			console.log('Error: '+err);
 		});
-		}
+		//}
 		
 		
 		$scope.pedidosInvalidosList = {};

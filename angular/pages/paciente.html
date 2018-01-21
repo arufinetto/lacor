@@ -50,7 +50,7 @@
     <label  for="domicilio">Domicilio:</label>
     <input type="text"  class="form-control" id="domicilio" ng-model="newPaciente.domicilio">
   </div>
-  <div class="form-group row">
+  <div class="form-group row" ng-controller="muestraMetodoController">
     <label  for="ciudad">Localidad:</label>
     <select  ng-options="ciudad.nombre as ciudad.nombre for ciudad in ciudades"  class="form-control" id="ciudad" ng-model="newPaciente.ciudad">
 	  <option ng-value={{ciudad.nombre}}>{{ciudad.nombre}}</option>
@@ -70,16 +70,16 @@
     <label for="celular">Celular:</label>
     <input type="text" class="form-control" id="celular" ng-model="newPaciente.celular">
   </div>
- <!-- <div class="form-group row">
+  <div class="form-group row" ng-controller="pedidoController">
 		<label for="prestador">Obras Social/Prepaga:</label>
-		<select  ng-options="prestador.nombre as prestador.nombre for prestador in prestadores"   class="form-control" id="prestador" ng-model="newPaciente.prestador">
+		<select  ng-options="prestador.nombre as prestador.nombre for prestador in prestadores"   class="form-control" id="prestador" ng-model="newPaciente.obraSocial.prestador">
 		  <option ng-value={{prestador.nombre}}>{{prestador.nombre}}</option>
 		 </select>
 	</div>
 	<div class="form-group row">
 		<label for="afiliado">Numero de Afiliado:</label>
-		<input type="text" id="afiliado"  maxlength="40" ng-model="newPaciente.afiliado" class="form-control"/>
-	</div>-->
+		<input type="text" id="afiliado"  maxlength="40" ng-model="newPaciente.obraSocial.afiliado" class="form-control"/>
+	</div>
   <div class="form-group row">
     <label  for="medicacion">Medicacion:</label>
     <input type="text" class="form-control" id="medicacion" ng-model="newPaciente.medicacion">

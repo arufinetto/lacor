@@ -63,6 +63,8 @@ module.exports = function(app) {
 	
 	app.put('/api/paciente/:id', ControllerPacientes.update);
 	
+	app.put('/api/paciente/:id/obrasocial/:ob_id', ControllerPacientes.updateObraSocial);
+	
 	/**fin controler paciente**/
 	
 	/**Controler pedido**/
