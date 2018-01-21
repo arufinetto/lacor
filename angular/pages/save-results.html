@@ -188,30 +188,30 @@
 	</table>
 	
 <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog" >
-	<div class="modal-dialog">
-	
-	  <!-- Modal content-->
-	  <div class="modal-content" ng-controller="analisisController">
-		<div class="modal-header">
-		  <button type="button" class="close" data-dismiss="modal">&times;</button>
-		  <h4 class="modal-title">Estudio</h4>
-		</div>
-		<div class="modal-body">
-	
-		  <input type="text" class="form-control" ng-model="code" placeholder="Ingrese el codigo del estudio" aria-describedby="basic-addon2" >
-		  <span class="btn btn-info input-group-addon" id="basic-addon2" ng-click="findAnalisisByName(code)">Buscar</span>
+ <div class="modal fade" id="myModal" role="dialog" >
+					<div class="modal-dialog">
+					
+					  <!-- Modal content-->
+					  <div class="modal-content" ng-controller="analisisController">
+						<div class="modal-header">
+						  <button type="button" class="close" data-dismiss="modal">&times;</button>
+						  <h4 class="modal-title">Estudio</h4>
+						</div>
+						<div class="modal-body">
+					
+						  <input type="text" class="form-control" ng-model="code" placeholder="Ingrese el codigo del estudio" aria-describedby="basic-addon2" >
+						  <span class="btn btn-info input-group-addon" id="basic-addon2" ng-click="findAnalisisByName(code)">Buscar</span>
 
-		</div>
-		 <input type="text" readonly class="form-control" ng-model="estudio.determinaciones" aria-describedby="basic-addon2" >
-		<div class="modal-footer" ng-controller="pedidoController">
-			<button type="button" class="btn btn-sm btn-primary" ng-click="agregarNuevoAnalisis(estudio)" data-dismiss="modal">Agregar</button>
-		  <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-		</div>
-	  </div>
-	  
-	</div>
-  </div>
+						</div>
+						 <input type="text" readonly class="form-control" ng-model="estudio.determinaciones" aria-describedby="basic-addon2" >
+						<div class="modal-footer" ng-controller="pedidoController">
+							<button type="button" class="btn btn-sm btn-primary" ng-click="agregarNuevoAnalisis(estudio)" data-dismiss="modal">Agregar</button>
+						  <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+						</div>
+					  </div>
+					  
+					</div>
+				  </div>
   
   
     <div class="modal fade" id="myModalObservaciones"  role="dialog">

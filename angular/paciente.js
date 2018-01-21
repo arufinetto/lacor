@@ -10,8 +10,7 @@ starter.factory("servicio", function(){
 	$scope.pacienteSelected = null;
 	$scope.isEmpty = function(value){
 		return (value == "" || value == null);
-		};
-		
+		};	
 	$scope.paciente ={}
 	$scope.newPaciente = {
 		nombre: '',
@@ -119,6 +118,7 @@ starter.factory("servicio", function(){
 	
 	
 	$scope.createPaciente = function () {
+		obraSocial = {"prestador":$scope.newPaciente.prestador,"afiliado":$newPaciente.afiliado}
 		$http.post('/api/paciente', $scope.newPaciente)
 		.success(function(data) {
 			$scope.pacienteList = data;
@@ -131,9 +131,30 @@ starter.factory("servicio", function(){
 		});
 	};
 	
-	$scope.agregarObraSocial = function(paciente,obraSocial,afiliado){
-		$scope.obraSocial = {"obraSocial":obraSocial,"afiliado":afiliado};
-		paciente.obraSocial.push($scope.obraSocial)
+	
+	$scope.pacienteModificado = function(paciente){
+		servicio.data.modifiedPaciente=paciente;
+		console.log($scope.modifiedPaciente)
+	}
+	
+	$scope.actualizarObraSocial = function(paciente_id, ob){
+		$http.put('/api/paciente/' + paciente_id + '/obrasocial/' + ob._id, {obraSocial: ob.obraSocial , afiliado: ob.afiliado})
+		.success(function(data) {
+			$ngBootbox.alert("La obra social ha sido actualizada exitosamente!")
+		})
+		.error(function(err) {
+			console.log('Error: '+err);
+			$ngBootbox.alert("Hubo un error y no se pudo actualizar la obra social!")
+		});
+	}
+	
+	
+	$scope.agregarObraSocial = function(obraSocial,afiliado){
+		$scope.newObraSocial = {"obraSocial":obraSocial,"afiliado":afiliado};
+		servicio.data.modifiedPaciente.obraSocial.push($scope.newObraSocial)
+		$scope.updatePaciente(servicio.data.modifiedPaciente);
+		
+
 	}
 	
 	$scope.agregarPaciente = function (paciente){
@@ -156,9 +177,11 @@ starter.factory("servicio", function(){
 		documento:paciente.documento,tipoDocumento:paciente.tipoDocumento,telefono:paciente.telefono,medicacion:paciente.medicacion,celular:paciente.celular,domicilio:paciente.domicilio})
 		.success(function(data) {
 			$scope.pacienteList = data;
+			$ngBootbox.alert("El paciente ha sido actualizado exitosamente!")
 		})
 		.error(function(err) {
 			console.log('Error: '+err);
+			$ngBootbox.alert("Hubo un error y no se pudo actualizar los datos del paciente!")
 		});
 	};
 	
@@ -167,8 +190,6 @@ starter.factory("servicio", function(){
 				console.log($scope.pacienteSelected.nombre);
 			};
 			
-			
-	
 			
 	
 	})

@@ -68,6 +68,26 @@ exports.update = function(req, res) {
    );
 };
 
+
+exports.updateObraSocial = function(req, res) {  
+    Paciente.update({
+    	_id:req.params.id,
+		"obraSocial._id":req.params.ob_id
+    }, 
+
+    	{$set :
+			{
+			"obraSocial.$.obraSocial": req.body.obraSocial,
+			"obraSocial.$.afiliado": req.body.afiliado
+			}
+
+    	},function(err,paciente){
+    		Paciente.find({_id:req.params.id},function(err,paciente){
+    			res.json(paciente);
+    		});
+    	}
+   );
+};
  exports.filter= function(req, res) {
 	 Paciente.find({$or:[{apellido: {$regex: req.query.apellido}},{nombre: {$regex:req.query.apellido}}]},function(err,paciente){
 					if(err) return res.status(500).send(err.message);

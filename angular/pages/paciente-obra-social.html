@@ -1,0 +1,89 @@
+<div ng-controller="pacienteController">
+	
+	Filtrar: 
+	<div class="input-group">
+		<input class="form-control" type="text" ng-model="nombrePaciente" placeholder="Ingrese el nombre o apellido del paciente"/>
+		<span class="btn btn-info input-group-addon" id="basic-addon2" ng-click="search()" ng-disabled="isEmpty(nombrePaciente)">Buscar</span>
+   </div>
+	<br/>
+	<table class="table table-striped" >
+		<thead>
+		 <tr>
+				<td><b>Apellido</b></td>
+				<td><b>Nombre</b></td>
+				<td><b>Edad</b></td>
+				<td><b>Tipo de Documento</b></td>
+				<td><b>Numero de Documento</b></td>
+			</tr>
+		</thead>
+		<tbody ng-repeat="paciente in pacienteList" >
+			<tr>
+				<td>{{paciente.apellido}}</td>
+				<td>{{paciente.nombre}}</td>
+				<td>{{calcularEdad(paciente.fechaNacimiento)}} años</td>
+				<td>{{paciente.tipoDocumento}}</td>
+				<td>{{paciente.documento}}</td>
+				<td><button ng-click="pacienteModificado(pacienteList[$index])" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Obras Sociales</button></td>
+				<!--<td><button ng-click="#row($index)" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row1{{$index}}">Obra Social</button></td>-->
+			</tr>
+			<tr id="row{{$index}}"  class="collapse" >
+				<td colspan="12">
+					<table class="table table-responsive"> 
+						<thead>
+							<td><b>Obra Social</b></td>
+							<td><b>Número de Afiliado</b></td>
+							<td><b></b></td>
+						</thead>
+					<tbody ng-repeat="ob in paciente.obraSocial track by $index" >
+							<tr>
+								<td>{{ob.obraSocial}}</td>
+								<td><input class="form-control" type="text" ng-model="ob.afiliado"/></td>
+								<td><button ng-click="actualizarObraSocial(paciente._id,paciente.obraSocial[$index])" class="btn btn-xs  btn-warning" data-toggle="collapse" data-target="#row{{$index}}">Actualizar</button></td>
+
+							</tr>
+					<tbody>
+					<tr>
+					<td><button class='btn btn-xs btn-info' data-toggle="modal" ng-click="savePedidoId(pedido._id)" data-target="#myModal">Agregar +</button></td>
+					</tr>
+
+					</table>
+				</td>
+				
+			</tr>
+			
+			
+		
+		</tbody>
+		
+		<div class="modal fade" id="myModal" role="dialog" >
+			<div class="modal-dialog">
+			
+			  <!-- Modal content-->
+			  <div class="modal-content" ng-controller="pedidoController">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title">Obra Social</h4>
+				</div>
+				<div class="modal-body">
+					<select  ng-options="prestador.nombre as prestador.nombre for prestador in prestadores" ng-model="prestador.nombre" class="form-control">
+						<option ng-value={{prestador.nombre}}>{{prestador.nombre}}</option>
+					</select>
+				 <br/>
+				 <input type="text" class="form-control" ng-model="code" placeholder="Ingrese el numero de afiliado" aria-describedby="basic-addon2" >
+				  
+				</div>
+				 
+				<div class="modal-footer" ng-controller="pacienteController" >
+					<button type="button" class="btn btn-sm btn-primary" ng-click="agregarObraSocial(prestador.nombre,code)" data-dismiss="modal">Agregar</button>
+				  <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+				</div>
+			  </div>
+			  
+			</div>
+		  </div>
+		
+	</table>
+	
+</div>
+	   
+		 
