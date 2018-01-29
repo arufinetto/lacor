@@ -1,5 +1,7 @@
-starter.controller("perfilController", function ($scope,$http){
+starter.controller("perfilController", function ($scope,$http,servicio){
 			$scope.perfils={};
+			$scope.analisisPerfil = []
+
 			$scope.newPerfil = {
 				nombre: '',
 				analisisList: []
@@ -30,7 +32,7 @@ starter.controller("perfilController", function ($scope,$http){
 			}
 			
 			$scope.analisisPorPerfil = {}
-			$scope.analisisPerfil = []
+			
 	
 			$scope.searchAnalisis = function(perfil){
 				$scope.clearAnalisis();
@@ -56,7 +58,7 @@ starter.controller("perfilController", function ($scope,$http){
 			}
 			
 			$scope.agregarAnalisis = function(analisis){
-				$scope.analisisPerfil.push(analisis); 
+				servicio.data.analisisPerfil=$scope.analisisPerfil.push(analisis); 
 			}
 			
 				
