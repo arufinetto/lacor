@@ -27,28 +27,27 @@
   </div>
   
 
- <div class="form-group row" ng-controller="analisisController" >
+ <div class="form-group row" ng-controller="analisisController"  >
         <label  class="control-label" for="analisis">Estudios:</label>
-		
-        <input type="text" class="form-control" ng-model="miFilter" id="analisis" placeholder="Ingrese el nombre/codigo del analisis...">
-		<div class="form-group row" ng-show="!isEmpty(miFilter)">
+		<div class="input-group">
+			<input type="text" class="form-control" ng-model="miFilter" id="analisis" placeholder="Ingrese el nombre/codigo del analisis...">
+			<span class="btn btn-info input-group-addon" id="basic-addon2" ng-click="findAnalisisByName(miFilter)" ng-disabled="isEmpty(miFilter)">Buscar</span>
+		</div>
+		<div class="form-group row" ng-controller="perfilController">
 			<table class="table table-striped">
 				<thead>
 				</thead>
-				<tbody ng-repeat="lab in analisisList | filter:miFilter | limitTo:5">
+				<tbody ng-repeat="est in estudio" >
 				<tr>
-					<td>{{lab.codigo}}</td>
-					<td>{{lab.determinaciones}}</td>
-					<td><a href ng-click="agregarAnalisis(lab)" data-toggle="collapse"><span class="glyphicon glyphicon-plus"></span></a>
+					<td>{{est.codigo}}</td>
+					<td>{{est.determinaciones}}</td>
+					<td><a href ng-click="agregarAnalisis(est)" data-toggle="collapse"><span class="glyphicon glyphicon-plus"></span></a>
 				</tr>
 				</tbody>
 				</tbody>
 			</table>
 		</div>
-		
-		<br/>
- 
-
+</div>
 	<div class="form-group row">
 	<label  class="control-label " for="analisisfilter"></label>
 	
@@ -73,9 +72,6 @@
 					</table>
 				</div>
 			</div>
-	</div>
-
- </div>
  
  
   <a href="#/perfil" type="submit" style="float:right" class="btn btn-primary" ng-click="createPerfil()">Guardar</a>

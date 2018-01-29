@@ -346,11 +346,12 @@ starter.controller("pedidoController",  function($route,$scope, $http,servicio,$
 			*/
 			doc.text(45,270, 'Dra. MONICA DE SOUTADET');
 			doc.text(48,273, 'BIOQUÍMICA: M.P. 4946');
-			doc.text(50,276, 'CITOLOGA: M.E. 556');
+			doc.text(49,276, 'CITOLOGA: M.E. 556');
 			
-			doc.text(120,270, 'JULIA LOPEZ');
-			doc.text(115,273, 'BIOQUÍMICA: M.P. 4946');
 			
+			doc.text(120,270, 'Dra. MARÍA JULIA QUINTEROS');
+			doc.text(133,273, 'BIOQUÍMICA');
+			doc.text(135,276, 'M.P. 5102');
 			//window.open(doc.output('datauristring'));
 			doc.save('descarga');
 			
