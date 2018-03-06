@@ -1,4 +1,8 @@
-starter.controller("pedidoController",  function($route,$scope, $http,servicio,$ngBootbox) {
+starter.factory("servicio", function(){
+				return {
+					data: {},
+				} ;
+}).controller("pedidoController",  function($route,$scope, $http,servicio,$ngBootbox) {
 			$scope.pedidosAbiertosList = {}
 			$scope.pedidosCompletosList = {}
 			$scope.created=false
@@ -339,21 +343,22 @@ starter.controller("pedidoController",  function($route,$scope, $http,servicio,$
 				
 				
            doc.setFontSize(8);
-			/* CENTRADO
-			doc.text(85,270, 'Dra. MONICA DE SOUTADET');
-			doc.text(88,273, 'BIOQUÍMICA: M.P. 4946');
-			doc.text(90,276, 'CITOLOGA: M.E. 556');
-			*/
-			doc.text(45,270, 'Dra. MONICA DE SOUTADET');
+			// CENTRADO
+			doc.text(85,270, 'AIMARÁ AYELEN ASPITIA');
+			doc.text(92,273, 'BIOQUÍMICA');
+			doc.text(94,276, 'M.P. 5819');
+		
+			
+			/*doc.text(45,270, 'Dra. MONICA DE SOUTADET');
 			doc.text(48,273, 'BIOQUÍMICA: M.P. 4946');
 			doc.text(49,276, 'CITOLOGA: M.E. 556');
 			
 			
 			doc.text(120,270, 'Dra. MARÍA JULIA QUINTEROS');
 			doc.text(133,273, 'BIOQUÍMICA');
-			doc.text(135,276, 'M.P. 5102');
-			//window.open(doc.output('datauristring'));
-			doc.save('descarga');
+			doc.text(135,276, 'M.P. 5102');*/
+			window.open(doc.output('datauristring'));
+			//doc.save('descarga');
 			
 		}
 	

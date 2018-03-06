@@ -7,12 +7,22 @@ var ControllerMuestraMetodo= require('./controllerMuestraMetodo');
 var ControllerLogin= require('./controllerLogin');
 var ControllerPerfil= require('./controllerPerfil');
 
-module.exports = function(app) {
+
+var isAuthenticated = function (req, res, next) {
+  // if user is authenticated in the session, call the next() to call the next request handler 
+  // Passport adds this method to request object. A middleware is allowed to add properties to
+  // request and response objects
+  if (req.isAuthenticated())
+    return next();
+  // if the user is not authenticated then redirect him to the login page
+  res.redirect('/');
+}
+
+
+
+module.exports = function(app,passport) {
 	
-	/**Controller Login**/
-	//app.post('/api/user', ControllerLogin.addUser);
-	//app.get('/api/user/:username', ControllerLogin.find);
-	//app.post('/api/login/:username', ControllerLogin.login);
+	
 	
 	/**Controler Analisis**/
 
@@ -32,7 +42,7 @@ module.exports = function(app) {
 	/**Fin Controler Analisis**/
 	
 	 /**Controler Muestra Metodos**/
-	app.get('/api/muestras', ControllerMuestraMetodo.findMuestra);
+	app.get('/api/muestras',ControllerMuestraMetodo.findMuestra);
 	
 	app.get('/api/metodos', ControllerMuestraMetodo.findMetodo);
 	
@@ -110,6 +120,8 @@ module.exports = function(app) {
 	
 	app.delete('/api/medico/:id', ControllerMedico.deleteMedico);
 	/**fin controler medico**/
+
+
 	
 	
 };

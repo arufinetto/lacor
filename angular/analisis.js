@@ -1,4 +1,8 @@
-starter.controller("analisisController", function($scope, $http,servicio) {
+starter.factory("servicio", function(){
+				return {
+					data: {},
+				} ;
+}).controller("analisisController", function($scope, $http,servicio) {
 
 	$scope.analisisList = {};
 	$scope.analisisListFiltered = [];
@@ -14,9 +18,8 @@ starter.controller("analisisController", function($scope, $http,servicio) {
 	$scope.findAnalisisByName =function(code){
 		$http.get('/api/analisisByCode/'+code)
 		.success(function(data) {
-			$scope.estudio = data; //filtra en pedidos
+			$scope.estudio = data; //filtra en pedidos en proceso
 			$scope.analisisList = data; //para filtrar en la lista de estudios
-			console.log($scope.estudio.determinaciones)
 		}).error(function(err) {
 			console.log('Error: '+err);
 		});
@@ -93,7 +96,6 @@ starter.controller("analisisController", function($scope, $http,servicio) {
 		$scope.analisisListFiltered.push(analisis); //lo necesito para la UI que muestre todo
 		$scope.analisisListFilteredObject.push($scope.objeto);
 		servicio.data.analisisListPedido = $scope.analisisListFilteredObject;
-		console.log(servicio.data.analisisListPedido)
 	}
 	
 	
@@ -102,7 +104,6 @@ starter.controller("analisisController", function($scope, $http,servicio) {
 	$scope.removeAnalisis = function(index){
 		$scope.analisisListFilteredObject.splice(index,1);
 		$scope.analisisListFiltered.splice(index,1);
-		console.log($scope.analisisListFiltered)
 		//$scope.analisisListFilteredObject.slice(analisis._id);
 		//servicio.data.analisisListPedido=$scope.analisisListFilteredObject
 	}

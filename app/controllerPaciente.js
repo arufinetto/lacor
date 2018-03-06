@@ -89,9 +89,10 @@ exports.updateObraSocial = function(req, res) {
    );
 };
  exports.filter= function(req, res) {
-	 Paciente.find({$or:[{apellido: {$regex: req.query.apellido}},{nombre: {$regex:req.query.apellido}}]},function(err,paciente){
+	 Paciente.find({$or:[{apellido: {$regex: req.query.apellido, $options:"ix"}},{nombre: {$regex: req.query.apellido,$options:"ix"}},{documento: {$regex:req.query.apellido}}]},function(err,paciente){
 					if(err) return res.status(500).send(err.message);
 					res.status(200).jsonp(paciente);
+					
     		});
 			
 };
