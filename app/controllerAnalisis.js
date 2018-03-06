@@ -30,7 +30,7 @@ exports.find = function(req, res) {
 };*/
 
  exports.findByCode= function(req, res) {
-	 Analisis.find({$or:[{codigo: {$regex: req.params.codigo}},{determinaciones: {$regex:req.params.codigo}}]},function(err,analisis){
+	 Analisis.find({$or:[{determinaciones: {$regex: req.params.codigo,$options:"ix"}},{codigo: {$regex:req.params.codigo}}]},function(err,analisis){
 					if(err) return res.status(500).send(err.message);
 					res.status(200).jsonp(analisis);
     		});

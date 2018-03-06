@@ -1,8 +1,8 @@
 starter.factory("servicio", function(){
 				return {
-					data: {}
-					
+					data: {},
 				} ;
+				
 }).controller("pacienteController", function($route,$scope, $http,servicio,$ngBootbox) {
 	$scope.totalItems=400;
 	$scope.currentPage=1;
@@ -105,11 +105,10 @@ starter.factory("servicio", function(){
 	}
 	
 	$scope.search = function() {
-		$http.get('/api/pacienteBy?apellido='+ $scope.nombrePaciente)
+		$http.get('/api/pacienteBy?apellido='+ $scope.nombrePaciente.toUpperCase())
 		.success(function(data) {
 			$scope.pacienteListFilter = data;
 			$scope.pacienteList= data; //para el filtro en la lista de pacientes
-			//console.log(data)
 		})
 		.error(function(err) {
 			console.log('Error: '+err);
@@ -118,7 +117,7 @@ starter.factory("servicio", function(){
 	
 	
 	$scope.createPaciente = function () {
-		obraSocial = {"prestador":$scope.newPaciente.prestador,"afiliado":$newPaciente.afiliado}
+		//obraSocial = {"prestador":$scope.newPaciente.prestador,"afiliado":$newPaciente.afiliado}
 		$http.post('/api/paciente', $scope.newPaciente)
 		.success(function(data) {
 			$scope.pacienteList = data;

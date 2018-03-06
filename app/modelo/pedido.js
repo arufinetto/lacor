@@ -11,7 +11,7 @@ var pedidoSchema = new Schema({
 	fecha:  { type: Date },
 	obrasocial:  { type: String },
 	afiliado:  { type: String },
-	derivador: {type:String,enum:['Ambulatorio','Derivado','Internado'],required:true},
+	derivador: {type:String,enum:['Ambulatorio','Derivado','Internado'],required:false},
 	derivadorDescripcion:{type:String},
 	diagnostico:{type:String},
 	estado: { type: String, enum: ['Creado','Abierto','Para Entregar','Entregado','Invalido']},
