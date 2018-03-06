@@ -4,11 +4,11 @@ var starter = angular.module("MainApp", ["ngRoute","ngBootbox","ui.bootstrap"])
 			.when('/', {
 				templateUrl	: 'pages/landing.html',
 			}).when('/login', {
-				templateUrl: 'views/login.html',
+				templateUrl: 'pages/login.html',
 				controller: 'loginController'
 			  })
 			  .when('/signup', {
-				templateUrl: 'views/signup.html',
+				templateUrl: 'pages/signup.html',
 				controller: 'loginController'
 			  }).when('/backup', {
 				templateUrl: 'pages/backup.html',

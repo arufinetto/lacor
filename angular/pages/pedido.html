@@ -21,7 +21,7 @@
  <div class="form-group row" >
   <label  for="paciente">Paciente:</label>
   <div class="input-group">
-		<input type="text" class="form-control" ng-model="nombrePaciente" id="paciente" placeholder="Ingrese el apellido o nombre del paciente..."/>
+		<input type="text" class="form-control" ng-model="nombrePaciente" id="paciente" placeholder="Ingrese el APELLIDO, NOMBRE o DOCUMENTO del paciente..."/>
 		<span class="btn btn-info input-group-addon" id="basic-addon2" ng-click="pacienteListFilter=search()" ng-disabled="isEmpty(nombrePaciente)">Buscar</span>
    </div>
 		<div class="form-group row" ng-show="!isEmpty(pacienteListFilter)">
@@ -99,7 +99,7 @@
  
   <div class="form-group row" ng-controller="medicoController">
     <label  for="medico">Medico:</label>
-	<input type="text" class="form-control" ng-model="medicoSelected" id="medico" placeholder="Ingrese el nombre/matricula del medico...">
+	<input type="text" class="form-control" ng-model="medicoSelected" id="medico" placeholder="Ingrese el NOMBRE o MATRICULA del medico...">
     	<div class="form-group row" ng-show="!isEmpty(medicoSelected)">
 			<table class="table table-striped">
 				<thead>
@@ -149,7 +149,7 @@
  <div class="form-group row"  >
         <label  class="control-label" for="analisis">Estudios:</label>
 		<div class="input-group">
-			<input type="text" class="form-control" ng-model="miFilter" id="analisis" placeholder="Ingrese el nombre/codigo del analisis...">
+			<input type="text" class="form-control" ng-model="miFilter" id="analisis" placeholder="Ingrese el NOMBRE o CODIGO del analisis...">
 			<span class="btn btn-info input-group-addon" id="basic-addon2" ng-click="findAnalisisByName(miFilter)" ng-disabled="isEmpty(miFilter)">Buscar</span>
 		</div>
 		<div class="form-group row" ng-show="estudio!=null">

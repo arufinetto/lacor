@@ -1,4 +1,8 @@
-starter.controller("perfilController", function ($scope,$http,servicio){
+starter.factory("servicio", function(){
+				return {
+					data: {},
+				} ;
+}).controller("perfilController", function ($scope,$http,servicio){
 			$scope.perfils={};
 			$scope.analisisPerfil = []
 
@@ -58,7 +62,11 @@ starter.controller("perfilController", function ($scope,$http,servicio){
 			}
 			
 			$scope.agregarAnalisis = function(analisis){
-				servicio.data.analisisPerfil=$scope.analisisPerfil.push(analisis); 
+				$scope.analisisPerfil.push(analisis); 
+			}
+			
+			$scope.removeAnalisis = function(index){
+				$scope.analisisPerfil.splice(index,1);
 			}
 			
 				
