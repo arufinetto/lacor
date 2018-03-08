@@ -36,17 +36,22 @@ starter.factory("servicio", function(){
 		}	
 	
 	$scope.insertImage = function(doc){
-		var logo = new Image(); logo.src = 'reporte.jpg'; 
-			doc.addImage(logo, 'JPG', 0, 0,210,297); 
+		var logo = new Image; logo.src = 'reporte.jpg'; 
+			doc.addImage(logo, 'JPEG', 0, 0,210,297); 
 	}
 	 
 	 
 	 $scope.generatePDF = function (pedido) {
-		 var doc = new jsPDF("p", "mm", "a4");
-
+		 
+			//a4
+			var doc = new jsPDF("p", "mm", "a4");
+			//letter
+			//var doc = new jsPDF("p", "mm", [216,279]);
+			//oficio
+			//var doc = new jsPDF("p", "mm", [220,340]);
 			
 			doc.setFont('helvetica'); 
-			////$scope.insertImage(doc);
+			//$scope.insertImage(doc);
 			doc.setTextColor(45,46,47);
 			doc.setFontSize(10);
 			
@@ -65,14 +70,15 @@ starter.factory("servicio", function(){
 			//doc.setLineWidth(0.65);
 			//doc.setDrawColor(107, 255, 212);
 			//doc.line(10, 63, 202, 63);
-			var position=70;var height = doc.internal.pageSize.height-28; var page = 1; var hallado=0; var ref=0;
+			var position=70; var height = doc.internal.pageSize.height-28; var page = 1; var hallado=0; var ref=0;
+			console.log(doc.internal.pageSize.height)
 			
 			for(var i=0; i< item.length;i++){
 			
 				if (position >= height)
 				{
 				  doc.addPage();
-				  //$scope.insertImage(doc);
+				 // $scope.insertImage(doc);
 				  position = 44 // Restart height position
 				  page = page +1;
 					
@@ -139,6 +145,13 @@ starter.factory("servicio", function(){
 				if(item[i].analisis.formula.length == 0){
 					doc.text(150,position,item[i].resultado[0].valorHallado+"  "+item[i].analisis.unidad);
 					
+					if(item[i].repetido){
+						doc.setFontType("bold");
+						doc.text(150,position+5, '**REPETIDO**')
+						doc.setFontType("normal");
+						//position=position+5;
+					}
+					
 				}else{
 					position=position+5
 					for(var y=0;y<item[i].resultado.length;y++){
@@ -185,6 +198,14 @@ starter.factory("servicio", function(){
 					
 						}
 						
+						
+						if(item[i].repetido){
+						doc.setFontType("bold");
+						doc.text(150,position+5, '**REPETIDO**')
+						doc.setFontType("normal");
+						position=position+5;
+						
+					}
 					
 					
 					position=initial;
@@ -251,6 +272,14 @@ starter.factory("servicio", function(){
 						
 					}
 					
+					if(item[i].repetido){
+						doc.setFontType("bold");
+						doc.text(80,position+5, '**REPETIDO**')
+						doc.setFontType("normal");
+						position=position+5;
+						
+					}
+					
 					
 				}else{
 				doc.setFontSize(9.5);
@@ -287,6 +316,13 @@ starter.factory("servicio", function(){
 					
 					
 				}
+				if(item[i].repetido){
+						doc.setFontType("bold");
+						doc.text(150,position-10, '**REPETIDO**')
+						doc.setFontType("normal");
+						position=position+5;
+						
+					}
 				if(item[i].analisis.observacion != null){
 					console.log(item[i].analisis.observacion);
 					doc.text(100,position+5, item[i].analisis.observacion);
@@ -295,30 +331,14 @@ starter.factory("servicio", function(){
 						//console.log("prueba que pasa por aca");
 				}
 						
-				/*if(item[i].repetido){
-						doc.setFontType("bold");
-						doc.text(45,position+4, '**REPETIDO**')
-						doc.setFontType("normal");
-						hallado=hallado+7;
-						
-					}*/
+				
 					position=hallado;
 				
 			}
 				
 			} //fin else
 
-				if(item[i].repetido){
-							doc.setFontSize(9);
-						doc.setFontType("bold");
-						doc.text(150,position+5, '**REPETIDO**')
-						doc.setFontType("normal");
-						position=position+5;
-						
-					}	
-			
-				
-				
+					
 				if(item[i].observacion != null && item[i].observacion != ""){
 							
 							doc.setFontSize(10);
@@ -335,7 +355,7 @@ starter.factory("servicio", function(){
 				
 				doc.setFontSize(7);
 				doc.setTextColor(132,134,136);
-				doc.text(185,275, 'Página ' + page);
+				doc.text(185,height-2, 'Página ' + page);
 				position = position+8.5;
 				doc.setTextColor(45,46,47);
 				doc.setFontSize(10);
@@ -349,16 +369,16 @@ starter.factory("servicio", function(){
 			//doc.text(94,276, 'M.P. 5819');
 		
 			
-			doc.text(45,270, 'Dra. MONICA DE SOUTADET');
-			doc.text(48,273, 'BIOQUÍMICA: M.P. 4946');
-			doc.text(49,276, 'CITOLOGA: M.E. 556');
+			doc.text(35,height-8, 'Dra. MONICA DE SOUTADET');
+			doc.text(38,height-5, 'BIOQUÍMICA: M.P. 4946');
+			doc.text(39,height-2, 'CITOLOGA: M.E. 556');
 			
 			
-			doc.text(120,270, 'Dra. MARÍA JULIA QUINTEROS');
-			doc.text(133,273, 'BIOQUÍMICA');
-			doc.text(135,276, 'M.P. 5102');
-			//window.open(doc.output('datauristring'));
-			doc.save('descarga');
+			doc.text(90,height-8, 'Dra. MARÍA JULIA QUINTEROS');
+			doc.text(103,height-5, 'BIOQUÍMICA');
+			doc.text(105,height-2, 'M.P. 5102');
+			window.open(doc.output('datauristring'));
+			//doc.save('descarga');
 			
 		}
 	
