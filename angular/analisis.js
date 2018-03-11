@@ -12,8 +12,13 @@ starter.factory("servicio", function(){
 	$scope.currentPage=1;
 	$scope.page=50;
 	
-	
-	
+	//para detener el submit cuando se hace enter
+	$scope.keyPressOnForm = function(event) {
+ 
+			if (event.keyCode === 13) {
+				event.preventDefault();
+			}
+		}  
 	
 	$scope.findAnalisisByName =function(code){
 		$http.get('/api/analisisByCode/'+code)
@@ -94,6 +99,7 @@ starter.factory("servicio", function(){
 		}
 		$scope.objeto = {"analisis":analisis._id,"metodo":analisis.metodoDefault,"muestra":analisis.muestraDefault,"repetido":false,"observacion":"","resultado":$scope.resultado};
 		$scope.analisisListFiltered.push(analisis); //lo necesito para la UI que muestre todo
+		console.log($scope.analisisListFiltered)
 		$scope.analisisListFilteredObject.push($scope.objeto);
 		servicio.data.analisisListPedido = $scope.analisisListFilteredObject;
 	}
@@ -113,5 +119,17 @@ starter.factory("servicio", function(){
 		$scope.analisisListFilteredObject = [] ;
 		
 	}
-
+	
+		 $scope.addAnalisisByPressingEnter =function (code){
+			$http.get('/api/analisisByCode/'+code)
+			.success(function(data) {
+				$scope.estudio = data; //filtra en pedidos en proceso
+				$scope.addAnalisis($scope.estudio[0])
+			})
+			.error(function(err) {
+				console.log('Error: '+err);
+			});
+		 }
+		
+		
 	})
