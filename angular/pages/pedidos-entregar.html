@@ -22,6 +22,7 @@
 				<td>{{pedido.paciente.apellido}}, {{pedido.paciente.nombre}}</td>
 				<td>{{pedido.diagnostico}}</td>
 	
+				<!--<td><button ng-click="confirmCambiarEstado(pedido,'Abierto')" class="btn btn-xs  btn-info" data-toggle="collapse" >Reabrir</button></td>-->
 				<td><button ng-click="confirmEntregar(pedido,'Entregado')" class="btn btn-xs  btn-info" data-toggle="collapse" >Entregar</button></td>
 				<td><button ng-click="confirmCambiarEstado(pedido,'Invalido')" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Invalidar</button></td>
 				

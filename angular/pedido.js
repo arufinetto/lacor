@@ -377,8 +377,8 @@ starter.factory("servicio", function(){
 			doc.text(90,height-8, 'Dra. MARÍA JULIA QUINTEROS');
 			doc.text(103,height-5, 'BIOQUÍMICA');
 			doc.text(105,height-2, 'M.P. 5102');
-			window.open(doc.output('datauristring'));
-			//doc.save('descarga');
+			//window.open(doc.output('datauristring'));
+			doc.save('protocolo-'+pedido.protocolo);
 			
 		}
 	
@@ -538,6 +538,14 @@ starter.factory("servicio", function(){
 			  console.log('Confirm was cancelled');
 			});
 		};
+		
+		//para detener el submit cuando se hace enter
+		$scope.keyPressOnForm = function(event) {
+ 
+			if (event.keyCode === 13) {
+				event.preventDefault();
+			}
+		}  
 		
 		$scope.confirmCambiarEstado = function(pedido,estado) {
 			var verb="completó"
