@@ -2,7 +2,7 @@ starter.factory("servicio", function(){
 				return {
 					data: {},
 				} ;
-}).controller("pedidoController",  function($route,$scope, $http,servicio,$ngBootbox) {
+}).controller("pedidoController", function($route,$scope, $http,servicio,$ngBootbox) {
 			$scope.pedidosAbiertosList = {}
 			$scope.pedidosCompletosList = {}
 			$scope.created=false
@@ -17,7 +17,6 @@ starter.factory("servicio", function(){
 			$scope.prestador={},
 			$scope.pedidosEntregadosList={},
 			$scope.pedidosCreadosList ={},
-	
 
 	$scope.calcularEdad = function(birthday, datePedido){
 			if(birthday !=null){
@@ -25,7 +24,6 @@ starter.factory("servicio", function(){
 				var cumpleanos = new Date(birthday);
 				var edad = hoy.getFullYear() - cumpleanos.getFullYear();
 				var m = hoy.getMonth() - cumpleanos.getMonth();
-
 				if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
 					edad--;
 				}
@@ -64,7 +62,7 @@ starter.factory("servicio", function(){
 			doc.text(10,58,"Solicitado por: "+ "DR/A. "+ pedido.medico.nombre)
 			doc.text(120,58,"Fecha de Recepción: "+ pedido.fechaModified)
 			if(pedido.paciente.fechaNacimiento != undefined && pedido.paciente.fechaNacimiento != "" && pedido.paciente.fechaNacimiento != null){
-				doc.text(120,53,"Edad: "+$scope.calcularEdad(pedido.paciente.fechaNacimiento,pedido.fecha)+" años")
+				doc.text(120,53,"Edad: "+$scope.calcularEdad(pedido.paciente.fechaNacimiento,pedido.fecha)+" años"
 			}
 			
 			//doc.setLineWidth(0.65);
