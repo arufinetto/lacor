@@ -8,6 +8,7 @@ var Medico = require('./modelo/medico');
 var ObjectId = require('mongoose').Types.ObjectId;
 var moment = require('moment');
 var async = require('async');
+var moment = require('moment')
 
 //GET - Return all pedido in the DB
 // con exports conseguimos modularizarlo y que pueda ser llamado desde el archivo principal de la aplicación.
@@ -17,8 +18,8 @@ exports.findAll = function(req, res) {
 	{$match:{estado:req.query.estado}},
 			{
        $project: {
-        fecha: { $dateToString: { format: "%d/%m/%Y", date: "$fecha" } },
-		
+        fechaModified: { $dateToString: { format: "%d/%m/%Y", date: "$fecha" } },
+		fecha: 1,
 		analisisList:1,
 		paciente:1,
 		medico:1,
