@@ -19,7 +19,7 @@ exports.findAll = function(req, res) {
 			{
        $project: {
         fechaModified: { $dateToString: { format: "%d/%m/%Y", date: "$fecha" } },
-		fecha: 1,
+		fecha:1,
 		analisisList:1,
 		paciente:1,
 		medico:1,

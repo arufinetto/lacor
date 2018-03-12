@@ -62,7 +62,7 @@ starter.factory("servicio", function(){
 			doc.text(10,58,"Solicitado por: "+ "DR/A. "+ pedido.medico.nombre)
 			doc.text(120,58,"Fecha de Recepción: "+ pedido.fechaModified)
 			if(pedido.paciente.fechaNacimiento != undefined && pedido.paciente.fechaNacimiento != "" && pedido.paciente.fechaNacimiento != null){
-				doc.text(120,53,"Edad: "+$scope.calcularEdad(pedido.paciente.fechaNacimiento, pedido.fecha)+" años")
+				doc.text(120,53,"Edad: "+$scope.calcularEdad(pedido.paciente.fechaNacimiento,pedido.fecha)+" años"
 			}
 			
 			//doc.setLineWidth(0.65);
