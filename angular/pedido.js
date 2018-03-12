@@ -19,9 +19,9 @@ starter.factory("servicio", function(){
 			$scope.pedidosCreadosList ={},
 	
 
-	$scope.calcularEdad = function(birthday){
+	$scope.calcularEdad = function(birthday, datePedido){
 			if(birthday !=null){
-				var hoy = new Date();
+				var hoy = new Date(datePedido);
 				var cumpleanos = new Date(birthday);
 				var edad = hoy.getFullYear() - cumpleanos.getFullYear();
 				var m = hoy.getMonth() - cumpleanos.getMonth();
@@ -62,16 +62,16 @@ starter.factory("servicio", function(){
 			{doc.text(120,48,"Derivador: "+ pedido.derivadorDescripcion)}
 			doc.text(10,53,"Paciente: "+ pedido.paciente.apellido+','+pedido.paciente.nombre)
 			doc.text(10,58,"Solicitado por: "+ "DR/A. "+ pedido.medico.nombre)
-			doc.text(120,58,"Fecha de Recepción: "+ pedido.fecha)
+			doc.text(120,58,"Fecha de Recepción: "+ pedido.fechaModified)
 			if(pedido.paciente.fechaNacimiento != undefined && pedido.paciente.fechaNacimiento != "" && pedido.paciente.fechaNacimiento != null){
-				doc.text(120,53,"Edad: "+$scope.calcularEdad(pedido.paciente.fechaNacimiento)+" años")
+				doc.text(120,53,"Edad: "+$scope.calcularEdad(pedido.paciente.fechaNacimiento,pedido.fecha)+" años")
 			}
 			
 			//doc.setLineWidth(0.65);
 			//doc.setDrawColor(107, 255, 212);
 			//doc.line(10, 63, 202, 63);
 			var position=70; var height = doc.internal.pageSize.height-28; var page = 1; var hallado=0; var ref=0;
-			console.log(doc.internal.pageSize.height)
+			//console.log(doc.internal.pageSize.height)
 			
 			for(var i=0; i< item.length;i++){
 			
@@ -166,7 +166,7 @@ starter.factory("servicio", function(){
 								initial=40;
 							}
 							if((item[i].resultado[y].valorHallado[x]!=""&& item[i].analisis.codigo==="0711")||item[i].analisis.codigo!="0711"){
-								console.log(item[i].analisis.codigo)
+								//console.log(item[i].analisis.codigo)
 								//if(item[i].analisis.codigo!="0481" || (item[i].analisis.codigo=="0481"&&item[i].analisis.formula[y].nombre!="BILIRRUBINA:")){
 									if(item[i].analisis.formula[y].subformula == null){
 										doc.text(115,position,item[i].resultado[y].formula);
@@ -324,7 +324,7 @@ starter.factory("servicio", function(){
 						
 					}
 				if(item[i].analisis.observacion != null){
-					console.log(item[i].analisis.observacion);
+					//console.log(item[i].analisis.observacion);
 					doc.text(100,position+5, item[i].analisis.observacion);
 					position = position+5;
 				}else{
@@ -386,7 +386,7 @@ starter.factory("servicio", function(){
 		$scope.getVarsUrl =function (){
 		var str = window.location.toString();
 		var res = str.split("=");
-		console.log("url"+res[1])
+		//console.log("url"+res[1])
 		return res[1];
 		}
 		
