@@ -355,7 +355,7 @@ starter.factory("servicio", function(){
 				
 				doc.setFontSize(7);
 				doc.setTextColor(132,134,136);
-				doc.text(185,height-2, 'Página ' + page);
+				doc.text(185,283, 'Página ' + page);
 				position = position+8.5;
 				doc.setTextColor(45,46,47);
 				doc.setFontSize(10);
@@ -369,14 +369,14 @@ starter.factory("servicio", function(){
 			//doc.text(94,276, 'M.P. 5819');
 		
 			
-			doc.text(35,height-8, 'Dra. MONICA DE SOUTADET');
-			doc.text(38,height-5, 'BIOQUÍMICA: M.P. 4946');
-			doc.text(39,height-2, 'CITOLOGA: M.E. 556');
+			doc.text(45,280, 'Dra. MONICA DE SOUTADET');
+			doc.text(48,283, 'BIOQUÍMICA: M.P. 4946');
+			doc.text(49,286, 'CITOLOGA: M.E. 556');
 			
 			
-			doc.text(90,height-8, 'Dra. MARÍA JULIA QUINTEROS');
-			doc.text(103,height-5, 'BIOQUÍMICA');
-			doc.text(105,height-2, 'M.P. 5102');
+			doc.text(95,280, 'Dra. MARÍA JULIA QUINTEROS');
+			doc.text(108,283, 'BIOQUÍMICA');
+			doc.text(110,286, 'M.P. 5102');
 			//window.open(doc.output('datauristring'));
 			doc.save('protocolo-'+pedido.protocolo);
 			
