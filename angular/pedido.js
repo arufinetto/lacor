@@ -367,14 +367,14 @@ starter.factory("servicio", function(){
 			//doc.text(94,276, 'M.P. 5819');
 		
 			
-			doc.text(35,height-8, 'Dra. MONICA DE SOUTADET');
-			doc.text(38,height-5, 'BIOQUÍMICA: M.P. 4946');
-			doc.text(39,height-2, 'CITOLOGA: M.E. 556');
+			doc.text(35,280, 'Dra. MONICA DE SOUTADET');
+			doc.text(38,283, 'BIOQUÍMICA: M.P. 4946');
+			doc.text(39,285, 'CITOLOGA: M.E. 556');
 			
 			
-			doc.text(90,height-8, 'Dra. MARÍA JULIA QUINTEROS');
-			doc.text(103,height-5, 'BIOQUÍMICA');
-			doc.text(105,height-2, 'M.P. 5102');
+			doc.text(90,280, 'Dra. MARÍA JULIA QUINTEROS');
+			doc.text(103,283, 'BIOQUÍMICA');
+			doc.text(105,285, 'M.P. 5102');
 			//window.open(doc.output('datauristring'));
 			doc.save('protocolo-'+pedido.protocolo);
 			
