@@ -23,7 +23,7 @@ $scope.myStyle={}
 			}
 			return total;
 		}
-	
+
 	$http.get('/api/pedidoByAnalisis')
 		.success(function(data) {
 			$scope.pedidosPorAnalisis = data; 

@@ -6,7 +6,7 @@ var starter = angular.module("MainApp", ["ngRoute","ngBootbox","ui.bootstrap"])
 			}).when('/estadisticas', {
 				templateUrl: 'pages/estadisticas.html',
 				controller: 'estadisticasController',
-			  })
+			  }) 
 			.when('/login', {
 				templateUrl: 'pages/login.html',
 				controller: 'loginController'

@@ -114,7 +114,7 @@ module.exports = function(app,passport) {
 	
 	app.get('/api/pedidoByDiagnostico', ControllerPedidos.filterPedidoByDiagnostico);
 	
-		app.get('/api/pedidoByObraSocial', ControllerPedidos.filterPedidoByObraSocial);
+	app.get('/api/pedidoByObraSocial', ControllerPedidos.filterPedidoByObraSocial);
 
 	/**fin controler pedido**/
 	
