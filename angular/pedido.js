@@ -2,7 +2,7 @@ starter.factory("servicio", function(){
 				return {
 					data: {},
 				} ;
-}).controller("pedidoController", function($route,$scope, $http,servicio,$ngBootbox) {
+}).controller("pedidoController",  function($route,$scope, $http,servicio,$ngBootbox) {
 			$scope.pedidosAbiertosList = {}
 			$scope.pedidosCompletosList = {}
 			$scope.created=false
@@ -17,6 +17,7 @@ starter.factory("servicio", function(){
 			$scope.prestador={},
 			$scope.pedidosEntregadosList={},
 			$scope.pedidosCreadosList ={},
+	
 
 	$scope.calcularEdad = function(birthday, datePedido){
 			if(birthday !=null){
@@ -24,6 +25,7 @@ starter.factory("servicio", function(){
 				var cumpleanos = new Date(birthday);
 				var edad = hoy.getFullYear() - cumpleanos.getFullYear();
 				var m = hoy.getMonth() - cumpleanos.getMonth();
+
 				if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
 					edad--;
 				}
@@ -62,7 +64,7 @@ starter.factory("servicio", function(){
 			doc.text(10,58,"Solicitado por: "+ "DR/A. "+ pedido.medico.nombre)
 			doc.text(120,58,"Fecha de Recepción: "+ pedido.fechaModified)
 			if(pedido.paciente.fechaNacimiento != undefined && pedido.paciente.fechaNacimiento != "" && pedido.paciente.fechaNacimiento != null){
-				doc.text(120,53,"Edad: "+$scope.calcularEdad(pedido.paciente.fechaNacimiento,pedido.fecha)+" años"
+				doc.text(120,53,"Edad: "+$scope.calcularEdad(pedido.paciente.fechaNacimiento,pedido.fecha)+" años")
 			}
 			
 			//doc.setLineWidth(0.65);
@@ -353,7 +355,7 @@ starter.factory("servicio", function(){
 				
 				doc.setFontSize(7);
 				doc.setTextColor(132,134,136);
-				doc.text(185,height-2, 'Página ' + page);
+				doc.text(185,283, 'Página ' + page);
 				position = position+8.5;
 				doc.setTextColor(45,46,47);
 				doc.setFontSize(10);
@@ -367,14 +369,14 @@ starter.factory("servicio", function(){
 			//doc.text(94,276, 'M.P. 5819');
 		
 			
-			doc.text(35,280, 'Dra. MONICA DE SOUTADET');
-			doc.text(38,283, 'BIOQUÍMICA: M.P. 4946');
-			doc.text(39,285, 'CITOLOGA: M.E. 556');
+			doc.text(45,280, 'Dra. MONICA DE SOUTADET');
+			doc.text(48,283, 'BIOQUÍMICA: M.P. 4946');
+			doc.text(49,286, 'CITOLOGA: M.E. 556');
 			
 			
-			doc.text(90,280, 'Dra. MARÍA JULIA QUINTEROS');
-			doc.text(103,283, 'BIOQUÍMICA');
-			doc.text(105,285, 'M.P. 5102');
+			doc.text(95,280, 'Dra. MARÍA JULIA QUINTEROS');
+			doc.text(108,283, 'BIOQUÍMICA');
+			doc.text(110,286, 'M.P. 5102');
 			//window.open(doc.output('datauristring'));
 			doc.save('protocolo-'+pedido.protocolo);
 			

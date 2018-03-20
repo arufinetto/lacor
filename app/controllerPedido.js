@@ -46,6 +46,15 @@ exports.findAll = function(req, res) {
 
 };
 
+exports.filterPedidoByFechaAndMedico = function(req, res) {  
+    Pedido.find({fecha:req.query.fecha,medico:req.query.medico}, function(err, pedido) {
+		Medico.populate(pedido, {path: "medico"},function(err,pedido){
+			res.status(200).jsonp(pedido);
+		})
+		
+    });
+};
+
 
 
 exports.filter = function(req, res) {  
@@ -67,6 +76,128 @@ exports.getPedidoByPaciente = function(req, res) {
 };
 
 
+exports.filterPedidoByFechaAndMedico = function(req, res) {  
+	
+Pedido.aggregate([
+		{
+			$match:{estado:{$ne:"Invalido"}}
+		},
+        {
+            $group: {
+                _id: "$medico",  //$medico is the column name in collection
+                count: {$sum: 1}
+            }
+        },
+		{
+			$sort:{count:-1}
+		}
+    ], function (err, result) {
+        if (err) {
+            res.send(500, err);
+        } else {
+			Medico.populate(result, {path: "_id"},function(err,result){
+				res.status(200).jsonp(result);
+			})
+        }
+    });
+
+};	
+
+exports.filterPedidoByDiagnostico = function(req, res) {  
+	
+Pedido.aggregate([
+		{
+			$match:{estado:{$ne:"Invalido"}}
+		},
+        {
+            $group: {
+                _id: "$diagnostico",  
+                count: {$sum: 1}
+            }
+        },
+		{
+			$sort:{count:-1}
+		}
+    ], function (err, result) {
+        if (err) {
+            res.send(500, err);
+        } else {
+			
+			res.status(200).jsonp(result);
+        }
+    });
+
+};
+
+exports.filterPedidoByObraSocial = function(req, res) {  
+
+/*var fech=new Date(req.query.fechahasta).toISOString();
+fech.setUTCHours(26,59,59)
+var fech1=new Date(req.query.fechadesde).toISOString();
+fech1.setUTCHours(03,00,0)
+console.log("DESDE "+ fech1 +"-HASTA ")*/
+Pedido.aggregate([
+		{
+			$match: {$and: [{estado:{$ne:"Invalido"}}]}
+			//,{fecha:{$gte:fech1}},{fecha:{$lte: fech}}
+		},
+        {
+            $group: {
+                _id: "$obrasocial", 
+                count: {$sum: 1},
+				protocolo:{"$push": {id:"$protocolo"}}
+			}
+        },
+	
+		{
+			$sort:{count:-1}
+		}
+		
+    ], function (err, result) {
+        if (err) {
+            res.send(500, err);
+        } else {
+			//Pedido.find({},{select:{protocolo:1}},function(err,result){
+				res.status(200).jsonp(result);
+			//})
+			
+        }
+    });
+
+};	
+
+exports.filterPedidoByAnalisis = function(req, res) {  
+	
+Pedido.aggregate([
+		{
+			$match: {$and:[{estado:{$ne:"Invalido"}}]}
+			
+		},
+		{
+			 $unwind: '$analisisList' 
+			  
+		},
+        {
+            $group: {
+                _id: "$analisisList.analisis",  
+                count: {$sum: 1}
+            }
+        },
+		{
+			$sort:{count:-1}
+		}
+    ], function (err, result) {
+        if (err) {
+            res.send(500, err);
+        } else {
+			Analisis.populate(result, {path: "_id",select:{determinaciones:1}},function(err,result){
+				res.status(200).jsonp(result);
+				
+			})
+        }
+    });
+
+};	
 
 
 exports.getPedido = function(req, res) {  
