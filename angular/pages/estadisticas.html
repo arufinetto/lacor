@@ -1,0 +1,134 @@
+
+<h4><b>ESTADISTICAS</b></h4>
+<br/>
+<div ng-controller="estadisticasController" >
+
+ <!--<div class="form-group row">
+    <label  for="fechaDesde">Fecha Desde:</label>
+	<input type="date"  id="fechaDesde" class="form-control"  ng-model="fechaDesde">
+  </div>
+   <div class="form-group row">
+    <label  for="fehcaHasta">Fecha Hasta:</label>
+	<input type="date"  id="fechaHasta" class="form-control"  ng-model="fechaHasta">
+  </div>-->
+<div class="col-lg-6 col-md-6">
+<h4>CANTIDAD DE PEDIDOS POR MEDICO</h4>
+	<table class="table table-striped" >
+		<thead>
+		 <tr>
+				<!--<td>Numero</td>-->
+				<td>Medico</td>
+				<td>Cantidad</td>
+				
+			</tr>
+		</thead>
+		<tbody  ng-repeat="pedido in pedidosPorMedico"  >
+			<tr>
+				<!--<td>{{pedido.numero}}</td>-->
+				<td>{{pedido._id.nombre}}</td>
+				<td>{{pedido.count}}</td>
+				
+			</tr>
+		</tbody>	
+		<tr>
+				<td><b>TOTAL PEDIDOS</b></td>
+				<td><b>{{getTotalPedido()}}</b></td>
+			</tr>
+	</table>
+</div>
+	
+<div class="col-lg-6 col-md-6">
+<h4>CANTIDAD DE ESTUDIOS</h4>
+	<table class="table table-striped" >
+		<thead>
+		 <tr>
+				<!--<td>Numero</td>-->
+				<td>Estudio</td>
+				<td>Cantidad</td>
+				
+			</tr>
+		</thead>
+		<tbody  ng-repeat="pedido in pedidosPorAnalisis" >
+			<tr>
+				<!--<td>{{pedido.numero}}</td>-->
+				<td>{{pedido._id.determinaciones}}</td>
+				<td>{{pedido.count}}</td>
+
+				
+			</tr>
+		</tbody>			
+	</table>
+</div>
+
+<div class="col-lg-6 col-md-6">
+<h4>CANTIDAD DE PEDIDOS POR DIAGNOSTICO</h4>
+	<table class="table table-striped">
+		<thead>
+		 <tr>
+				<!--<td>Numero</td>-->
+				<td>Diagnostico</td>
+				<td>Cantidad</td>
+				
+			</tr>
+		</thead>
+		<tbody ng-repeat="pedido in pedidosPorDiagnostico" >
+			<tr>
+				<!--<td>{{pedido.numero}}</td>-->
+				<td>{{pedido._id}}</td>
+				<td>{{pedido.count}}</td>
+
+				
+			</tr>
+		</tbody>
+		
+	</table>
+</div>
+
+<div class="col-lg-6 col-md-6">
+<h4>CANTIDAD DE PEDIDOS POR OBRA SOCIAL</h4>
+	<table class="table table-striped">
+		<thead>
+		 <tr>
+				<!--<td>Numero</td>-->
+				<td>Obra Social</td>
+				<td>Cantidad</td>
+				
+				
+				
+			</tr>
+		</thead>
+		<tbody ng-repeat="pedido in pedidosPorObraSocial" >
+			<tr>
+				<!--<td>{{pedido.numero}}</td>-->
+				<td>{{pedido._id}}</td>
+				<td>{{pedido.count}}</td>
+				<!--<td><button  ng-click="selectPedido(pedido)" class="btn btn-xs  btn-info" data-target="#myModal" data-toggle="collapse">Ver Protocolos</button></td>-->
+
+			</tr>
+		</tbody>
+		
+	</table>
+	
+		<div class="modal fade" id="myModal" role="dialog" >
+					<div class="modal-dialog">
+					
+					  <!-- Modal content-->
+					  <div class="modal-content" >
+						<div class="modal-body">
+				
+						</div>
+							<pre style="preStyle">
+							{{pedidoObraSocialSelected.protocolo}}
+							</pre>
+						<div class="modal-footer">
+						  <button type="button" class="btn btn-default" data-toggle="collapse">Cancelar</button>
+						</div>
+					  </div>
+					  
+					</div>
+				  </div>
+  
+</div>
+</div>
+
+

@@ -108,6 +108,13 @@ module.exports = function(app,passport) {
 	
 	app.put('/api/pedidos/:id/remove-analisis', ControllerPedidos.removeAnalisis);
 	
+	app.get('/api/pedidoByMedico', ControllerPedidos.filterPedidoByFechaAndMedico);
+	
+	app.get('/api/pedidoByAnalisis', ControllerPedidos.filterPedidoByAnalisis);
+	
+	app.get('/api/pedidoByDiagnostico', ControllerPedidos.filterPedidoByDiagnostico);
+	
+		app.get('/api/pedidoByObraSocial', ControllerPedidos.filterPedidoByObraSocial);
 
 	/**fin controler pedido**/
 	

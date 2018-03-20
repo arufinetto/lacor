@@ -3,7 +3,11 @@ var starter = angular.module("MainApp", ["ngRoute","ngBootbox","ui.bootstrap"])
      $routeProvider
 			.when('/', {
 				templateUrl	: 'pages/landing.html',
-			}).when('/login', {
+			}).when('/estadisticas', {
+				templateUrl: 'pages/estadisticas.html',
+				controller: 'estadisticasController',
+			  })
+			.when('/login', {
 				templateUrl: 'pages/login.html',
 				controller: 'loginController'
 			  })
