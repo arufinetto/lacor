@@ -75,5 +75,8 @@ var starter = angular.module("MainApp", ["ngRoute","ngBootbox","ui.bootstrap"])
 			}).when("/save-results",{
 				controller: "pedidoController",
 				templateUrl: "pages/save-results.html"
+			}).when("/pedidos-paciente",{
+				controller: "pedidoController",
+				templateUrl: "pages/pedidos-paciente.html"
 			})
 })

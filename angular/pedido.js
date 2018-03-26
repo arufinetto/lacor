@@ -17,8 +17,23 @@ starter.factory("servicio", function(){
 			$scope.prestador={},
 			$scope.pedidosEntregadosList={},
 			$scope.pedidosCreadosList ={},
-	
+			$scope.pedidosPorPacienteList ={},
+			$scope.currentPage=1,
+			$scope.totalItems=573,
+			$scope.page=20
+			
+	$scope.getPedidoPorPaciente = function(id_paciente){
+		$http.get('/api/pedidosByPaciente/'+id_paciente)
+		.success(function(data) {
+			$scope.pedidosPorPacienteList = data; 
+			console.log($scope.pedidosPorPacienteList)
+		}).error(function(err) {
+			console.log('Error: '+err);
+		});
+	}
+		
 
+		
 	$scope.calcularEdad = function(birthday, datePedido){
 			if(birthday !=null){
 				var hoy = new Date(datePedido);
@@ -41,7 +56,7 @@ starter.factory("servicio", function(){
 	}
 	 
 	 
-	 $scope.generatePDF = function (pedido) {
+	 $scope.generatePDF = function (pedido, descargar) {
 		 
 			//a4
 			var doc = new jsPDF("p", "mm", "a4");
@@ -377,8 +392,13 @@ starter.factory("servicio", function(){
 			doc.text(95,280, 'Dra. MARÍA JULIA QUINTEROS');
 			doc.text(108,283, 'BIOQUÍMICA');
 			doc.text(110,286, 'M.P. 5102');
-			//window.open(doc.output('datauristring'));
-			doc.save('protocolo-'+pedido.protocolo);
+			if(descargar){
+				doc.save('protocolo-'+pedido.protocolo);
+			}
+			else {
+				window.open(doc.output('datauristring'));
+			}
+			
 			
 		}
 	
@@ -415,9 +435,7 @@ starter.factory("servicio", function(){
 			console.log('Error: '+err);
 		});
 
-		$scope.currentPage=1;
-		$scope.totalItems=573;
-		$scope.page=20
+		
 		//$scope.getPedidosEntregados = function(){
 			$http.get('/api/pedidos?estado=Entregado')
 		.success(function(data) {

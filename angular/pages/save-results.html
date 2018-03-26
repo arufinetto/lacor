@@ -33,10 +33,9 @@
 				<td><button class="btn btn-xs  btn-info" ng-click="confirmCambiarEstado(pedido,'Para Entregar')">Completar</button></td>
 				
 				<td><button ng-click="confirmCambiarEstado(pedido,'Invalido')" class="btn btn-xs  btn-info" >Invalidar</button></td>
-				<!--<td><button ng-click="generatePDF(pedido)" class="btn btn-xs  btn-info">Informe</button></td>-->
-				
-				<td><button ng-click="generatePDF(pedido)" class="btn btn-xs  btn-info">Informe</button></td>
-				<!--<td><a href="#/informe" data-target="#/informe" class="btn btn-xs  btn-info" target="_blank" data-toggle="collapse" >Informe</a></td>-->
+				<td><button ng-click="generatePDF(pedido,false)" class="btn btn-xs  btn-info">Ver Informe</button></td>
+
+				<td><button ng-click="generatePDF(pedido,true)" class="btn btn-xs  btn-info">Descargar Informe</button></td>
 			</tr>
 			
 			<tr id="row{{$index}}" class="collapse" >
