@@ -384,14 +384,14 @@ starter.factory("servicio", function(){
 			//doc.text(94,276, 'M.P. 5819');
 		
 			
-			doc.text(45,280, 'Dra. MONICA DE SOUTADET');
+			/*doc.text(45,280, 'Dra. MONICA DE SOUTADET');
 			doc.text(48,283, 'BIOQUÍMICA: M.P. 4946');
-			doc.text(49,286, 'CITOLOGA: M.E. 556');
+			doc.text(49,286, 'CITOLOGA: M.E. 556');*/
 			
 			
-			doc.text(95,280, 'Dra. MARÍA JULIA QUINTEROS');
-			doc.text(108,283, 'BIOQUÍMICA');
-			doc.text(110,286, 'M.P. 5102');
+			doc.text(83,280, 'Dra. MARÍA JULIA QUINTEROS');
+			doc.text(93,283, 'BIOQUÍMICA');
+			doc.text(95,286, 'M.P. 5102');
 			if(descargar){
 				doc.save('protocolo-'+pedido.protocolo);
 			}
