@@ -86,6 +86,39 @@ Pedido.aggregate([
 }
 
 
+exports.getLastResult = function(req, res) {  
+
+Pedido.aggregate([
+{$unwind: '$analisisList'},
+{$match:{$and:[{paciente:ObjectId(req.params.paciente)},{estado:{$ne:"Invalido"}}, {protocolo: {$lt:Number(req.params.protocolo)}},{ 'analisisList.analisis':ObjectId(req.params.analisis) }]}},
+{$project:  	{
+					fecha:1,
+					protocolo:1,
+					diagnostico:1,
+					'analisisList.analisis': 1,
+					'analisisList.resultado': 1,
+					'analisisList.repetido': 1,
+					fechaModified: { $dateToString: { format: "%d/%m/%Y", date: "$fecha" } }
+					}
+	},
+{$sort:{fecha: -1}},
+{$limit:3},
+],function(err, pedido) {
+				if(err) res.send(500, err.message);
+				res.status(200).jsonp(pedido);
+})
+}
+
+exports.getLastResult1 = function(req, res){
+	Pedido.find({},{paciente:ObjectId(req.params.paciente)},
+				{estado:{$ne:"Invalido"}}, 
+				{ 'analisisList.analisis': { $elemMatch: { analisis:ObjectId(req.params.analisis) } }},function(err, pedido) {
+				if(err) res.send(500, err.message);
+				res.status(200).jsonp(pedido);
+}) 
+}
+
+
 exports.filterPedidoByFechaAndMedico = function(req, res) {  
 	
 Pedido.aggregate([

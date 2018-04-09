@@ -427,6 +427,25 @@ starter.factory("servicio", function(){
 			console.log('Error: '+err);
 		});
 		
+		
+		$scope.selectEstudioPaciente = function(estudio,apellidoPaciente,nombrePaciente){
+			$scope.selectedEstudio=estudio;
+			$scope.selectedPaciente=apellidoPaciente +", "+ nombrePaciente;
+		}
+		$scope.selectedEstudio="",
+		$scope.selectedPaciente="",
+		$scope.lastResults = {},
+		
+		$scope.getLastResults = function(paciente, analisis,protocolo){
+			$http.get('/api/last-result/'+ paciente +'/analisis/'+ analisis+'/protocolo/'+protocolo)
+			.success(function(data) {
+				$scope.lastResults = data; 
+				console.log("Last results "+$scope.lastResults)
+			}).error(function(err) {
+				console.log('Error: '+err);
+			});
+		}
+		
 		$http.get('/api/pedidos?estado=Creado')
 		.success(function(data) {
 			$scope.pedidosCreadosList = data; 
