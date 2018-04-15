@@ -1,0 +1,62 @@
+
+<div class="container">
+<div ng-app="MainApp" ng-controller="pedidoController">
+	<div class="form-group row"  ng-controller="pacienteController" >
+	  <label  for="paciente">Paciente:</label>
+	  <div class="input-group">
+			<input type="text" class="form-control" autocomplete="off" ng-model="nombrePaciente" id="paciente" placeholder="Ingrese el APELLIDO, NOMBRE o DOCUMENTO del paciente..."/>
+			<span class="btn btn-info input-group-addon" id="basic-addon2" ng-click="pacienteListFilter=search()" ng-disabled="isEmpty(nombrePaciente)">Buscar</span>
+	   </div>
+			<div class="form-group row" ng-show="!isEmpty(pacienteListFilter)" >
+				<table class="table table-striped">
+					<thead>
+					</thead>
+					<tbody ng-repeat="paciente in pacienteListFilter" >
+					<tr>
+						<td>{{paciente.nombre}}</td>
+						<td>{{paciente.apellido}}</td>
+						<td><a href ng-click="getPedidoPorPaciente(paciente._id)"  data-toggle="collapse"><span class="glyphicon glyphicon-search"></span></a>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+
+			
+	</div> 
+	<br/>
+<div class="panel panel-info" >
+		<div class="panel-heading">
+			<h3 class="panel-title">Listado de Pedidos</h3>
+		</div>
+	<table class="table table-hover" >
+		<thead>
+		 <tr>
+				<td><b>Protocolo</b></td>
+				<td><b>Fecha</b></td>
+				<td><b>Estado</b></td>
+				<td><b>Resultados</b></td>
+
+			</tr>
+		</thead>
+		<tbody ng-repeat="pedido in pedidosPorPacienteList track by $index">
+			<tr>
+				<td>{{pedido.protocolo}}</td>
+				<td>{{pedido.fechaModified}}</td>
+				<td>{{pedido.estado}}</td>
+				<td><button ng-click="generatePDF(pedido, false)" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Ver Informe</button></td>
+				<td><button ng-click="generatePDF(pedido, true)" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Descargar Informe</button></td>
+
+			</tr>
+		
+		</tbody>
+		
+		
+	</table>
+	</div>
+
+	
+	</div>
+</div>
+	   
+		 

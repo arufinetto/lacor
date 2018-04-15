@@ -46,19 +46,9 @@ exports.findAll = function(req, res) {
 
 };
 
-exports.filterPedidoByFechaAndMedico = function(req, res) {  
-    Pedido.find({fecha:req.query.fecha,medico:req.query.medico}, function(err, pedido) {
-		Medico.populate(pedido, {path: "medico"},function(err,pedido){
-			res.status(200).jsonp(pedido);
-		})
-		
-    });
-};
-
-
 
 exports.filter = function(req, res) {  
-    Pedido.find({estado:req.query.estado}, function(err, pedido) {
+    Pedido.find({estado:req.query.estado}).sort({fecha: 1}, function(err, pedido) {
 		Paciente.populate(pedido, {path: "paciente"},function(err,pedido){
 			res.status(200).jsonp(pedido);
 		})
@@ -67,13 +57,66 @@ exports.filter = function(req, res) {
 };
 
 exports.getPedidoByPaciente = function(req, res) {  
-    Pedido.find({paciente:req.params.paciente}, function(err, pedido) {
-		//Paciente.populate(pedido, {path: "paciente"},function(err,pedido){
-			res.status(200).jsonp(pedido);
-		//})
-		
-    });
-};
+
+Pedido.aggregate([
+{$match: {paciente:ObjectId(req.params.paciente)}},
+{ $project: {
+        fechaModified: { $dateToString: { format: "%d/%m/%Y", date: "$fecha" } },
+		fecha:1,
+		analisisList:1,
+		paciente:1,
+		medico:1,
+		estado:1,
+		protocolo:1,
+		diagnostico:1,
+		derivadorDescripcion:1
+		  }
+       },
+	   {$sort: {fecha:-1}}
+], function(err, pedido){
+	Paciente.populate(pedido, {path: "paciente"},function(err,pedido){
+	Medico.populate(pedido, {path: "medico"},function(err,pedido){
+		Analisis.populate(pedido, {path: "analisisList.analisis", select:{determinaciones:1,codigo:1,formula:1,valorReferencia:1,unidad:1,muestraDefault:1,metodoDefault:1,multiple:1}},function(err,labs){
+			res.status(200).jsonp(labs);
+	})
+})
+   
+})
+});
+}
+
+
+exports.getLastResult = function(req, res) {  
+
+Pedido.aggregate([
+{$unwind: '$analisisList'},
+{$match:{$and:[{paciente:ObjectId(req.params.paciente)},{estado:{$ne:"Invalido"}}, {protocolo: {$lt:Number(req.params.protocolo)}},{ 'analisisList.analisis':ObjectId(req.params.analisis) }]}},
+{$project:  	{
+					fecha:1,
+					protocolo:1,
+					diagnostico:1,
+					'analisisList.analisis': 1,
+					'analisisList.resultado': 1,
+					'analisisList.repetido': 1,
+					fechaModified: { $dateToString: { format: "%d/%m/%Y", date: "$fecha" } }
+					}
+	},
+{$sort:{fecha: -1}},
+{$limit:3},
+],function(err, pedido) {
+				if(err) res.send(500, err.message);
+				res.status(200).jsonp(pedido);
+})
+}
+
+exports.getLastResult1 = function(req, res){
+	Pedido.find({},{paciente:ObjectId(req.params.paciente)},
+				{estado:{$ne:"Invalido"}}, 
+				{ 'analisisList.analisis': { $elemMatch: { analisis:ObjectId(req.params.analisis) } }},function(err, pedido) {
+				if(err) res.send(500, err.message);
+				res.status(200).jsonp(pedido);
+}) 
+}
 
 
 exports.filterPedidoByFechaAndMedico = function(req, res) {  

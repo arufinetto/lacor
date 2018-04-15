@@ -17,8 +17,23 @@ starter.factory("servicio", function(){
 			$scope.prestador={},
 			$scope.pedidosEntregadosList={},
 			$scope.pedidosCreadosList ={},
-	
+			$scope.pedidosPorPacienteList ={},
+			$scope.currentPage=1,
+			$scope.totalItems=573,
+			$scope.page=20
+			
+	$scope.getPedidoPorPaciente = function(id_paciente){
+		$http.get('/api/pedidosByPaciente/'+id_paciente)
+		.success(function(data) {
+			$scope.pedidosPorPacienteList = data; 
+			console.log($scope.pedidosPorPacienteList)
+		}).error(function(err) {
+			console.log('Error: '+err);
+		});
+	}
+		
 
+		
 	$scope.calcularEdad = function(birthday, datePedido){
 			if(birthday !=null){
 				var hoy = new Date(datePedido);
@@ -41,7 +56,7 @@ starter.factory("servicio", function(){
 	}
 	 
 	 
-	 $scope.generatePDF = function (pedido) {
+	 $scope.generatePDF = function (pedido, descargar) {
 		 
 			//a4
 			var doc = new jsPDF("p", "mm", "a4");
@@ -369,16 +384,21 @@ starter.factory("servicio", function(){
 			//doc.text(94,276, 'M.P. 5819');
 		
 			
-			doc.text(45,280, 'Dra. MONICA DE SOUTADET');
+			/*doc.text(45,280, 'Dra. MONICA DE SOUTADET');
 			doc.text(48,283, 'BIOQUÍMICA: M.P. 4946');
-			doc.text(49,286, 'CITOLOGA: M.E. 556');
+			doc.text(49,286, 'CITOLOGA: M.E. 556');*/
 			
 			
-			doc.text(95,280, 'Dra. MARÍA JULIA QUINTEROS');
-			doc.text(108,283, 'BIOQUÍMICA');
-			doc.text(110,286, 'M.P. 5102');
-			//window.open(doc.output('datauristring'));
-			doc.save('protocolo-'+pedido.protocolo);
+			doc.text(83,280, 'Dra. MARÍA JULIA QUINTEROS');
+			doc.text(93,283, 'BIOQUÍMICA');
+			doc.text(95,286, 'M.P. 5102');
+			if(descargar){
+				doc.save('protocolo-'+pedido.protocolo);
+			}
+			else {
+				window.open(doc.output('datauristring'));
+			}
+			
 			
 		}
 	
@@ -407,6 +427,25 @@ starter.factory("servicio", function(){
 			console.log('Error: '+err);
 		});
 		
+		
+		$scope.selectEstudioPaciente = function(estudio,apellidoPaciente,nombrePaciente){
+			$scope.selectedEstudio=estudio;
+			$scope.selectedPaciente=apellidoPaciente +", "+ nombrePaciente;
+		}
+		$scope.selectedEstudio="",
+		$scope.selectedPaciente="",
+		$scope.lastResults = {},
+		
+		$scope.getLastResults = function(paciente, analisis,protocolo){
+			$http.get('/api/last-result/'+ paciente +'/analisis/'+ analisis+'/protocolo/'+protocolo)
+			.success(function(data) {
+				$scope.lastResults = data; 
+				console.log("Last results "+$scope.lastResults)
+			}).error(function(err) {
+				console.log('Error: '+err);
+			});
+		}
+		
 		$http.get('/api/pedidos?estado=Creado')
 		.success(function(data) {
 			$scope.pedidosCreadosList = data; 
@@ -415,9 +454,7 @@ starter.factory("servicio", function(){
 			console.log('Error: '+err);
 		});
 
-		$scope.currentPage=1;
-		$scope.totalItems=573;
-		$scope.page=20
+		
 		//$scope.getPedidosEntregados = function(){
 			$http.get('/api/pedidos?estado=Entregado')
 		.success(function(data) {

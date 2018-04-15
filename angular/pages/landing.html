@@ -12,6 +12,7 @@
 </div>-->
 
 
+
     <div id="wrapper" ng-controller="pedidoController as crtl" >
 
         <!-- Navigation -->
@@ -34,9 +35,9 @@
                
 
                 <div class="row">
-				  <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
+				  <div class="col-lg-4 col-md-6">
+                        <div class="panel panel-primary" >
+                            <div class="panel-heading" style="background-color:#33b7b1; border-color:#33b7b1 !important">
                                 <div class="row">
                                     <div class="col-xs-3">
                                         <i class="fa fa-newspaper-o fa-5x"></i>
@@ -56,9 +57,9 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-4 col-md-6">
                         <div class="panel panel-primary">
-                            <div class="panel-heading">
+                            <div class="panel-heading"  >
                                 <div class="row">
                                     <div class="col-xs-3">
                                         <i class="fa fa-bars fa-5x"></i>
@@ -79,9 +80,9 @@
                         </div>
                     </div>
           
-		    <div class="col-lg-3 col-md-6">
+		    <div class="col-lg-4 col-md-6">
                         <div class="panel panel-primary">
-                            <div class="panel-heading">
+                            <div class="panel-heading" style="background-color:#5cb85c;border-color:#5cb85c !important">
                                 <div class="row">
                                     <div class="col-xs-3">
                                         <i class="fa fa-check fa-5x"></i>
@@ -101,9 +102,9 @@
                             </a>
                         </div>
                     </div>
-					  <div class="col-lg-3 col-md-6">
+					  <div class="col-lg-4 col-md-6">
                         <div class="panel panel-primary">
-                            <div class="panel-heading">
+                            <div class="panel-heading" style="background-color:#f0ad4e; border-color:#f0ad4e !important">
                                 <div class="row">
                                     <div class="col-xs-3">
                                         <i class="fa fa-history fa-5x"></i>
@@ -123,9 +124,33 @@
                             </a>
                         </div>
                     </div>
-					 <div class="col-lg-3 col-md-6">
+					
+					 <div class="col-lg-4 col-md-6">
                         <div class="panel panel-primary">
-                            <div class="panel-heading">
+                            <div class="panel-heading" style="background-color:#f0776c; border-color:#f0776c !important">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-user fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                       <div class="huge" style="font-size:32px"><b>-</b></div>
+                                        <div>Pedidos por Paciente</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#pedidos-paciente">
+                                <div class="panel-footer">
+                                    <span class="pull-left">Ver Detalle</span>
+                                    <span class="pull-right"><i class="glyphicon glyphicon-arrow-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+		  
+					 <div class="col-lg-4 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading" style="background-color:#d9534f; border-color:#d9534f !important">
                                 <div class="row">
                                     <div class="col-xs-3">
                                         <i class="fa fa-ban fa-5x"></i>
@@ -150,7 +175,7 @@
                 </div>
                 <!-- /.row -->
                 
-                   <div class="row" >
+                  <!--<div class="row" >
                     <div class="col-lg-4">
                         <div class="panel panel-green">
                             <div class="panel-heading">
@@ -166,27 +191,41 @@
                                
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-8">
-                        <div class="panel panel-yellow">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Grafico de Barras</h3>
-								
-                            </div>
-                            <div class="panel-body">
-                                <div class="flot-chart" >
-                                    <div id="flot-bar-chart"></div>
+                    </div>-->
+                   <!-- <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            5 Obras sociales mas utilizadas
+                        </div>
+                        <div class="panel-body">
+                            <div class="flot-chart">
+                                <div class="flot-chart-content" id="flot-pie-chart">
+								 <canvas baseChart width="400" height="400"
+											  [datasets]="lineChartData"
+											  [labels]="lineChartLabels"
+											  [options]="lineChartOptions"
+											  [colors]="lineChartColors"
+											  [legend]="lineChartLegend"
+											  [chartType]="lineChartType"
+											  (chartHover)="chartHovered($event)"
+											  (chartClick)="chartClicked($event)">
+										</canvas>
+									</div>
+								</div>
                             </div>
                         </div>
+                       
                     </div>
+                    
                 </div>
-                <!-- /.row -->
+                </div>
+           
 
         </div>
         <!-- /#page-wrapper -->
 	
  
-
+	
     </div>
 	
 

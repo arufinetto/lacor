@@ -27,21 +27,18 @@
 				<td>{{pedido.paciente.apellido}}, {{pedido.paciente.nombre}}</td>
 				<td>{{pedido.diagnostico}}</td>
 				
+				
 				<td><button ng-click="#row($index)" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Editar</button></td>
-				
-				
 				<td><button class="btn btn-xs  btn-info" ng-click="confirmCambiarEstado(pedido,'Para Entregar')">Completar</button></td>
-				
 				<td><button ng-click="confirmCambiarEstado(pedido,'Invalido')" class="btn btn-xs  btn-info" >Invalidar</button></td>
-				<!--<td><button ng-click="generatePDF(pedido)" class="btn btn-xs  btn-info">Informe</button></td>-->
-				
-				<td><button ng-click="generatePDF(pedido)" class="btn btn-xs  btn-info">Informe</button></td>
-				<!--<td><a href="#/informe" data-target="#/informe" class="btn btn-xs  btn-info" target="_blank" data-toggle="collapse" >Informe</a></td>-->
+				<td><button ng-click="generatePDF(pedido,false)" class="btn btn-xs  btn-info">Ver Informe</button></td>
+				<td><button ng-click="generatePDF(pedido,true)" class="btn btn-xs  btn-info">Descargar Informe</button></td>
 			</tr>
 			
 			<tr id="row{{$index}}" class="collapse" >
 			   
 				<td colspan="10">
+				
 				   
 					<table class="table table-responsive" style="font-family: Verdana;font-size:12px;">
 						<thead>
@@ -161,14 +158,17 @@
 							<td><input type="checkbox" class="checkbox checkbox-primary"  ng-model="lab.repetido"  ng-checked="lab.repetido"/>Repetido</td>
 	
 							<td ng-show="lab.analisis.formula.length == 0  && !lab.analisis.multiple"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.repetido,lab.observacion,lab.resultado[0].valorHallado)" class='btn btn-sm btn-primary'>Guardar</button></td>
-
-							<td><button ng-click="confirmDeleteAnalisis(pedido._id,lab.analisis._id)"  class='btn btn-xs btn-danger'>Eliminar!</button></td>
-
 							
+							<!--<td><button class='btn btn-xs btn-default' data-toggle="modal" data-target="#rowobservacion{{$index}}">Observaciones +</button></td>-->
+
+							<td><button class='btn btn-xs btn-warning' ng-click="selectEstudioPaciente(lab.analisis.determinaciones,pedido.paciente.apellido,pedido.paciente.nombre);getLastResults(pedido.paciente._id,lab.analisis._id,pedido.protocolo)" data-toggle="modal" data-target="#ultimosResultados">Ver ultimos!</button></td>
+
+							<td>
+							<button ng-click="confirmDeleteAnalisis(pedido._id,lab.analisis._id)"  class='btn btn-xs btn-danger'>Eliminar!</button>
 							</td>
 	
 						</tr>
-						<tr>
+						<tr id="rowobservacion{{$index}}">
 							<td>Observaciones:</td>
 							<td colspan="10"><textarea type="text" cols="40" rows="2"  class="form-control"  ng-model="lab.observacion" aria-describedby="basic-addon2"></textarea></td>
 
@@ -219,6 +219,86 @@
 									</tr>
 								</tbody>
 							</table>
+						<div class="modal-footer">
+						  <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+						</div>
+					  </div>
+					  
+					</div>
+				  </div>
+				  
+				  
+	<div class="modal fade" id="ultimosResultados" role="dialog" >
+					<div class="modal-dialog">
+					
+					  <!-- Modal content-->
+					  <div class="modal-content">
+						<div class="modal-header">
+						  <button type="button" class="close" data-dismiss="modal">&times;</button>
+						  <h4 class="modal-title">{{selectedEstudio}} - {{selectedPaciente}}</h4>
+						</div>
+						<div class="modal-body">
+						</div>
+							<table class="table table-hover" >
+								<thead>
+									<tr>
+										
+										<th>Protocolo</th>
+										<th>Fecha</th>
+										<th>Diagnostico</th>
+										<th>Resultado</th>
+									</tr>
+								</thead>
+								<tbody ng-repeat="est in lastResults track by $index">
+									<tr>
+										<td>{{est.protocolo}}</td>
+										<td>{{est.fechaModified}}</td>
+										<td>{{est.diagnostico}}</td>
+										<td ng-show="est.analisisList.resultado.length > 1">
+										<div class="dropdown">
+											 <div class='btn-group'>
+											
+											 <!-- Configurar el botón dropdown -->
+											
+											<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Seleccione...
+											<span class="caret"></span></button>
+												<!-- Configurar el botón dropdown -->
+											 
+											 <!-- Lista de opciones -->
+											<ul class="dropdown-menu">
+											<li class="dropdown-header"></li>
+											<li>
+											<table class='table' ng-repeat="res in est.analisisList.resultado">
+											<tr><td></td>
+											<td style="text-align: right">
+											<table>
+											<tbody >
+											<td><input style="border-radius: 10px 10px" type="text" ng-model="res.formula" ng-click="$event.stopPropagation()" />
+											
+											</td>
+											<td><input style="border-radius: 10px 10px" type="text" ng-model="res.valorHallado[0]" ng-click="$event.stopPropagation()" />
+											
+											</td>
+											</tbody>
+											</table>
+											</td>
+											
+
+											</tr>
+											 
+											</table>
+											
+											</li>
+											
+											</div>
+										  </div>		   
+									</td>
+									<td ng-show="est.analisisList.resultado.length == 1">{{est.analisisList.resultado[0].valorHallado[0]}} </td>
+		
+							</tbody>
+							
+							</table>
+								
 						<div class="modal-footer">
 						  <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 						</div>
