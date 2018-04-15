@@ -1,5 +1,5 @@
 var User = require('./modelo/user');
-var bcrypt =require('bcrypt');
+//var bcrypt =require('bcrypt');
 
 exports.register = function(req, res) {
   console.log("Registering user: " + req.body.email);
