@@ -1,5 +1,5 @@
 var Paciente = require('./modelo/paciente');
-var dateFormat = require('dateformat');
+//var dateFormat = require('dateformat');
 //var moment = require('m');
 
 //GET - Return all paciente in the DB
