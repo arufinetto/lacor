@@ -115,6 +115,8 @@ module.exports = function(app,passport) {
 	app.get('/api/pedidoByDiagnostico', ControllerPedidos.filterPedidoByDiagnostico);
 	
 	app.get('/api/pedidoByObraSocial', ControllerPedidos.filterPedidoByObraSocial);
+	
+	app.get('/api/last-result/:paciente/analisis/:analisis/protocolo/:protocolo', ControllerPedidos.getLastResult)
 
 	/**fin controler pedido**/
 	
