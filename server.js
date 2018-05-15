@@ -49,6 +49,8 @@ app.configure(function() {
 	app.use(passport.initialize());
 });
 app.set('port', process.env.PORT || 3000 );
+console.log(process.env.PORT)
+
 //settings del server
 
 //seccion de rutas
@@ -62,3 +64,5 @@ mongoose.connect('mongodb://127.0.0.1:27017/laboratorios',function(err,res){
 	console.log("APP por el puerto 3000");
     });
 });
+
+module.exports = app;

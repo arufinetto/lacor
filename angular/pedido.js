@@ -18,6 +18,7 @@ starter.factory("servicio", function(){
 			$scope.pedidosEntregadosList={},
 			$scope.pedidosCreadosList ={},
 			$scope.pedidosPorPacienteList ={},
+			$scope.newPedidoId= "";
 			$scope.currentPage=1,
 			$scope.totalItems=573,
 			$scope.page=20
@@ -396,7 +397,8 @@ starter.factory("servicio", function(){
 				doc.save('protocolo-'+pedido.protocolo);
 			}
 			else {
-				window.open(doc.output('datauristring'));
+				doc.autoPrint(true);
+				window.open(doc.output('bloburl'), '_blank');
 			}
 			
 			
@@ -502,8 +504,17 @@ starter.factory("servicio", function(){
 			$scope.getPedido = function(id){
 			$http.get('/api/pedidos/'+id)
 			.success(function(data) {
-				$scope.pedido =data
-				//return data;
+				$scope.pedido = data
+			}).error(function(err) {
+				console.log('Error: '+err);
+			});
+			}
+			
+			$scope.getPedidoAndDownload= function(id){
+			$http.get('/api/pedidos/'+id)
+			.success(function(data) {
+				//$scope.pedido = data
+				$scope.generatePDF(data[0], false)
 			}).error(function(err) {
 				console.log('Error: '+err);
 			});
@@ -660,7 +671,9 @@ starter.factory("servicio", function(){
 				$scope.obra=ob;
 			}
 			
+		
 		$scope.createPedido = function () {
+	
 			for(var i=0; i< servicio.data.analisisListPedido.length;i++){
 				$scope.newPedido.analisisList.push(servicio.data.analisisListPedido[i]);
 			}
@@ -673,27 +686,34 @@ starter.factory("servicio", function(){
 				
 			}
 			
+			//$scope.createPedidoApi();
 			
-			$http.post('/api/pedidos', $scope.newPedido)
+		$http.post('/api/pedidos', $scope.newPedido)
 			.success(function(data) {
+				
+				servicio.data.newPedidoId= data._id;
 				$scope.created=true;
-				//$scope.pedidosAbiertosList=data
+				
+				$scope.getPedidoAndDownload(servicio.data.newPedidoId);
+				
+				//Limpiamos
 				$scope.newPedido = {};
 				servicio.data = {};
-				
 				$scope.analisisListFiltered={} //lo necesito para la UI que muestre todo
 				$scope.analisisListFilteredObject={}
 				servicio.data.analisisListPedido = {}
-				 
-				
+
 			})
 			.error(function(err) {
 				console.log('Error: '+err);
 			});
+			
+			
 		};
 
 	
 		
+			
 		$scope.agregarObservaciones =function(value){
 			servicio.data.labo.observacion=value;
 		}
