@@ -248,7 +248,8 @@ exports.getPedido = function(req, res) {
 	{$match:{_id:ObjectId(req.params.id)}},
 			{
        $project: {
-        fecha: { $dateToString: { format: "%d/%m/%Y", date: "$fecha" } },
+        fechaModified: { $dateToString: { format: "%d/%m/%Y", date: "$fecha" } },
+		fecha:1,
 		medico:1,
 		analisisList:1,
 		paciente:1,
