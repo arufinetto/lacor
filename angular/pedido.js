@@ -56,7 +56,27 @@ starter.factory("servicio", function(){
 			doc.addImage(logo, 'JPEG', 0, 0,210,297); 
 	}
 	 
-	 
+	 $scope.generatePDFExtraccion = function(pedido){
+		 var doc = new jsPDF("p", "mm", "a4");
+		 	var item = pedido.analisisList;
+			doc.setFontSize(10);
+			doc.setTextColor(45,46,47);
+			doc.text(10,8,"Protocolo:"+pedido.protocolo)
+			doc.text(10,13,"Paciente: "+ pedido.paciente.apellido+','+pedido.paciente.nombre)
+			//doc.text(10,58,"Solicitado por: "+ "DR/A. "+ pedido.medico.nombre)
+			doc.text(120,13,"Fecha de Recepción: "+ pedido.fechaModified)
+			doc.text(10,18,"------------LISTADO DE ESTUDIOS---------------")
+			var item=pedido.analisisList; var position=25;
+			for(var i=0; i<item.length;i++){
+				var texto= (i+1) + ". " + item[i].analisis.determinaciones;
+				doc.text(10,position, texto);
+				position=position+5;
+				
+			}
+			doc.autoPrint(true);
+			window.open(doc.output('bloburl'), '_blank');
+		
+	 }
 	 $scope.generatePDF = function (pedido, descargar) {
 		 
 			//a4
@@ -397,7 +417,7 @@ starter.factory("servicio", function(){
 				doc.save('protocolo-'+pedido.protocolo);
 			}
 			else {
-				doc.autoPrint(true);
+				//doc.autoPrint(true);
 				window.open(doc.output('bloburl'), '_blank');
 			}
 			
@@ -514,7 +534,7 @@ starter.factory("servicio", function(){
 			$http.get('/api/pedidos/'+id)
 			.success(function(data) {
 				//$scope.pedido = data
-				$scope.generatePDF(data[0], false)
+				$scope.generatePDFExtraccion(data[0])
 			}).error(function(err) {
 				console.log('Error: '+err);
 			});
