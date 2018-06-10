@@ -636,11 +636,11 @@ starter.factory("servicio", function(){
 			//$scope.saveResult(pedido,id_analisis,orden,metodo,muestra,valorHallado)
 		}
 		
-		$scope.saveResult = function (pedido,id_analisis,orden,metodo,muestra,repetido,observaciones,valorHallado) {
+		$scope.saveResult = function (pedido,id_analisis,orden,metodo,muestra,repetido,valorHallado) {
 			
 		pedido.analisisList[orden].resultados = valorHallado
 
-		$http.put('/api/loadResults/pedido/'+pedido._id+'/analisis/'+id_analisis,{'metodo':metodo,'muestra':muestra,'repetido': repetido,'observacion':observaciones,'resultado':pedido.analisisList[orden].resultado})
+		$http.put('/api/loadResults/pedido/'+pedido._id+'/analisis/'+id_analisis,{'metodo':metodo,'muestra':muestra,'repetido': repetido,'resultado':pedido.analisisList[orden].resultado})
 		.success(function(data) {
 		})
 		.error(function(err) {
@@ -648,6 +648,16 @@ starter.factory("servicio", function(){
 		});
 	};
 		
+		
+		$scope.saveObservaciones = function (pedido,id_analisis,observaciones) {
+			
+			$http.put('/api/saveObservaciones/pedido/'+pedido._id+'/analisis/'+id_analisis,{'observacion':observaciones})
+			.success(function(data) {
+			})
+			.error(function(err) {
+				console.log('Error: '+err);
+			});
+		};
 		
 		$scope.newPedido = {
 			medico: '',

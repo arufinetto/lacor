@@ -99,7 +99,7 @@
 									</table>
 									
 									</li>
-									<li style="text-align: right" class="dropdown-header"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.repetido,lab.observacion,lab.resultado.valorHallado)" class='btn btn-sm btn-primary'>Guardar</button>
+									<li style="text-align: right" class="dropdown-header"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.repetido,lab.resultado.valorHallado)" class='btn btn-sm btn-primary'>Guardar</button>
 									</li>
 									</ul>
 									<!-- Lista de opciones -->
@@ -142,7 +142,7 @@
 									</table>
 									
 									</li>
-									<li style="text-align: right" class="dropdown-header"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.repetido,lab.observacion,lab.resultado[0].valorHallado)" class='btn btn-sm btn-primary'>Guardar</button>
+									<li style="text-align: right" class="dropdown-header"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.repetido,lab.resultado[0].valorHallado)" class='btn btn-sm btn-primary'>Guardar</button>
 									</li>
 									</ul>
 									<!-- Lista de opciones -->
@@ -157,7 +157,7 @@
 							
 							<td><input type="checkbox" class="checkbox checkbox-primary"  ng-model="lab.repetido"  ng-checked="lab.repetido"/>Repetido</td>
 	
-							<td ng-show="lab.analisis.formula.length == 0  && !lab.analisis.multiple"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.repetido,lab.observacion,lab.resultado[0].valorHallado)" class='btn btn-sm btn-primary'>Guardar</button></td>
+							<td ng-show="lab.analisis.formula.length == 0  && !lab.analisis.multiple"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.repetido,lab.resultado[0].valorHallado)" class='btn btn-sm btn-primary'>Guardar</button></td>
 							
 							<!--<td><button class='btn btn-xs btn-default' data-toggle="modal" data-target="#rowobservacion{{$index}}">Observaciones +</button></td>-->
 
@@ -170,9 +170,10 @@
 						</tr>
 						<tr id="rowobservacion{{$index}}">
 							<td>Observaciones:</td>
-							<td colspan="10"><textarea type="text" cols="40" rows="2"  class="form-control"  ng-model="lab.observacion" aria-describedby="basic-addon2"></textarea></td>
-
+							<td colspan="9"><textarea type="text" cols="40" rows="2"  class="form-control"  ng-model="lab.observacion" aria-describedby="basic-addon2"></textarea></td>
+							<td colspan="2"><button ng-click="saveObservaciones(pedido,lab.analisis._id,lab.observacion)" class='btn btn-sm btn-primary'>Guardar</button></td>
 						</tr>
+					
 					</tbody>
 					
 					<tr>

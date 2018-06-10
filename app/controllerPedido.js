@@ -464,8 +464,30 @@ exports.saveResults = function(req, res) {
 		{$set : {"analisisList.$.resultado": req.body.resultado,
 		"analisisList.$.muestra": req.body.muestra,
 		"analisisList.$.metodo": req.body.metodo,
-		"analisisList.$.repetido": req.body.repetido,
-		"analisisList.$.observacion": req.body.observacion}
+		"analisisList.$.repetido": req.body.repetido}
+			
+   		},function(err,pedido){
+			
+				Pedido.find(function(err,pedido){
+					if(err) res.status(500).json("Error " +err)
+					res.json(pedido);
+				});
+			}
+    	
+   );
+    
+}
+
+exports.saveObservaciones = function(req, res) {  
+
+    Pedido.update({
+    	_id:req.params.id,
+		estado: 'Abierto',
+		"analisisList.analisis":req.params.analisis_id,
+	
+    }, 
+
+		{$set : {"analisisList.$.observacion": req.body.observacion}
 			
    		},function(err,pedido){
 			
