@@ -130,6 +130,8 @@ module.exports = function(app,passport) {
 
 	app.get('/api/medicos', ControllerMedico.findAllMedicos);
 	
+	app.put('/api/medico/:id', ControllerMedico.updateMedico);
+	
 	app.delete('/api/medico/:id', ControllerMedico.deleteMedico);
 	/**fin controler medico**/
 

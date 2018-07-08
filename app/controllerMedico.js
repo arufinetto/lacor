@@ -21,7 +21,8 @@ if (req.body.batch){
 else {
   var medico = new Medico({
         nombre: req.body.nombre,
-        matricula: req.body.matricula
+        matricula: req.body.matricula,
+		telefono: req.body.telefono
     });
 
     medico.save(function(err, medico) {
@@ -54,6 +55,26 @@ exports.deleteMedico = function(req, res) {
      _id:req.params.id
 
 	},function(err,data){
+		Medico.find(function(err,data){
+		res.status(200).jsonp(data);
+		})
+	});
+};
+
+exports.updateMedico = function(req, res) {  
+  Medico.update({
+     _id:req.params.id
+
+	},{
+
+    	$set:{
+    	matricula: req.body.matricula,
+		nombre: req.body.nombre,
+		telefono: req.body.telefono
+	
+    		}
+
+    	},function(err,data){
 		Medico.find(function(err,data){
 		res.status(200).jsonp(data);
 		})

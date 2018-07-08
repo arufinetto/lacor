@@ -56,6 +56,13 @@ starter.factory("servicio", function(){
 			});
 		}
 	
-	
+		$scope.updateMedico = function (medico){
+			$http.put('/api/medico/' + medico._id,{"matricula": medico.matricula, "nombre": medico.nombre, "telefono": medico.telefono})
+			.success(function(data) {
+				$scope.medicosList = data;
+			}).error(function(err) {
+				console.log('Error: '+err);
+			});
+		}
 	
 	})
