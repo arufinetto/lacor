@@ -23,7 +23,6 @@ var isAuthenticated = function (req, res, next) {
 module.exports = function(app,passport) {
 	
 	
-	
 	/**Controler Analisis**/
 
 	app.get('/api/analisis/:page', ControllerAnalisis.findAllAnalysis);

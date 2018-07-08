@@ -1,0 +1,103 @@
+<!--<HTML>
+<HEAD>
+	<TITLE>Listado de Examenes</TITLE>
+	<script src="js/angular.min.js"></script>
+
+	
+	<!-- jQuery library 
+	<link rel="stylesheet" href="js/jquery-2.1.3.js">
+	<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/main.css">
+	<!-- Latest compiled JavaScript
+	<script src="js/main.js"></script>
+</HEAD>
+<body>
+<!--BODY ng-app="MainApp" ng-controller="pacienteController">-->
+<div class="container" ng-app="MainApp" ng-controller="analisisController">
+<div>
+<form data-toggle="validator" role="form"> 
+ <div class="form-group row">
+  <label  for="codigo">* Codigo:</label>
+  <input type="text"  class="form-control" id="codigo" ng-model="newAnalisis.codigo" required class="form-control">
+  <!--<div class="form-control-feedback">Success! You've done it.</div>
+  <small class="form-text text-muted">Example help text that remains unchanged.</small>-->
+  
+</div> 
+ 
+  <div class="form-group row">
+    <label  for="determinaciones">* Determinaciones:</label>
+    <input type="text" required class="form-control" id="determinaciones" ng-model="newAnalisis.determinaciones">
+	  <div class="help-block with-errors"></div>
+  </div>
+  
+  <div class="form-group row">
+    <label  for="formula">Formula:</label>
+	<br/>
+	<br/>
+	<div>
+		<label  for="nameformula">Nombre:</label>
+		<input type="text"  id="nameformula"  ng-model="nameformula" class="form-control">
+		<label  for="unidadformula">Unidad:</label>
+		<input type="text"  class="form-control" ng-model="unidadformula" id="unidadformula">
+	</div>
+	  <button type="submit" style="float:right" class="btn btn-infor" ng-click="agregarFormula(nameformula,unidadformula,newAnalisis)">Agregar</button>
+
+	<table id="formula" class="table table-striped" ng-model="newAnalisis.formula">
+		<thead>
+		<td>Nombre</td>
+		<td>Unidad</td>
+		</thead>
+		<tbody ng-repeat="formula in newAnalisis.formula">
+		<tr>
+			<td>{{formula.nombre}}</td>
+			<td>{{formula.unidad}}</td>
+		</tr>
+		</tbody>
+	</table>
+     <!--<button type="submit" style="float:left" class="btn btn-primary">Guardar</button>-->
+
+	  <div class="help-block with-errors"></div>
+  </div>
+  
+   <div class="form-group row">
+    <label  for="unidad">Unidad:</label>
+    <input type="unidad" class="form-control" id="text" ng-model="newAnalisis.unidad">
+  </div>
+  <div class="form-group row">
+    <label  for="urgencia">Urgencia:</label>
+    <input type="text"  class="form-control" id="urgencia" ng-model="newAnalisis.urgencia">
+  </div>
+  <div class="form-group row">
+    <label  for="otro">Otro:</label>
+    <input type="text"  class="form-control" id="otro" ng-model="newAnalisis.otro">
+  </div>
+  <div class="form-group row">
+    <label  for="ni">NI:</label>
+    <input type="text"  class="form-control" id="ni" ng-model="newAnalisis.ni">
+  </div>
+    <div class="form-group row">
+    <label  for="precio">Precio:</label>
+    <input type="text"  class="form-control" id="precio" ng-model="newAnalisis.valor">
+  </div>
+   </div>
+  <div class="form-group row">
+	<label  for="muestra">Muestra por Defecto:</label>
+	<select ng-controller="muestraMetodoController" class="form-control" id="muestra" class="btn dropdown-toggle selectpicker btn-default" ng-options="muestra.nombre as muestra.nombre for muestra in muestras" required class="form-control" id="muestra"  ng-model="newAnalisis.muestraDefault">
+		<option ng-value={{muestra.nombre}}>{{muestra.nombre}}</option>
+	</select>
+  </div>
+  
+	<div class="form-group row">
+	<label  for="metodo">Metodo por Defecto:</label>
+	<select ng-controller="muestraMetodoController"  id="metodo" class="form-control" ng-options="metodo.nombre as metodo.nombre for metodo in metodos" id="metodo"  ng-model="newAnalisis.metodoDefault">
+	<option ng-value={{metodo.nombre}}>{{metodo.nombre}}</option>
+	</select></div>
+  
+ 
+ 
+  <button type="submit" style="float:right" class="btn btn-primary" ng-click="createAnalisis()">Guardar</button>
+  <p>(*) Campo Obligatorio a cargar</p>
+</form>
+</div>
+</div>

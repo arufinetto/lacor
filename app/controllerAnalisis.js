@@ -37,6 +37,7 @@ exports.find = function(req, res) {
 			
 };
 
+
 exports.addAnalysis = function(req, res) {  
 if (req.body.batch){
   Analisis.create(req.body.batch, function(err){
@@ -57,10 +58,10 @@ else {
 		UB: req.body.UB,
         valor: req.body.valor,
 		otro:req.body.otro,
-		pedidoList:null,
-		formula:null,
+		pedidoList:[],
+		formula:req.body.formula,
 		valorReferencia:[],
-		unidad:null,
+		unidad:req.body.unidad,
 		metodoDefault:req.body.metodoDefault,
 		muestraDefault:req.body.muestraDefault
     });

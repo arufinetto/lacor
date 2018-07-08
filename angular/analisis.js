@@ -12,6 +12,12 @@ starter.factory("servicio", function(){
 	$scope.currentPage=1;
 	$scope.page=50;
 	
+	$scope.agregarFormula = function(nombre, unidad, analisis){
+		$scope.newFormula = {"nombre": nombre, "unidad":unidad};
+		analisis.formula.push($scope.newFormula);
+
+	}
+	
 	//para detener el submit cuando se hace enter
 	$scope.keyPressOnForm = function(event) {
  
@@ -39,6 +45,48 @@ starter.factory("servicio", function(){
 		});
 	}
 	
+	$scope.newAnalisis = {
+		codigo: '',
+        determinaciones: '',
+		urgencia: 'U',
+		NI: 'NI',
+		UB: 'UB',
+		multiple: false,
+        valor: '100',
+		otro:'PMO',
+		pedidoList:[],
+		formula: [],
+		valorReferencia:[],
+		unidad:'',
+		metodoDefault:'',
+		muestraDefault:''
+		
+	};
+	$scope.createAnalisis = function(){
+	$http.post('/api/analisis', $scope.newAnalisis)
+		.success(function(data) {
+			$scope.newAnalisis = {
+				codigo: '',
+				determinaciones: '',
+				urgencia: 'U',
+				NI: 'NI',
+				UB: 'UB',
+				multiple: false,
+				valor: '100',
+				otro:'PMO',
+				pedidoList:[],
+				formula: [],
+				valorReferencia:[],
+				unidad:'',
+				metodoDefault:'',
+				muestraDefault:''
+				
+			};
+		}).error(function(err) {
+			console.log('Error: '+err);
+	 });
+	}
+	
 	
 	$scope.isEmpty = function(value){
 		return (value == "" || value == null);
@@ -58,8 +106,7 @@ starter.factory("servicio", function(){
 	$scope.updateAnalisis = function(analisis){
 		$http.put('/api/analisis/' + analisis._id, {determinaciones:analisis.determinaciones,valorReferencia:analisis.valorReferencia,unidad:analisis.unidad,formula:analisis.formula,valor:analisis.valor,metodoDefault:analisis.metodoDefault,muestraDefault:analisis.muestraDefault})
 		.success(function(data) {
-			$scope.analisisList = data;
-			console.log($scope.selectedAnalisis)
+			//$scope.analisisList = data;
 		})
 		.error(function(err) {
 			console.log('Error: '+err);
