@@ -63,7 +63,9 @@ else {
 		valorReferencia:[],
 		unidad:req.body.unidad,
 		metodoDefault:req.body.metodoDefault,
-		muestraDefault:req.body.muestraDefault
+		muestraDefault:req.body.muestraDefault,
+		multiple: req.body.multiple
+		
     });
 
     analisis.save(function(err, lab) {
@@ -97,15 +99,16 @@ exports.update = function(req, res) {
     }, {
 
     	$set:{
-    	determinaciones: req.body.determinaciones,
-		valorReferencia: req.body.valorReferencia,
-		unidad: req.body.unidad,
-		formula: req.body.formula,
-		valor: req.body.valor,
-		metodoDefault:req.body.metodoDefault,
-		muestraDefault:req.body.muestraDefault
-		
-    		}
+			determinaciones: req.body.determinaciones,
+			valorReferencia: req.body.valorReferencia,
+			unidad: req.body.unidad,
+			formula: req.body.formula,
+			valor: req.body.valor,
+			metodoDefault:req.body.metodoDefault,
+			muestraDefault:req.body.muestraDefault,
+			multiple: req.body.multiple
+			
+			}
 
     	},function(err,analisis){
     		Analisis.find(function(err,analisis){

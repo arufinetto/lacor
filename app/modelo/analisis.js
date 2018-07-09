@@ -2,8 +2,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;  
 
 var analisisSchema = new Schema({  
-	codigo: String,
-	determinaciones: String,
+	codigo: {type:String,unique:true,require:true, validate: /[0-9]+[a-zA-Z]*[-]*/},
+	determinaciones: {type:String,require:true},
 	urgencia: String,
 	NI: String,
 	UB: String ,
@@ -14,7 +14,8 @@ var analisisSchema = new Schema({
 	muestraDefault:String,
 	metodoDefault: String,
 	pedidoList : [{type: Schema.ObjectId, ref: 'pedido'}],
-	formula: []
+	formula: [],
+	multiple: Boolean
 	
 });
 

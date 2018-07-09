@@ -2,7 +2,7 @@ starter.factory("servicio", function(){
 				return {
 					data: {},
 				} ;
-}).controller("analisisController", function($scope, $http,servicio) {
+}).controller("analisisController", function($scope, $http,servicio, $ngBootbox) {
 
 	$scope.analisisList = {};
 	$scope.analisisListFiltered = [];
@@ -82,8 +82,9 @@ starter.factory("servicio", function(){
 				muestraDefault:''
 				
 			};
+			$ngBootbox.alert("El analisis se ha creado exitosamente!")
 		}).error(function(err) {
-			console.log('Error: '+err);
+			$ngBootbox.alert("Se produjo un error al crear el analisis: " + err)
 	 });
 	}
 	
@@ -104,7 +105,7 @@ starter.factory("servicio", function(){
 	};
 	
 	$scope.updateAnalisis = function(analisis){
-		$http.put('/api/analisis/' + analisis._id, {determinaciones:analisis.determinaciones,valorReferencia:analisis.valorReferencia,unidad:analisis.unidad,formula:analisis.formula,valor:analisis.valor,metodoDefault:analisis.metodoDefault,muestraDefault:analisis.muestraDefault})
+		$http.put('/api/analisis/' + analisis._id, {determinaciones:analisis.determinaciones,valorReferencia:analisis.valorReferencia,unidad:analisis.unidad,formula:analisis.formula,valor:analisis.valor,metodoDefault:analisis.metodoDefault,muestraDefault:analisis.muestraDefault,multiple:analisis.multiple})
 		.success(function(data) {
 			//$scope.analisisList = data;
 		})
