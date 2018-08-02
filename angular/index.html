@@ -24,6 +24,7 @@
 	<script  type="text/javascript" src="pedido.js"></script>
 	<script  type="text/javascript" src="perfil.js"></script>
 	<script  type="text/javascript" src="estadisticas.js"></script>
+	<script  type="text/javascript" src="login.js"></script>
 	<!--reporte-->
 	
 	<link rel="stylesheet" href="css/main.css">
@@ -37,86 +38,7 @@
 </HEAD>
 <!--<body ng-app="MainApp" ng-controller="pedidoController" >-->
 <body ng-app="MainApp">
-<div>
-<nav class="navbar navbar-default navbar-static-top" role="navigation">
-	  <div class="navbar-header">
-		<a href="#" class="navbar-brand">
-		  <span><img src="logo.png" width="110" height="32"></span>
-		</a>
-	  </div>
-
-	  <ul class="nav navbar-nav dropdown">
-
-		<li class="dropdown">
-			<a href="" class="dropdown-toggle" data-toggle="dropdown">
-			  Pedidos <b class="caret"></b>
-			</a>
-			<ul class="dropdown-menu">
-			  <li><a href="#pedidos-creados">Pedidos Creados</a></li>
-			  <li><a href="#save-results">Pedidos en Proceso</a></li>
-			  <li><a href="#pedidos-entregar">Pedidos para Entregar</a></li>
-			  <li><a href="#pedidos-entregados">Pedidos Entregados</a></li>
-			  
-			  <!--<li><a href="#resultados?pedido=5935dd6ad3222c983e000003">Historico de Pedidos</a></li>-->
-			</ul>
-		</li>
-		 <li class="dropdown">
-			<a href="" class="dropdown-toggle" data-toggle="dropdown">
-			  Estudios <b class="caret"></b>
-			</a>
-			<ul class="dropdown-menu">
-				<li><a href="#analisis">Crear Estudio</a></li>
-			  <li><a href="#analysis-list">Consultar Estudios</a></li>
-			</ul>
-		</li>
-		
-		 <li class="dropdown" >
-			<a href="" class="dropdown-toggle" data-toggle="dropdown">
-			  Pacientes <b class="caret" data-toggle="collapse" ></b>
-			</a>
-			<ul class="dropdown-menu">
-			  <li><a href="#paciente">Agregar Paciente</a></li>
-			  <li><a href="#obra-social-paciente">Agregar Obra Social</a></li>
-			  <li><a href="#paciente-list">Consultar Pacientes</a></li>
-			</ul>
-		</li>
-		
-		<li class="dropdown" >
-			<a href="" class="dropdown-toggle" data-toggle="dropdown">
-			  Administracion <b class="caret" data-toggle="collapse" ></b>
-			</a>
-			<ul class="dropdown-menu">
-				<li><a href="#metodos">Metodos</a></li>
-			   <li><a href="#muestras">Muestras</a></li>
-			   <li><a href="#medicos">Medico</a></li>
-			   <li><a href="#localidades">Localidades</a></li>
-			   <li><a href="#prestadores">Obras Sociales / Prepagas</a></li>
-			   <li><a href="#perfil">Perfiles</a></li>
-			   <li><a href="#backup">Backup</a></li>
-			</ul>
-		</li>
-		<li class="dropdown" >
-			<a href="" class="dropdown-toggle" data-toggle="dropdown">
-			  Estadisticas <b class="caret" data-toggle="collapse" ></b>
-			</a>
-			<ul class="dropdown-menu">
-				<li><a href="#estadisticas">Consultar Estadisticas</a></li>
-			</ul>
-		</li>
-		
-	  </ul>
-	 <!-- <ul class="nav navbar-nav pull-right" ng-if="!currentUser">
-		<li data-match-route="/login"><a href="/login">Login</a></li>
-		<li data-match-route="/signup"><a href="/signup">Sign up</a></li>
-	  </ul>
-	  <ul class="nav navbar-nav pull-right" ng-if="currentUser">
-		<li class="navbar-text" ng-bind="currentUser.email"></li>
-		<li><a href="javascript:void(0)" ng-click="logout()">Logout</a></li>
-	  </ul>-->
-	</nav>
 	<div ng-view></div>
- </div>
- 
 </body>
 
 </HTML>

@@ -1,8 +1,9 @@
 starter.factory("servicio", function(){
 				return {
-					data: {},
+					data: {
+					},
 				} ;
-}).controller("pedidoController",  function($route,$scope, $http,servicio,$ngBootbox) {
+}).controller("pedidoController",  function($route,$scope, $http,servicio,$ngBootbox, $rootScope) {
 			$scope.pedidosAbiertosList = {}
 			$scope.pedidosCompletosList = {}
 			$scope.created=false
@@ -21,19 +22,55 @@ starter.factory("servicio", function(){
 			$scope.newPedidoId= "";
 			$scope.currentPage=1,
 			$scope.totalItems=573,
-			$scope.page=20
+			$scope.page=20,
+			$scope.progreso=0;
 			
-	$scope.getPedidoPorPaciente = function(id_paciente){
-		$http.get('/api/pedidosByPaciente/'+id_paciente)
-		.success(function(data) {
-			$scope.pedidosPorPacienteList = data; 
-			console.log($scope.pedidosPorPacienteList)
-		}).error(function(err) {
-			console.log('Error: '+err);
-		});
-	}
+			
+	
+	$scope.$watch($scope.progreso);
+	
+	$scope.calcularProgreso = function (pedido){
 		
+		var cantTotalResultado = 0;
+		var cantResultadosCargados =0;
 
+		for(var i=0;i< pedido.analisisList.length; i++){
+			if(pedido.analisisList[i].analisis.codigo == "0475" ){
+					cantTotalResultado --;
+				}
+			for(var j=0; j< pedido.analisisList[i].resultado.length; j++){
+			
+				if(pedido.analisisList[i].resultado[j].valorHallado!=""){
+					cantResultadosCargados ++;
+				
+					}
+				cantTotalResultado ++;
+				
+				
+			}
+			
+		}
+		var array=[];
+		var progreso = (cantResultadosCargados/cantTotalResultado)*100;
+		array.push(Math.trunc(progreso));
+		if(progreso<=35){
+			array.push("progress-bar-striped progress-bar-danger");
+		}
+		if(progreso>35 && progreso<=60){
+			array.push("progress-bar-striped progress-bar-warning");
+		}   
+		if(progreso>60 && progreso<99){
+			array.push("progress-bar-striped progress-bar-info");
+		}
+		if(progreso == 100){
+			array.push("progress-bar-striped progress-bar-success");
+		}
+		
+		return  array;
+
+	}
+	
+	
 		
 	$scope.calcularEdad = function(birthday, datePedido){
 			if(birthday !=null){
@@ -616,11 +653,20 @@ starter.factory("servicio", function(){
 		}  
 		
 		$scope.confirmCambiarEstado = function(pedido,estado) {
-			var verb="completó"
+			var mensaje = "";
 			if(estado=="Invalido"){
 				verb="invalide"
+				mensaje='Una vez que '+ verb.toUpperCase() +' el pedido, no podrá actualizar sus resultados.'
 			}
-		  $ngBootbox.confirm('Una vez que '+ verb.toUpperCase() +' el pedido, no podrá actualizar sus resultados.')
+			if(estado=="Para Entregar"){
+				var verb="completó"
+				mensaje='Una vez que '+ verb.toUpperCase() +' el pedido, no podrá actualizar sus resultados.'
+			}
+			if(estado=="Abierto"){
+				mensaje='Desea Reabrir el pedido?'
+
+			}
+		  $ngBootbox.confirm(mensaje)
 			.then(function() {
 			  $scope.updateEstadoPedido(pedido._id,estado)
 			},
@@ -642,6 +688,8 @@ starter.factory("servicio", function(){
 
 		$http.put('/api/loadResults/pedido/'+pedido._id+'/analisis/'+id_analisis,{'metodo':metodo,'muestra':muestra,'repetido': repetido,'resultado':pedido.analisisList[orden].resultado})
 		.success(function(data) {
+			//$scope.calcularProgreso(pedido);
+			//$route.reload();
 		})
 		.error(function(err) {
 			console.log('Error: '+err);

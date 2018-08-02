@@ -1,7 +1,7 @@
-
+<div ng-include="'header.html'"></div>
 <h4><b>LISTA DE PEDIDOS EN PROCESO</b></h4>
 <br/>
-<div ng-controller="pedidoController" >
+<div  ng-controller="pedidoController" >
 
 	<!--Filtrar: <input class="ani" type="text" ng-model="criterio"/> <br/>-->
 	<table id="pedidosAbiertos" class="table table-striped" cellspacing="0">
@@ -27,7 +27,11 @@
 				<td>{{pedido.paciente.apellido}}, {{pedido.paciente.nombre}}</td>
 				<td>{{pedido.diagnostico}}</td>
 				
-				
+				<!--<td><div class="progress" ng-init="progreso=calcularProgreso(pedido)" data-toggle="collapse"> <div class="progress-bar progress-bar-warning" role="progressbar" style="width:100%">Progreso {{progreso}} %</div></div></td>-->
+				<td>
+				<button  class={{calcularProgreso(pedido)[1]}}  role="progressbar" style="width:100%">Progreso {{calcularProgreso(pedido)[0]}} %</button>
+				</td>
+
 				<td><button ng-click="#row($index)" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Editar</button></td>
 				<td><button class="btn btn-xs  btn-info" ng-click="confirmCambiarEstado(pedido,'Para Entregar')">Completar</button></td>
 				<td><button ng-click="confirmCambiarEstado(pedido,'Invalido')" class="btn btn-xs  btn-info" >Invalidar</button></td>
@@ -157,7 +161,7 @@
 							
 							<td><input type="checkbox" class="checkbox checkbox-primary"  ng-model="lab.repetido"  ng-checked="lab.repetido"/>Repetido</td>
 	
-							<td ng-show="lab.analisis.formula.length == 0  && !lab.analisis.multiple"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.repetido,lab.resultado[0].valorHallado)" class='btn btn-sm btn-primary'>Guardar</button></td>
+							<td ng-show="lab.analisis.formula.length == 0  && !lab.analisis.multiple"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.repetido,lab.resultado[0].valorHallado);" class='btn btn-sm btn-primary'>Guardar</button></td>
 							
 							<!--<td><button class='btn btn-xs btn-default' data-toggle="modal" data-target="#rowobservacion{{$index}}">Observaciones +</button></td>-->
 

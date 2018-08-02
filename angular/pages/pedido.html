@@ -14,7 +14,8 @@
 </HEAD>
 <body>
 <!--BODY ng-app="MainApp" ng-controller="pacienteController">-->
-<div class="container" ng-app="MainApp" ng-controller="pedidoController">
+<div ng-include="'header.html'"></div>
+<div class="container" ng-controller="pedidoController">
 <div>
 <form data-toggle="validator" role="form" ng-keypress="keyPressOnForm($event)">
 <div ng-controller="pacienteController">

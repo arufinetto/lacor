@@ -1,13 +1,15 @@
 var starter = angular.module("MainApp", ["ngRoute","ngBootbox","ui.bootstrap"])
 .config(function($routeProvider){
      $routeProvider
-			.when('/', {
+			.when('/landing', {
 				templateUrl	: 'pages/landing.html',
 			}).when('/estadisticas', {
 				templateUrl: 'pages/estadisticas.html',
 				controller: 'estadisticasController',
-			  }) 
-			.when('/login', {
+			  }).when('/estadisticas-pacientes', {
+				templateUrl: 'pages/estadisticas-paciente.html',
+				controller: 'estadisticasController',
+			  })  .when('/', {
 				templateUrl: 'pages/login.html',
 				controller: 'loginController'
 			  })

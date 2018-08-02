@@ -14,13 +14,13 @@
 </HEAD>
 <body>
 <!--BODY ng-app="MainApp" ng-controller="pacienteController">-->
-<div class="container" ng-app="MainApp" ng-controller="perfilController">
+<div ng-include="'header.html'"></div>
+<div class="container" ng-controller="perfilController">
+
 <div>
 <form data-toggle="validator" role="form"> 
  
 
-
-  
   <div class="form-group row">
     <label  for="nombre">Nombre:</label>
     <input type="text"  class="form-control" id="nombre" ng-model="newPerfil.nombre">

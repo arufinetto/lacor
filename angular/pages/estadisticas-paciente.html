@@ -1,0 +1,66 @@
+<div ng-controller="estadisticasController" >
+<div ng-include="'header.html'"></div>
+ <!--<div class="form-group row">
+    <label  for="fechaDesde">Fecha Desde:</label>
+	<input type="date"  id="fechaDesde" class="form-control"  ng-model="fechaDesde">
+  </div>
+   <div class="form-group row">
+    <label  for="fehcaHasta">Fecha Hasta:</label>
+	<input type="date"  id="fechaHasta" class="form-control"  ng-model="fechaHasta">
+  </div>-->
+
+
+
+<div class="col-lg-6 col-md-6" >
+<div class="panel panel-default">
+  <div class="panel-heading" style="background-color:#d9534f;color:#FFFFFF"><b>CANTIDAD DE PACIENTES POR LOCALIDAD</b></div>                    
+	<div class="panel-body" style="max-height:450px; overflow-y:scroll">
+	<table class="table table-striped">
+		<thead>
+		 <tr>
+				<!--<td>Numero</td>-->
+				<td>Localidad</td>
+				<td>Cantidad</td>
+				
+			</tr>
+		</thead>
+		<tbody ng-repeat="ciudad in pacientesPorCiudad" >
+			<tr>
+				<!--<td>{{pedido.numero}}</td>-->
+				<td>{{ciudad._id}}</td>
+				<td>{{ciudad.cantidad}}</td>
+				<!--<td><button  ng-click="selectPedido(pedido)" class="btn btn-xs  btn-info" data-target="#myModal" data-toggle="collapse">Ver Protocolos</button></td>-->
+
+			</tr>
+		</tbody>
+		
+		
+	</table>
+</div>
+</div>
+</div>
+
+	
+		<!--<div class="modal fade" id="myModal" role="dialog" >
+					<div class="modal-dialog">
+				
+					  <div class="modal-content" >
+						<div class="modal-body">
+				
+						</div>
+							<pre style="preStyle">
+							{{pedidoObraSocialSelected.protocolo}}
+							</pre>
+						<div class="modal-footer">
+						  <button type="button" class="btn btn-default" data-toggle="collapse">Cancelar</button>
+						</div>
+					  </div>
+					  
+					</div>
+				  </div>-->
+
+
+  
+</div>
+
+

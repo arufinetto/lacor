@@ -1,4 +1,6 @@
-<div ng-controller="analisisController" >
+<div ng-include="'header.html'"></div>
+<div class="container" ng-controller="analisisController"  >
+
 	Filtrar: 
 	<div class="input-group" ng-init="analisisList=getAnalisis(1)">
 		<input  class="form-control" type="text" ng-model="criterio" placeholder="Ingrese el codigo o nombre del estudio"/> 

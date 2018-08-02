@@ -14,7 +14,9 @@
 </HEAD>
 <body>
 <!--BODY ng-app="MainApp" ng-controller="pacienteController">-->
-<div class="container" ng-app="MainApp" ng-controller="pacienteController">
+<div ng-include="'header.html'"></div>
+<div class="container"  ng-controller="pacienteController">
+
 <div>
 <form data-toggle="validator" role="form"> 
  <div class="form-group row">
