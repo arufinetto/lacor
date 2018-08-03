@@ -50,21 +50,17 @@ starter.factory("servicio", function(){
 			}
 			
 		}
+		
 		var array=[];
 		var progreso = (cantResultadosCargados/cantTotalResultado)*100;
 		array.push(Math.trunc(progreso));
-		if(progreso<=35){
+		if(progreso!=100){
 			array.push("progress-bar-striped progress-bar-danger");
 		}
-		if(progreso>35 && progreso<=60){
-			array.push("progress-bar-striped progress-bar-warning");
-		}   
-		if(progreso>60 && progreso<99){
-			array.push("progress-bar-striped progress-bar-info");
-		}
-		if(progreso == 100){
+		else{
 			array.push("progress-bar-striped progress-bar-success");
-		}
+		} 
+	
 		
 		return  array;
 

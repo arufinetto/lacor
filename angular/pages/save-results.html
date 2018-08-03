@@ -30,6 +30,7 @@
 				<!--<td><div class="progress" ng-init="progreso=calcularProgreso(pedido)" data-toggle="collapse"> <div class="progress-bar progress-bar-warning" role="progressbar" style="width:100%">Progreso {{progreso}} %</div></div></td>-->
 				<td>
 				<button  class={{calcularProgreso(pedido)[1]}}  role="progressbar" style="width:100%">Progreso {{calcularProgreso(pedido)[0]}} %</button>
+
 				</td>
 
 				<td><button ng-click="#row($index)" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Editar</button></td>
