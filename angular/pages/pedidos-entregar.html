@@ -1,7 +1,7 @@
 <div ng-include="'header.html'"></div>
 <h4><b>LISTA DE PEDIDOS PARA ENTREGAR</b></h4>
 <br/>
-<div ng-controller="pedidoController" >
+<div ng-controller="pedidoController" ng-init="getPedidosParaEntregar()" >
 
 	<!--Filtrar: <input class="ani" type="text" ng-model="criterio"/> <br/>-->
 	<table class="table table-striped">

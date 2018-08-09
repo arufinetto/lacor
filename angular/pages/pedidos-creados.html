@@ -1,9 +1,8 @@
 <div ng-include="'header.html'"></div>
-<h4><b>LISTA DE PEDIDOS CREADOS</b></h4>
-
+<div class="container" ng-controller="pedidoController" ng-init="getPedidosCreados()" >
  <a href="#pedido"><span class="btn btn-primary pull-right">Nuevo Pedido</span></a>
-<br/>
-<div ng-controller="pedidoController" >
+ <h4><b>LISTA DE PEDIDOS CREADOS</b></h4>
+	<br/>
 	<!--Filtrar: <input class="ani" type="text" ng-model="criterio"/> <br/>-->
 	<table class="table table-striped">
 		<thead>

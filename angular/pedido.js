@@ -21,15 +21,29 @@ starter.factory("servicio", function(){
 			$scope.pedidosPorPacienteList ={},
 			$scope.newPedidoId= "";
 			$scope.currentPage=1,
-			$scope.totalItems=573,
-			$scope.page=20,
+			$scope.totalItems=1100,
+			$scope.page=25,
 			$scope.progreso=0;
+			$scope.abiertosCount =0;
+			$scope.paraEntregarCount =0;
+			$scope.entregadosCount =0;
+			$scope.invalidosCount =0;
+			$scope.creadosCount =0;
+
 			
-			
-	
+	$scope.getPedidoPorPaciente = function(id_paciente){
+		$http.get('/api/pedidosByPaciente/'+id_paciente)
+		.success(function(data) {
+			$scope.pedidosPorPacienteList = data; 
+			console.log($scope.pedidosPorPacienteList)
+		}).error(function(err) {
+			console.log('Error: '+err);
+		});
+	}		
+
 	$scope.$watch($scope.progreso);
 	
-	$scope.calcularProgreso = function (pedido){
+	$scope.calcularProgreso = function(pedido){
 		
 		var cantTotalResultado = 0;
 		var cantResultadosCargados =0;
@@ -66,7 +80,36 @@ starter.factory("servicio", function(){
 
 	}
 	
-	
+	$scope.getCount = function(estado){
+		$http.get('/api/pedidos/count?estado='+estado)
+			.success(function(data) {
+				if(estado == "Abierto"){
+					$scope.abiertosCount= data;
+					
+				}
+				if(estado == "Para Entregar"){
+					$scope.paraEntregarCount= data;
+					
+				}
+				if(estado == "Entregado"){
+					$scope.entregadosCount= data;
+					
+				}
+				if(estado == "Invalido"){
+					$scope.invalidosCount= data;
+					
+				}
+				if(estado == "Creado"){
+					$scope.creadosCount= data;
+					
+				}
+				
+			})
+			.error(function(err) {
+				console.log('Error: '+err);
+			});
+
+	}
 		
 	$scope.calcularEdad = function(birthday, datePedido){
 			if(birthday !=null){
@@ -474,6 +517,7 @@ starter.factory("servicio", function(){
 			});
 		}
 	
+	$scope.getPedidosAbiertos = function(){
 		$http.get('/api/pedidos?estado=Abierto')
 		.success(function(data) {
 			$scope.pedidosAbiertosList = data; 
@@ -481,7 +525,7 @@ starter.factory("servicio", function(){
 		}).error(function(err) {
 			console.log('Error: '+err);
 		});
-		
+	}
 		
 		$scope.selectEstudioPaciente = function(estudio,apellidoPaciente,nombrePaciente){
 			$scope.selectedEstudio=estudio;
@@ -501,6 +545,7 @@ starter.factory("servicio", function(){
 			});
 		}
 		
+		$scope.getPedidosCreados = function(){
 		$http.get('/api/pedidos?estado=Creado')
 		.success(function(data) {
 			$scope.pedidosCreadosList = data; 
@@ -508,32 +553,37 @@ starter.factory("servicio", function(){
 		}).error(function(err) {
 			console.log('Error: '+err);
 		});
-
+		}
 		
-		//$scope.getPedidosEntregados = function(){
-			$http.get('/api/pedidos?estado=Entregado')
+		
+		$scope.getPedidosEntregados = function(page){
+			$http.get('/api/pedidos?estado=Entregado&page='+page)
 		.success(function(data) {
 			$scope.pedidosEntregadosList = data; 
 		}).error(function(err) {
 			console.log('Error: '+err);
 		});
-		//}
+		}
 		
 		
 		$scope.pedidosInvalidosList = {};
+		$scope.getPedidosInvalidos = function(){
 		$http.get('/api/pedidos?estado=Invalido')
 		.success(function(data) {
 			$scope.pedidosInvalidosList = data; 
 		}).error(function(err) {
 			console.log('Error: '+err);
 		});
+		}
 		
-		$http.get('/api/pedidos?estado=Para Entregar')
-		.success(function(data) {
-			$scope.pedidosCompletosList = data; 
-		}).error(function(err) {
-			console.log('Error: '+err);
-		});
+		$scope.getPedidosParaEntregar = function(){
+			$http.get('/api/pedidos?estado=Para Entregar')
+			.success(function(data) {
+				$scope.pedidosCompletosList = data; 
+			}).error(function(err) {
+				console.log('Error: '+err);
+			});
+		}
 		
 		$scope.getPedidos = function(){
 			$scope.estado=["Entregado","Invalido"]
@@ -573,7 +623,8 @@ starter.factory("servicio", function(){
 			});
 			}
 		
-	
+
+		   $scope.getPrestadores = function(){
 			$http.get('/api/prestadores')
 			.success(function(data) {
 				$scope.prestadores =data
@@ -581,6 +632,7 @@ starter.factory("servicio", function(){
 			}).error(function(err) {
 				console.log('Error: '+err);
 			});
+		   }
 			
 			$scope.createPrestador = function(){
 				$http.post('/api/prestadores', $scope.prestador)

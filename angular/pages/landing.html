@@ -43,7 +43,7 @@
                                         <i class="fa fa-newspaper-o fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                       <div class="huge" style="font-size:32px"><b>{{pedidosCreadosList.length}}</b></div>
+                                       <div ng-init="getCount('Creado')" class="huge" style="font-size:32px"><b >{{creadosCount}}</b></div>
                                         <div>Pedidos Creados!</div>
                                     </div>
                                 </div>
@@ -65,7 +65,7 @@
                                         <i class="fa fa-bars fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                       <div class="huge" style="font-size:32px"><b>{{pedidosAbiertosList.length}}</b></div>
+                                       <div ng-init="getCount('Abierto')" class="huge" style="font-size:32px"><b>{{abiertosCount}}</b></div>
                                         <div>Pedidos en Proceso!</div>
                                     </div>
                                 </div>
@@ -88,7 +88,7 @@
                                         <i class="fa fa-check fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                        <div class="huge" style="font-size:32px"><b>{{pedidosCompletosList.length}}</b></div>
+                                        <div ng-init="getCount('Para Entregar')" class="huge" style="font-size:32px"><b>{{paraEntregarCount}}</b></div>
                                         <div>Pedidos para Entregar!</div>
                                     </div>
                                 </div>
@@ -110,7 +110,7 @@
                                         <i class="fa fa-history fa-5x"></i>
                                     </div>
                                   <div class="col-xs-9 text-right">
-                                        <div class="huge" style="font-size:32px"><b>{{pedidosEntregadosList.length}}</b></div>
+                                        <div ng-init="getCount('Entregado')" class="huge" style="font-size:32px"><b>{{entregadosCount}}</b></div>
                                         <div>Pedidos Entregados!</div>
                                     </div>
                                 </div>
@@ -156,7 +156,7 @@
                                         <i class="fa fa-ban fa-5x"></i>
                                     </div>
                                     <div class="col-xs-9 text-right">
-                                       <div class="huge" style="font-size:32px"><b>{{pedidosInvalidosList.length}}</b></div>
+                                       <div ng-init="getCount('Invalido')" class="huge" style="font-size:32px"><b>{{invalidosCount}}</b></div>
                                         <div>Pedidos Invalidos</div>
                                     </div>
                                 </div>

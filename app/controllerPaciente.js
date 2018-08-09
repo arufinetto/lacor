@@ -109,4 +109,18 @@ exports.deletePaciente = function(req, res) {
 	});
 };
     
+exports.getPacienteByCiudad = function(req, res){
+	Paciente.aggregate(
+	[{$group:{_id:"$ciudad", cantidad:{$sum:1}}}, {$sort: {cantidad:-1}}],function (err, result) {
+        if (err) {
+            res.send(500, err);
+        } else {
+			//Pedido.find({},{select:{protocolo:1}},function(err,result){
+				res.status(200).jsonp(result);
+			//})
+			
+        }
+	})
+}
+	
 

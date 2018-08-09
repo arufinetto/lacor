@@ -1,5 +1,5 @@
-<div ng-controller="pacienteController">
-	<div ng-include="'header.html'"></div>
+<div  ng-include="'header.html'"></div>
+<div class="container" ng-controller="pacienteController">
 	Filtrar: 
 	<div class="input-group" ng-init="pacienteList=getPacientes(1)">
 		<input class="form-control" type="text" ng-model="nombrePaciente" placeholder="Ingrese el nombre o apellido del paciente"/>

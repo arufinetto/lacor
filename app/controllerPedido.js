@@ -13,7 +13,7 @@ var moment = require('moment')
 //GET - Return all pedido in the DB
 // con exports conseguimos modularizarlo y que pueda ser llamado desde el archivo principal de la aplicación.
 
-exports.findAll = function(req, res) {  
+exports.findAll1 = function(req, res) {  
     Pedido.aggregate([
 	{$match:{estado:req.query.estado}},
 			{
@@ -46,14 +46,60 @@ exports.findAll = function(req, res) {
 
 };
 
+exports.findAll = function(req, res) {
+var page = req.query.page || 1;
+var perPage = 25; 
+var skip =(perPage*page)-perPage;
+Pedido.aggregate([
+	{$match:{estado:req.query.estado}},
+	{ $lookup: { from: "medicos", localField: "medico", as:"medico",foreignField: "_id"}},
+	{ $lookup: { from: "pacientes", localField: "paciente", as:"paciente",foreignField: "_id"}},
+	{ $project: {
+        fechaModified: { $dateToString: { format: "%d/%m/%Y", date: "$fecha" } },
+		fecha:1,
+		//'analisisList.analisis': 1,
+		//'analisisList.resultado': 1,
+		analisisList: 1,
+		//analisisList: {$array:['$analisisList']},
+		paciente: {$arrayElemAt: [ '$paciente', 0 ]},
+		medico: {$arrayElemAt: [ '$medico', 0 ]},
+		estado:1,
+		protocolo:1,
+		diagnostico:1,
+		derivadorDescripcion:1
+		  }
+       }, 
+	   
+	{$sort:{protocolo:1}},
+	{$skip: skip},
+		{$limit: perPage}
+	], function (err, pedido) {
+		Analisis.populate(pedido, {path: "analisisList.analisis", select:{determinaciones:1,codigo:1,formula:1,valorReferencia:1,unidad:1,muestraDefault:1,metodoDefault:1,multiple:1}},function(err,labs){
 
-exports.filter = function(req, res) {  
+		if (err) return res.send(500, err.message)
+		return res.status(200).json(pedido);
+	})
+	}
+)
+
+}
+
+exports.filter = function(req, res) {
     Pedido.find({estado:req.query.estado}).sort({fecha: 1}, function(err, pedido) {
 		Paciente.populate(pedido, {path: "paciente"},function(err,pedido){
 			res.status(200).jsonp(pedido);
 		})
 		
     });
+
+};
+
+exports.count = function(req, res) {
+    Pedido.count({estado:req.query.estado}, function(err, pedido) {
+			res.status(200).jsonp(pedido);
+		
+    });
+
 };
 
 exports.getPedidoByPaciente = function(req, res) {  

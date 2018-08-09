@@ -1,8 +1,8 @@
 <div ng-include="'header.html'"></div>
+
+<div  ng-controller="pedidoController" ng-init="getPedidosAbiertos()" >
 <h4><b>LISTA DE PEDIDOS EN PROCESO</b></h4>
 <br/>
-<div  ng-controller="pedidoController" >
-
 	<!--Filtrar: <input class="ani" type="text" ng-model="criterio"/> <br/>-->
 	<table id="pedidosAbiertos" class="table table-striped" cellspacing="0">
 		<thead >

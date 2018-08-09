@@ -1,8 +1,8 @@
-<h4><b>LISTA DE PEDIDOS INVALIDOS</b></h4>
-<br/>
-
-<div ng-controller="pedidoController" >
 <div ng-include="'header.html'"></div>
+<div class="container" ng-controller="pedidoController" ng-init="getPedidosInvalidos()" >
+
+	<h4><b>LISTA DE PEDIDOS INVALIDOS</b></h4>
+	<br/>
 	Filtrar: <input class="form-control" type="text" ng-model="search" placeholder="Ingrese el nombre o apellido del paciente y/o del medico"/> 
 
 	<br/>
