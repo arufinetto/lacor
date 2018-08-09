@@ -21,7 +21,7 @@ starter.factory("servicio", function(){
 			$scope.pedidosPorPacienteList ={},
 			$scope.newPedidoId= "";
 			$scope.currentPage=1,
-			$scope.totalItems=1100,
+			$scope.totalItems=1300,
 			$scope.page=25,
 			$scope.progreso=0;
 			$scope.abiertosCount =0;
