@@ -9,13 +9,9 @@ var starter = angular.module("MainApp", ["ngRoute","ngBootbox","ui.bootstrap"])
 			  }).when('/estadisticas-pacientes', {
 				templateUrl: 'pages/estadisticas-paciente.html',
 				controller: 'estadisticasController',
-			  })  .when('/', {
-				templateUrl: 'pages/login.html',
-				controller: 'loginController'
-			  })
-			  .when('/signup', {
-				templateUrl: 'pages/signup.html',
-				controller: 'loginController'
+			  }).when('/', {
+				templateUrl: 'pages/landing.html',
+				//controller: 'loginController'
 			  }).when('/backup', {
 				templateUrl: 'pages/backup.html',
 				controller: 'loginController'
