@@ -13,6 +13,7 @@ starter.factory("servicio", function(){
 	$scope.page=50;
 	
 	$scope.agregarFormula = function(nombre, unidad, analisis){
+		if(unidad == null || unidad == undefined){unidad = ""};
 		$scope.newFormula = {"nombre": nombre, "unidad":unidad};
 		analisis.formula.push($scope.newFormula);
 

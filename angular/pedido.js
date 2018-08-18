@@ -230,7 +230,7 @@ starter.factory("servicio", function(){
 				}
 				doc.setFontType("bold");
 				if(item[i].analisis.valorReferencia.length>0){
-					doc.text(115,position+22,"VALOR HALLADO: ");
+					doc.text(100,position+22,"VALOR HALLADO: ");
 				}else{
 					
 					doc.text(15,position+22,"VALOR HALLADO: ");
@@ -255,11 +255,11 @@ starter.factory("servicio", function(){
 				doc.setTextColor(45,46,47);
 		
 				if(item[i].analisis.formula.length == 0){
-					doc.text(150,position,item[i].resultado[0].valorHallado+"  "+item[i].analisis.unidad);
+					doc.text(135,position,item[i].resultado[0].valorHallado+"  "+item[i].analisis.unidad);
 					
 					if(item[i].repetido){
 						doc.setFontType("bold");
-						doc.text(150,position+5, '**REPETIDO**')
+						doc.text(135,position+5, '**REPETIDO**')
 						doc.setFontType("normal");
 						//position=position+5;
 					}
@@ -281,9 +281,9 @@ starter.factory("servicio", function(){
 								//console.log(item[i].analisis.codigo)
 								//if(item[i].analisis.codigo!="0481" || (item[i].analisis.codigo=="0481"&&item[i].analisis.formula[y].nombre!="BILIRRUBINA:")){
 									if(item[i].analisis.formula[y].subformula == null){
-										doc.text(115,position,item[i].resultado[y].formula);
-										doc.text(160,position,item[i].resultado[y].valorHallado[x]);
-										doc.text(180,position,item[i].analisis.formula[y].unidad);
+										doc.text(100,position,item[i].resultado[y].formula);
+										doc.text(145,position,item[i].resultado[y].valorHallado[x]);
+										doc.text(165,position,item[i].analisis.formula[y].unidad);
 										position = position+5;
 										hallado=position;
 									}else{
