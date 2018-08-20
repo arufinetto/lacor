@@ -277,16 +277,34 @@ starter.factory("servicio", function(){
 								position=45;
 								initial=40;
 							}
-							if((item[i].resultado[y].valorHallado[x]!=""&& item[i].analisis.codigo==="0711")||item[i].analisis.codigo!="0711"){
+							if(item[i].analisis.codigo!="0711"){
 								//console.log(item[i].analisis.codigo)
 								//if(item[i].analisis.codigo!="0481" || (item[i].analisis.codigo=="0481"&&item[i].analisis.formula[y].nombre!="BILIRRUBINA:")){
+									//if(item[i].analisis.resultado[y]==undefined){
+							
 									if(item[i].analisis.formula[y].subformula == null){
+									if(item[i].analisis.codigo.includes("0136")||item[i].analisis.codigo=="0546"||item[i].analisis.codigo=="0015-MA"||item[i].analisis.codigo.includes("0767")){
 										doc.text(100,position,item[i].resultado[y].formula);
-										doc.text(145,position,item[i].resultado[y].valorHallado[x]);
-										doc.text(165,position,item[i].analisis.formula[y].unidad);
-										position = position+5;
-										hallado=position;
-									}else{
+										doc.text(137,position,item[i].resultado[y].valorHallado[x]);
+										doc.text(145,position,item[i].analisis.formula[y].unidad);
+										}
+										else{
+											if(item[i].analisis.codigo=="1050"){
+												doc.text(100,position,item[i].resultado[y].formula);
+												doc.text(155,position,item[i].resultado[y].valorHallado[x]);
+											
+											}else{
+												doc.text(100,position,item[i].resultado[y].formula);
+											doc.text(145,position,item[i].resultado[y].valorHallado[x]);
+											doc.text(165,position,item[i].analisis.formula[y].unidad);
+											}
+											
+										}
+												
+									position = position+5;
+									hallado=position;										
+									}
+									else{
 										
 										if(!isWritten)
 										{	doc.text(115,position,item[i].resultado[y].formula);
@@ -301,6 +319,16 @@ starter.factory("servicio", function(){
 											hallado=position;
 										//}
 										
+									}
+									
+									
+								}else{
+									if((item[i].resultado[y].valorHallado[x]!=""&& item[i].analisis.codigo==="0711")){
+										doc.text(100,position,item[i].resultado[y].formula);
+										doc.text(145,position,item[i].resultado[y].valorHallado[x]);
+										//doc.text(165,position,item[i].analisis.formula[y].unidad);
+										position = position+5;
+										hallado=position;
 									}
 									
 								}
@@ -730,9 +758,35 @@ starter.factory("servicio", function(){
 			//$scope.saveResult(pedido,id_analisis,orden,metodo,muestra,valorHallado)
 		}
 		
+		$scope.addItem= function(pedido, analisis){
+			item = {formula:"<<ingrese nombre>>", valorHallado:[""]}
+			analisis.resultado.push(item);
+			
+			/*$http.put('/api/addItem/pedido/'+pedido._id+'/analisis/'+analisis._id,{nombre:""}).success(function(data){
+				
+			}).error(function(err){
+				console.log('ERROR')
+			})*/
+		}
+		
 		$scope.saveResult = function (pedido,id_analisis,orden,metodo,muestra,repetido,valorHallado) {
 			
 		pedido.analisisList[orden].resultados = valorHallado
+
+		$http.put('/api/loadResults/pedido/'+pedido._id+'/analisis/'+id_analisis,{'metodo':metodo,'muestra':muestra,'repetido': repetido,'resultado':pedido.analisisList[orden].resultado})
+		.success(function(data) {
+			//$scope.calcularProgreso(pedido);
+			//$route.reload();
+		})
+		.error(function(err) {
+			console.log('Error: '+err);
+		});
+	};
+		
+		
+		$scope.agregarItemOrina = function (pedido,id_analisis,item) {
+			
+			item = {"nombre": item, "unidad":""};
 
 		$http.put('/api/loadResults/pedido/'+pedido._id+'/analisis/'+id_analisis,{'metodo':metodo,'muestra':muestra,'repetido': repetido,'resultado':pedido.analisisList[orden].resultado})
 		.success(function(data) {
