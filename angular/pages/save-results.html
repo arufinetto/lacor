@@ -17,7 +17,7 @@
 				
 			</tr>
 		</thead> <!--ng-class-odd="'odd'" ng-class-even="'even'"-->
-		<tbody ng-repeat="pedido in pedidosAbiertosList" >
+		<tbody ng-repeat="pedido in pedidosAbiertosList">
 			<tr>
 				<!--<td>{{pedido.numero}}</td>-->
 				<td>{{pedido.protocolo}}</td>
@@ -69,8 +69,7 @@
 							 </select>
 							&nbsp;
 							</td>
-							
-							<td ng-show="lab.analisis.formula.length > 0">
+								<td ng-show="lab.analisis.formula.length > 0 && lab.analisis.multiple==true" >
 								<div class="dropdown" style="font-size:12px;font:Verdana">
 									 <div class='btn-group'>
 									
@@ -84,8 +83,10 @@
 									<ul class="dropdown-menu" >
 									<li class="dropdown-header"></li>
 									<li>
-									<table style="font-size:12px;font:Verdana" class='table' ng-repeat="formula in lab.analisis.formula track by $index" ng-init="rowIndex1=$index">
-									<tr><td>{{formula.nombre}}</td>
+									<table style="font-size:12px;font:Verdana" class='table' 
+									ng-repeat="formula in lab.resultado track by $index" ng-model="lab.resultado" ng-init="rowIndex1=$index" >
+									<tr><td><div  ng-click="$event.stopPropagation()" contenteditable>{{formula.formula}}<div></td>
+									
 									<td style="text-align: right">
 									<table>
 									<tbody ng-repeat="vr in lab.resultado[rowIndex1].valorHallado track by $index" ng-init="rowIndex2=$index" >
@@ -93,24 +94,49 @@
 									
 									</td>
 									<td>{{formula.unidad}}</td>
+									
 									</tbody>
 									</table>
-									</td>
+						
 									
-									<td ng-show="lab.analisis.multiple==true"><button ng-click="add(lab,rowIndex1)" class='btn btn-sm btn-primary'>+</button></td>
-									
+									<td><button ng-click="add(lab,rowIndex1)" class='btn btn-sm btn-primary'>+</button></td>
+
 									</tr>
+									
 									 
 									</table>
 									
 									</li>
+					
+
 									<li style="text-align: right" class="dropdown-header"><button ng-click="saveResult(pedido,lab.analisis._id,rowIndex,lab.metodo,lab.muestra,lab.repetido,lab.resultado.valorHallado)" class='btn btn-sm btn-primary'>Guardar</button>
+
 									</li>
 									</ul>
 									<!-- Lista de opciones -->
 									
 									</div>
-								  </div>		   
+
+								  </div>
+								  
+							</td>
+							</td>
+							<td ng-show="lab.analisis.formula.length > 0 && !lab.analisis.multiple" >
+								
+									 <div class='btn-group'>
+									
+									 <!-- Configurar el botón dropdown -->
+									
+									<button class="btn btn-default" style="font-size:12px;font:Verdana"  data-toggle="modal" ng-click="savePedido(pedido,rowIndex); saveCurrentResult(lab)" data-target="#Item">Resultados...</button>
+									
+										<!-- Configurar el botón dropdown -->
+								
+								
+									<!-- Lista de opciones -->
+									
+									</div>
+									
+		
 							</td>
 							
 							<td ng-show="lab.analisis.multiple && lab.analisis.formula.length == 0">
@@ -182,7 +208,7 @@
 					</tbody>
 					
 					<tr>
-					<td><button class='btn btn-xs btn-info' data-toggle="modal" ng-click="savePedidoId(pedido._id)" data-target="#myModal">Agregar +</button></td>
+					<td><button class='btn btn-xs btn-info' data-toggle="modal" ng-click="savePedidoId(pedido._id, null)" data-target="#myModal">Agregar +</button></td>
 					</tr>	 
 							
 						
@@ -192,6 +218,125 @@
 			</tr>
 		</tbody>
 	</table>
+	
+	
+				<div class="modal fade"  id="Item" role="dialog" >
+					<div class="modal-dialog">
+					
+					  <!-- Modal content-->
+					  <div class="modal-content" >
+						<div class="modal-header">
+						  <button type="button" class="close" data-dismiss="modal">&times;</button>
+						  <h4 class="modal-title">Valor Hallado</h4>
+						</div>
+						<div class="modal-body">
+						
+						<table class="table table-hover" >
+								<thead>
+									<tr>
+										<th>Nombre</th>
+										<th>Valor Hallado</th>
+									</tr>
+								</thead>
+								<tbody ng-repeat="formula in currentLab.resultado track by $index" ng-model="currentLab.resultado" ng-init="rowIndex1=$index">
+									<tr>
+										
+										<td>{{formula.formula}}</td>
+										<td>
+										<table>
+											<tbody  ng-repeat="vr in formula[rowIndex1].valorHallado track by $index">
+											<tr><input class="form-control" ng-model="currentLab.resultado[rowIndex1].valorHallado[0]"/></tr>
+											</tbody>
+										</table>
+										</td>
+										<!--<td><button type="button" class="btn btn-xs btn-primary"  ng-click="addItem(item,valorHallado, $index)">Agregar</button>-->
+										
+									
+									</tr>
+									
+								</tbody>
+							</table>
+							
+							
+
+						   <td ><button ng-show="currentLab.analisis.codigo== '0711'" ng-click="viewMoreItems()" ng-click="$event.stopPropagation()" class='btn btn-sm btn-primary'>Ver Mas</button></td>
+							<div ng-show="moreitems">
+							<table class="table table-hover" >
+								<thead>
+									<tr>
+										<th>Item</th>
+										<th>Valor Hallado</th>
+									</tr>
+								</thead>
+								<tbody ng-repeat="item in itemsOrina track by $index">
+									<tr>
+										
+										<td>{{item}}</td>
+										<td><input class="form-control"  ng-model="valorHallado"/></td>
+										<td><button type="button" class="btn btn-xs btn-primary"  ng-click="addItem(currentPedido._id,currentLab,item,valorHallado, $index)">Agregar</button>
+										</td>
+										<td>
+											<span ng-show="$index==indice"class="glyphicon glyphicon-ok-circle"></span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							</div>
+							
+						<div class="modal-footer">
+						  <button type="button" class="btn btn-info" ng-click="saveResult(currentPedido,currentLab.analisis._id,currentPosition,currentLab.metodo,currentLab.muestra,currentLab.repetido,currentLab.resultado[0].valorHallado)" data-dismiss="modal">Guardar</button>
+						</div>
+						</div>
+					  </div>
+					  
+					</div>
+					</div>
+		    
+	
+	
+				<div class="modal fade"  id="Item1" role="dialog" >
+					<div class="modal-dialog">
+					
+					  <!-- Modal content-->
+					  <div class="modal-content" >
+						<div class="modal-header">
+						  <button type="button" class="close" data-dismiss="modal">&times;</button>
+						  <h4 class="modal-title">Items para Orina</h4>
+						</div>
+						<div class="modal-body">
+						
+						<table class="table table-hover" >
+								<thead>
+									<tr>
+										<th>Item</th>
+										<th>Valor Hallado</th>
+									</tr>
+								</thead>
+								<tbody ng-repeat="item in itemsOrina track by $index">
+									<tr>
+										
+										<td>{{item}}</td>
+										<td><input class="form-control"  ng-model="valorHallado"/></td>
+										<td><button type="button" class="btn btn-xs btn-primary"  ng-click="addItem(item,valorHallado, $index)">Agregar</button>
+										</td>
+										<td>
+											<span ng-show="$index==indice"class="glyphicon glyphicon-ok-circle"></span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							</div>
+						<div class="modal-footer">
+						  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+						</div>
+					  </div>
+					  
+					</div>
+					</div>
+					
+					
+					
+				
 	
 <!-- Modal -->
 			<div class="modal fade" id="myModal" role="dialog" >
@@ -233,6 +378,8 @@
 					</div>
 				  </div>
 				  
+	
+						  
 				  
 	<div class="modal fade" id="ultimosResultados" role="dialog" >
 					<div class="modal-dialog">

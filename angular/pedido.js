@@ -41,8 +41,8 @@ starter.factory("servicio", function(){
 		});
 	}		
 
-	$scope.$watch($scope.progreso);
-	
+	//$scope.$watch($scope.progreso);
+
 	$scope.calcularProgreso = function(pedido){
 		
 		var cantTotalResultado = 0;
@@ -283,10 +283,10 @@ starter.factory("servicio", function(){
 									//if(item[i].analisis.resultado[y]==undefined){
 							
 									if(item[i].analisis.formula[y].subformula == null){
-									if(item[i].analisis.codigo.includes("0136")||item[i].analisis.codigo=="0546"||item[i].analisis.codigo=="0015-MA"||item[i].analisis.codigo.includes("0767")){
+									if(item[i].analisis.codigo=="0481"||item[i].analisis.codigo=="0110"||item[i].analisis.codigo.includes("0136")||item[i].analisis.codigo=="0546"||item[i].analisis.codigo=="0015-MA"||item[i].analisis.codigo.includes("0767")){
 										doc.text(100,position,item[i].resultado[y].formula);
-										doc.text(137,position,item[i].resultado[y].valorHallado[x]);
-										doc.text(145,position,item[i].analisis.formula[y].unidad);
+										doc.text(141,position,item[i].resultado[y].valorHallado[x]);
+										doc.text(150,position,item[i].analisis.formula[y].unidad);
 										}
 										else{
 											if(item[i].analisis.codigo=="1050"){
@@ -307,14 +307,14 @@ starter.factory("servicio", function(){
 									else{
 										
 										if(!isWritten)
-										{	doc.text(115,position,item[i].resultado[y].formula);
+										{	doc.text(100,position,item[i].resultado[y].formula);
 											position = position+5;
 											hallado=position;
 											isWritten=true
 										}
 										//for(var a=x; a<item[i].analisis.formula[y].subformula.length;a++){
-											doc.text(115,position,item[i].analisis.formula[y].subformula[x].nombre);
-											doc.text(160,position,item[i].resultado[y].valorHallado[x]+"   "+item[i].analisis.formula[y].subformula[x].unidad);
+											doc.text(105,position,item[i].analisis.formula[y].subformula[x].nombre);
+											doc.text(125,position,item[i].resultado[y].valorHallado[x]+"   "+item[i].analisis.formula[y].subformula[x].unidad);
 											position = position+5;
 											hallado=position;
 										//}
@@ -626,10 +626,12 @@ starter.factory("servicio", function(){
 			}
 		}
 			$scope.pedidoId= {}
-			$scope.savePedidoId = function(id){
+			$scope.savePedidoId = function(id,analisis){
 				$scope.pedidoId=id
 				servicio.data.pedidoId=$scope.pedidoId
-				console.log($scope.pedidoId)
+				$scope.analisisId=analisis
+				servicio.data.analisisId=$scope.analisisId
+				
 			}
 
 			$scope.getPedido = function(id){
@@ -758,45 +760,66 @@ starter.factory("servicio", function(){
 			//$scope.saveResult(pedido,id_analisis,orden,metodo,muestra,valorHallado)
 		}
 		
-		$scope.addItem= function(pedido, analisis){
-			item = {formula:"<<ingrese nombre>>", valorHallado:[""]}
-			analisis.resultado.push(item);
+	
+		$scope.addItem =function(pedido_id,analisis,item, valorHallado, indice){
+			$scope.valor=[]; $scope.valor.push(valorHallado)
+			$scope.newItem ={"formula":item, "valorHallado":$scope.valor};
+			$scope.indice = 0;
+			analisis.resultado.push($scope.newItem);
 			
-			/*$http.put('/api/addItem/pedido/'+pedido._id+'/analisis/'+analisis._id,{nombre:""}).success(function(data){
+			/*$http.put('/api/addItem/pedido/'+pedido_id+'/analisis/'+analisis_id,{nombre:item, valorHallado:$scope.valor}).success(function(data){
+				
+				$scope.indice=indice;
+				$scope.pedido = data[0];
+				
 				
 			}).error(function(err){
 				console.log('ERROR')
 			})*/
 		}
+      
+		$scope.currentLab = {}
+		$scope.currentPosition = 0
+		//El analisis actual de la lista
+	    $scope.saveCurrentResult = function(result){
+			$scope.currentLab = result
+			$scope.moreitems = false;
+			
+		}
+		//El pedido actual
+		 $scope.savePedido = function(pedido,position){
+			$scope.currentPedido = pedido
+			$scope.currentPosition = position
+		}
+		
+		$scope.moreitems = false;
+		$scope.viewMoreItems = function(){
+				$scope.moreitems=!$scope.moreitems;
+		}
+		
+		$scope.add= function(lab,indexRes){
+			lab.resultado[indexRes].valorHallado.push("");
+			//$scope.saveResult(pedido,id_analisis,orden,metodo,muestra,valorHallado)
+		}
+		
+		$scope.itemsOrina =["CEL.EPIT.PLANAS AGRUP:","LEUCOCITOS AGRUP.:","HEMATÍES:","ESTRIAS DE MUCUS:", "URATOS AMORFOS:", "FOSFATOS AMORFOS:","OXALATOS DE CALCIO:", "CRIST.DE ACIDO URICO:", "CILINDROS:"];
 		
 		$scope.saveResult = function (pedido,id_analisis,orden,metodo,muestra,repetido,valorHallado) {
 			
-		pedido.analisisList[orden].resultados = valorHallado
+			pedido.analisisList[orden].resultados = valorHallado
 
-		$http.put('/api/loadResults/pedido/'+pedido._id+'/analisis/'+id_analisis,{'metodo':metodo,'muestra':muestra,'repetido': repetido,'resultado':pedido.analisisList[orden].resultado})
-		.success(function(data) {
-			//$scope.calcularProgreso(pedido);
-			//$route.reload();
-		})
-		.error(function(err) {
-			console.log('Error: '+err);
-		});
+			$http.put('/api/loadResults/pedido/'+pedido._id+'/analisis/'+id_analisis,{'metodo':metodo,'muestra':muestra,'repetido': repetido,'resultado':pedido.analisisList[orden].resultado})
+			.success(function(data) {
+				//$scope.calcularProgreso(pedido);
+				//$route.reload();
+				
+			})
+			.error(function(err) {
+				console.log('Error: '+err);
+			});
 	};
 		
 		
-		$scope.agregarItemOrina = function (pedido,id_analisis,item) {
-			
-			item = {"nombre": item, "unidad":""};
-
-		$http.put('/api/loadResults/pedido/'+pedido._id+'/analisis/'+id_analisis,{'metodo':metodo,'muestra':muestra,'repetido': repetido,'resultado':pedido.analisisList[orden].resultado})
-		.success(function(data) {
-			//$scope.calcularProgreso(pedido);
-			//$route.reload();
-		})
-		.error(function(err) {
-			console.log('Error: '+err);
-		});
-	};
 		
 		
 		$scope.saveObservaciones = function (pedido,id_analisis,observaciones) {

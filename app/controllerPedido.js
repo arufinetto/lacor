@@ -13,39 +13,6 @@ var moment = require('moment')
 //GET - Return all pedido in the DB
 // con exports conseguimos modularizarlo y que pueda ser llamado desde el archivo principal de la aplicación.
 
-exports.findAll1 = function(req, res) {  
-    Pedido.aggregate([
-	{$match:{estado:req.query.estado}},
-			{
-       $project: {
-        fechaModified: { $dateToString: { format: "%d/%m/%Y", date: "$fecha" } },
-		fecha:1,
-		analisisList:1,
-		paciente:1,
-		medico:1,
-		estado:1,
-		protocolo:1,
-		diagnostico:1,
-		derivadorDescripcion:1
-		  }
-       } 
-   ],function(err, pedido) {
-		Paciente.populate(pedido, {path: "paciente"},function(err,pedido){
-			Medico.populate(pedido, {path: "medico"},function(err,pedido){
-				Analisis.populate(pedido, {path: "analisisList.analisis", select:{determinaciones:1,codigo:1,formula:1,valorReferencia:1,unidad:1,muestraDefault:1,metodoDefault:1,multiple:1}},function(err,labs){
-				//Formula.populate(labs, {path: "analisisList.resultado.formula"},function(err,data){
-				//Formula.populate(labs, {path: "analisisList.analisis.formula"},function(err,data){
-							res.status(200).jsonp(labs);
-			})
-			//})
-		//})
-	})
-	})
-		
-    })	
-
-};
-
 exports.findAll = function(req, res) {
 var page = req.query.page || 1;
 var perPage = 25; 
@@ -472,13 +439,14 @@ exports.addAnalysis = function(req, res) {
 		{ $push: { 'analisisList': { analisis: req.body.analisis, muestra:req.body.muestra,metodo:req.body.metodo, observacion:req.body.observacion,resultado:req.body.resultado } }
 			
    		},function(err,pedido){
-    		Pedido.find(function(err,pedido){
+    		Pedido.find({estado:"Abierto"},function(err,pedido){
     			res.json(pedido);
     		});
     	}
    );
     
 }
+
 
 /*exports.deleteAnalysis = function(req, res) {  
     Pedido.update({

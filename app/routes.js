@@ -89,7 +89,7 @@ module.exports = function(app,passport) {
 	app.post('/api/pedidos', ControllerPedidos.add);
 	
 	app.put('/api/loadResults/pedido/:id/analisis/:analisis_id', ControllerPedidos.saveResults);
-	
+
 	app.put('/api/saveObservaciones/pedido/:id/analisis/:analisis_id', ControllerPedidos.saveObservaciones);
 	
 	app.put('/api/updateState/pedido/:id', ControllerPedidos.updateState);
