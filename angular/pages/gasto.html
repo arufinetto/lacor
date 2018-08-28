@@ -1,0 +1,81 @@
+<div ng-include="'header.html'"></div>
+<div class="container" ng-controller="gastoController">
+	
+	<table class="table table-striped" ng-init="getGastos()">
+		<thead>
+				<td>Mes</td>
+				<td>Año</td>
+				<td></td>
+	
+		</thead>
+		<tbody ng-repeat="gasto in gastos | filter:criterio">
+			<tr>
+				<td>{{gasto.monthName}}</td>
+				<td>{{gasto.year}}</td>
+		
+				<!--<td><button class="btn btn-xs  btn-danger" ng-click="confirmDeleteMuestra(muestra)">Eliminar!</button></td>-->
+				<td><button class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Ver Gastos</button>
+				<button ng-click="getCurrentLibroGasto(gasto)" class="btn btn-xs  btn-info" data-toggle="modal" data-target="#gasto">Agregar Gasto</button></td>
+
+			</tr>
+			<tr id="row{{$index}}"  class="collapse">
+			<td colspan="12">
+			 <table class="table table-responsive">
+			 <thead style="background-color:#ffe6c2">
+				<td>DÍA</td>
+				<td>MOTIVO</td>
+				<td>COSTO</td>
+				<td>REFERENCIA</td>
+			 </thead>
+			 <tbody ng-repeat="g in gasto.gastos" >
+			  <tr>
+					<td>{{g.dia}}</td>
+					<td>{{g.motivo}}</td>
+					<td>{{g.costo}}</td>
+					<td>{{g.referencia}}</td>
+				</tr>
+				
+			 </tbody>
+			 <tfoot style="background-color:#ffe6c2" >
+			 <tr>
+					<td><b>TOTAL</b></td>
+					<td></td>
+					<td>{{ getTotalPorMes(gastos[$index])}}</td>
+					<td></td>
+			 </tr>
+			 </tfoot>
+				<!--<tr>Total Gastos para {{gasto.monthName}} de {{gasto.year}}</tr>-->
+			 </table>
+			 
+			 </td>
+			</tr>
+		</tbody>
+	</table>
+	
+	
+	<div class="modal fade"  id="gasto" role="dialog" >
+					<div class="modal-dialog">
+					
+					  <!-- Modal content-->
+					  <div class="modal-content" >
+						<div class="modal-header">
+						  <button type="button" class="close" data-dismiss="modal">&times;</button>
+						  <h4 class="modal-title">Gasto</h4>
+						</div>
+						<div class="modal-body">
+						    
+							<input type="number" class="form-control"  ng-model="newGasto.dia" placeholder="Ingrese el Dia" aria-describedby="basic-addon2" >
+							<input type="text" class="form-control"  ng-model="newGasto.motivo" placeholder="Ingrese el MOTIVO" aria-describedby="basic-addon2" >
+							<input type="text" class="form-control"  ng-model="newGasto.referencia" placeholder="Ingrese la REFERENCIA" aria-describedby="basic-addon2" >
+							<input type="number" class="form-control"  ng-model="newGasto.costo" placeholder="Ingrese el COSTO" aria-describedby="basic-addon2" >
+							<button ng-click="createGasto(currentLibro)" class="btn  btn-info" data-toggle="modal" data-target="#gasto">Agregar Gasto</button></td>
+
+							</div>
+						<div class="modal-footer">
+						  <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
+						</div>
+					  </div>
+					  
+					</div>
+			</div>
+</div>
