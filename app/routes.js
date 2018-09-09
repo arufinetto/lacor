@@ -6,7 +6,7 @@ var ControllerMedico= require('./controllerMedico');
 var ControllerMuestraMetodo= require('./controllerMuestraMetodo');
 var ControllerLogin= require('./controllerLogin');
 var ControllerPerfil= require('./controllerPerfil');
-
+var ControllerGasto= require('./controllerGasto');
 
 var isAuthenticated = function (req, res, next) {
   // if user is authenticated in the session, call the next() to call the next request handler 
@@ -139,7 +139,14 @@ module.exports = function(app,passport) {
 	app.delete('/api/medico/:id', ControllerMedico.deleteMedico);
 	/**fin controler medico**/
 
-
+	/**Controller Gastos**/
+	app.put('/api/librogasto/:id', ControllerGasto.agregarGasto);
+	app.post('/api/librogasto', ControllerGasto.createLibroGasto);
 	
+	app.get('/api/librogasto', ControllerGasto.findLibroGasto);
+	app.get('/api/motivos', ControllerGasto.findMotivoGastos);
+	app.get('/api/gasto-motivo/:id', ControllerGasto.agruparGastoPorMotivo);
+	
+
 	
 };
