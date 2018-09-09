@@ -4,6 +4,7 @@ starter.factory("servicio", function(){
 				} ;
 }).controller("gastoController", function ($scope,$http,servicio){
 			$scope.gastos={};
+			$scope.motivosgastos = {};
 		
 			
 			$scope.getGastos = function(){
@@ -14,12 +15,20 @@ starter.factory("servicio", function(){
 						console.log('Error: '+err);
 					});
 			}
+			$scope.getMotivos = function(){
+				$http.get('/api/motivos')
+					.success(function(data) {
+						$scope.motivosgastos = data; 
+					}).error(function(err) {
+						console.log('Error: '+err);
+					});
+			}
 			
 			$scope.newGasto = {
-				dia:0,
+				dia:'',
 				motivo:'',
 				referencia:'',
-				costo:''
+				costo:undefined,
 				
 			}
 			
@@ -44,7 +53,7 @@ starter.factory("servicio", function(){
 					.success(function(data) {
 						$scope.gastos = data; 
 						$scope.newGasto = {
-								dia:0,
+								dia:'',
 								motivo:'',
 								referencia:'',
 								costo:''
@@ -66,6 +75,16 @@ starter.factory("servicio", function(){
 			$scope.removeGasto = function(indice){
 				
 				$scope.gastosPorCrear.splice(indice,1);
+			}
+			
+			$scope.gastosPorMotivo = {}
+			$scope.getGastosPorMotivo = function(id){
+				$http.get('/api/gasto-motivo/'+id)
+					.success(function(data) {
+						$scope.gastosPorMotivo = data; 
+					}).error(function(err) {
+						console.log('Error: '+err);
+					});
 			}
 
 		  })

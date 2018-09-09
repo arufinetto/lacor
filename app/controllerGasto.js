@@ -1,5 +1,7 @@
 var Gasto = require('./modelo/gasto');
 var LibroGasto = require('./modelo/libroGasto');
+var MotivoGasto = require('./modelo/motivoGasto');
+var ObjectId = require('mongoose').Types.ObjectId;
 
 exports.findLibroGasto = function(req, res) {  
 //var page = req.query.page || 1;
@@ -22,6 +24,15 @@ exports.findLibroGasto1 = function(req, res) {
 				res.status(200).jsonp(data);
 		});
     });
+	 
+}
+
+exports.findMotivoGastos = function(req, res) {  
+
+		MotivoGasto.find({},null,{sort:{nombre:1 }},function(err,data){
+				if(err) res.send(500, err);
+				res.status(200).jsonp(data);
+		});
 	 
 }
 
@@ -56,5 +67,38 @@ exports.createLibroGasto = function(req, res) {
 			res.status(200).jsonp(data);
 		});
   })
+};
+
+exports.agruparGastoPorMotivo = function(req, res) {  
+LibroGasto.aggregate([
+
+
+	{$match: {_id: ObjectId(req.params.id)}},
+		{
+			 $unwind: '$gastos' 
+			  
+		},
+		
+	   
+        {
+            $group: {
+				
+				_id:"$gastos.motivo",
+                subtotal: {$sum: "$gastos.costo"},
+				quantity: {$sum: 1}	
+            }
+        },
+		{
+			$sort:{subtotal:-1}
+		}
+    ], function (err, result) {
+        if (err) {
+            res.send(500, err);
+        } else {
+			
+			res.status(200).jsonp(result);
+        }
+    });
+
 };
 
