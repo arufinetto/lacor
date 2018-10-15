@@ -1,7 +1,7 @@
 <div ng-include="'header.html'"></div>
 
 
-<div class="container" ng-controller="pedidoController" ng-init="pedidosEntregadosList=getPedidosEntregados(1)" >
+<div class="container" ng-controller="pedidoController" ng-init="pedidosEntregadosList=getPedidosEntregados(1);getCount('Entregado')" >
 <h4><b>LISTA DE PEDIDOS ENTREGADOS</b></h4>
 <br/>
 	Filtrar: <input class="form-control" type="text" ng-model="search" placeholder="Ingrese el nombre o apellido del paciente y/o del medico"/> 
@@ -32,7 +32,7 @@
 
 		</tbody>
 	</table>
-		 <ul uib-pagination class="pull-center" total-items="totalItems" items-per-page="page" ng-model="currentPage" previous-text="Anterior" next-text="Siguiente" ng-change="pedidosEntregadosList=getPedidosEntregados(currentPage)" ></ul> 
+		 <ul uib-pagination class="pull-center" total-items="entregadosCount" items-per-page="page" ng-model="currentPage" previous-text="Anterior" next-text="Siguiente" ng-change="pedidosEntregadosList=getPedidosEntregados(currentPage)" ></ul> 
 
 	</div>
 

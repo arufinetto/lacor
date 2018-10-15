@@ -3,7 +3,7 @@ var Analisis = require('./modelo/analisis');
 
 exports.findPerfil = function(req, res) {  
   Perfil.find({nombre:req.query.nombre},function(err, data) {
-   Analisis.populate(data, {path: "analisisList.analisis", select:{determinaciones:1,codigo:1,formula:1,unidad:1,muestraDefault:1,metodoDefault:1,multiple:1}},function(err,labs){
+   Analisis.populate(data, {path: "analisisList.analisis", select:{UB:1,valor:1,determinaciones:1,codigo:1,formula:1,unidad:1,muestraDefault:1,metodoDefault:1,multiple:1}},function(err,labs){
 			res.status(200).jsonp(labs);
 	})
 })

@@ -124,7 +124,7 @@ module.exports = function(app,passport) {
 	
 	app.get('/api/last-result/:paciente/analisis/:analisis/protocolo/:protocolo', ControllerPedidos.getLastResult)
 
-
+	app.get('api/pedidos/proporcion-estudios-derivados', ControllerPedidos.proporcionEstudiosDerivados)
 	/**fin controler pedido**/
 	
 	/**Controler Medico**/
@@ -139,13 +139,13 @@ module.exports = function(app,passport) {
 	app.delete('/api/medico/:id', ControllerMedico.deleteMedico);
 	/**fin controler medico**/
 
-	/**Controller Gastos**/
-	app.put('/api/librogasto/:id', ControllerGasto.agregarGasto);
-	app.post('/api/librogasto', ControllerGasto.createLibroGasto);
+	/**Controller Finanza**/
+	//app.put('/api/librogasto/:id', ControllerGasto.agregarGasto);
+	app.post('/api/gasto', ControllerGasto.createGasto);
 	
-	app.get('/api/librogasto', ControllerGasto.findLibroGasto);
-	app.get('/api/motivos', ControllerGasto.findMotivoGastos);
-	app.get('/api/gasto-motivo/:id', ControllerGasto.agruparGastoPorMotivo);
+	app.get('/api/gastos', ControllerGasto.findGastos);
+	//app.get('/api/motivos', ControllerGasto.findMotivoGastos);
+	//app.get('/api/gasto-motivo/:id', ControllerGasto.agruparGastoPorMotivo);
 	
 
 	

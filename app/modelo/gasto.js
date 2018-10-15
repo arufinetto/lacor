@@ -2,11 +2,11 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema; 
 
 
-var gastoSchema = new Schema({   
-	motivo: {type:String},
-	referencia: {type:String},
+var gastoSchema = new Schema({  
 	costo: {type:Number},
-	fecha:{type:Date}
+	fecha:{type:Date},
+	motivo:{type:String},
+	referencia: {type:String}
 	
 });
 

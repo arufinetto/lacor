@@ -6,9 +6,21 @@ starter.factory("servicio", function(){
 			$scope.gastos={};
 			$scope.motivosgastos = {};
 		
-			
-			$scope.getGastos = function(){
-				$http.get('/api/librogasto')
+			$scope.init= function(){
+				var fecha = new Date();
+				$scope.anio = fecha.getFullYear();
+				$scope.mesNumero = fecha.getMonth() +1;
+	
+			}
+			$scope.calcularGasto = function(){
+				var costoTotal = 0;
+				for(var i=0;i<$scope.gastos.length;i++){
+				   costoTotal = costoTotal + $scope.gastos[i].costo;
+				}
+				return costoTotal;
+			}
+			$scope.getGastos = function(mes,anio){
+				$http.get('/api/gastos?mes='+mes+'&anio='+anio)
 					.success(function(data) {
 						$scope.gastos = data; 
 					}).error(function(err) {
@@ -25,10 +37,10 @@ starter.factory("servicio", function(){
 			}
 			
 			$scope.newGasto = {
-				dia:'',
+				fecha: new Date(),
 				motivo:'',
 				referencia:'',
-				costo:undefined,
+				costo:0,
 				
 			}
 			
@@ -43,48 +55,28 @@ starter.factory("servicio", function(){
 				}
 				return subtotal;
 			}
-			$scope.getCurrentLibroGasto=function(lg){
-				$scope.currentLibro=lg
+			
+			$scope.clean = function(){
+				$scope.newGasto = {
+								fecha: new Date(),
+								motivo:'',
+								referencia:'',
+								costo:0
+								
+							}
 			}
 			$scope.createGasto = function(librogasto){
 		
-				$http.put('/api/librogasto/'+librogasto._id, {"dia":$scope.newGasto.dia,"costo":parseFloat($scope.newGasto.costo),
-				"referencia":$scope.newGasto.referencia,"motivo":$scope.newGasto.motivo})
+				$http.post('/api/gasto', $scope.newGasto)
 					.success(function(data) {
-						$scope.gastos = data; 
-						$scope.newGasto = {
-								dia:'',
-								motivo:'',
-								referencia:'',
-								costo:''
-								
-							}
+						alert("Se creo el gasto")
+							$scope.clean();
 					}).error(function(err) {
-						console.log('Error: '+err);
+						alert('No se creo el gasto debido a un error: '+err);
 					});
 				
 			}
 			
-			$scope.gastosPorCrear = []
-			$scope.doGastosPorCrear = function(nombre, fecha, referencia, costo){
-				var gasto= {"motivo": nombre, "referencia":referencia, "fecha":fecha,"costo":costo}
-				$scope.gastosPorCrear.push(gasto);
-				
-			}
+})
 			
-			$scope.removeGasto = function(indice){
-				
-				$scope.gastosPorCrear.splice(indice,1);
-			}
-			
-			$scope.gastosPorMotivo = {}
-			$scope.getGastosPorMotivo = function(id){
-				$http.get('/api/gasto-motivo/'+id)
-					.success(function(data) {
-						$scope.gastosPorMotivo = data; 
-					}).error(function(err) {
-						console.log('Error: '+err);
-					});
-			}
-
-		  })
+		

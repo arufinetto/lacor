@@ -85,5 +85,8 @@ var starter = angular.module("MainApp", ["ngRoute","ngBootbox","ui.bootstrap"])
             }).when("/nuevo-gasto", {
                 controller: "gastoController",
                 templateUrl: "pages/nuevo-gasto.html"
+            }).when("/gastos", {
+                controller: "gastoController",
+                templateUrl: "pages/gasto.html"
             })
 })

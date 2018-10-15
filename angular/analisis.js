@@ -12,6 +12,14 @@ starter.factory("servicio", function(){
 	$scope.currentPage=1;
 	$scope.page=50;
 	
+	$scope.calcularCostoPedido = function(){
+		var costoTotal = 0;
+		 for(var i =0; i<$scope.analisisListFiltered.length;i++){
+			costoTotal = parseFloat($scope.analisisListFiltered[i].valor)*parseFloat($scope.analisisListFiltered[i].UB) + costoTotal;
+		 }
+		 return costoTotal;
+	}
+	
 	$scope.agregarFormula = function(nombre, unidad, analisis){
 		if(unidad == null || unidad == undefined){unidad = ""};
 		$scope.newFormula = {"nombre": nombre, "unidad":unidad};

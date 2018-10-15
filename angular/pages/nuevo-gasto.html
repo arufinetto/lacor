@@ -1,0 +1,80 @@
+<!--<HTML>
+<HEAD>
+	<TITLE>Listado de Examenes</TITLE>
+	<script src="js/angular.min.js"></script>
+
+	
+	<!-- jQuery library 
+	<link rel="stylesheet" href="js/jquery-2.1.3.js">
+	<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/main.css">
+	<!-- Latest compiled JavaScript
+	<script src="js/main.js"></script>
+</HEAD>
+<body>
+<!--BODY ng-app="MainApp" ng-controller="pacienteController">-->
+<div ng-include="'header.html'"></div>
+<div class="container" ng-controller="gastoController">
+
+<div>
+<form data-toggle="validator" role="form"> 
+
+  <div class="form-group row">
+    <label  for="fecha">Fecha:</label>
+    <input type="date"  class="form-control" id="fecha" ng-model="newGasto.fecha">
+  </div>
+  
+   <div class="form-group row">
+    <label  for="nombre">Motivo:</label>
+    <input type="text"  class="form-control" id="nombre" ng-model="newGasto.motivo">
+  </div>
+  
+   <div class="form-group row">
+    <label  for="ref">Referencia:</label>
+    <input type="text"  class="form-control" id="ref" ng-model="newGasto.referencia">
+  </div>
+  
+   <div class="form-group row">
+    <label  for="costo">Costo:</label>
+    <input type="text"  class="form-control" id="costo" ng-model="newGasto.costo">
+  </div>
+  <!--<div><button ng-click="doGastosPorCrear(nombre,fecha, referencia, costo)" class="btn  btn-warning" class="pull-right">Agregar</button></div>
+
+  <br/>
+
+	<div class="form-group row">
+	<label  class="control-label " for="analisisfilter"></label>
+	
+				<div class="panel panel-info" id="analisisfilter">
+					<div class="panel-heading">
+						<h3 class="panel-title">Listado de Gastos a Crear</h3>
+					</div>
+					<table class="table table-hover" >
+						<thead>
+							<tr>
+								<th>Fecha</th>
+								<th>Nombre</th>
+								<th>Referencia</th>
+								<th>Costo</th>
+							</tr>
+						</thead>
+						<tbody ng-repeat="ga in gastosPorCrear track by $index">
+							<tr>
+								<td>{{ga.fecha}}</td>
+								<td>{{ga.motivo}}</td>
+								<td>{{ga.referencia}}</td>
+								<td>{{ga.costo}}</td>
+								<td><button ng-click="removeGasto($index)" class="btn btn-xs  btn-danger" data-toggle="collapse">Eliminar!</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>-->
+ 
+ 
+  <button type="submit" style="float:right" class="btn btn-primary" ng-click="createGasto()">Guardar</button>
+
+</form>
+</div>
+</div>

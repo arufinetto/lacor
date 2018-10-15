@@ -1,131 +1,60 @@
 <div ng-include="'header.html'"></div>
-<div class="container" ng-controller="gastoController">
+<div class="container" ng-controller="gastoController" ng-init="init();getGastos(mesNumero, anio)">
 	
-	<table class="table table-striped" ng-init="getGastos()">
-		<thead>
-				<td>Mes</td>
-				<td>Año</td>
-				<td></td>
+	<div class="form-group row">
+    <label  for="tipo">Mes:</label>
+    <select class="form-control" id="mes" ng-model="mesNumero" ng-change="getGastos(mesNumero, anio)">
+	  <option ng-selected="mesNumero == 1" ng-value="1">Enero</option>
+	  <option ng-selected="mesNumero == 2" ng-value="2">Febrero</option>
+	  <option ng-selected="mesNumero == 3" ng-value="3">Marzo</option>
+	  <option ng-selected="mesNumero == 4" ng-value="4">Abril</option>
+	  <option ng-selected="mesNumero == 5" ng-value="5">Mayo</option>
+	  <option ng-selected="mesNumero == 6" ng-value="6">Junio</option>
+	  <option ng-selected="mesNumero == 7" ng-value="7">Julio</option>
+      <option ng-selected="mesNumero == 8" ng-value="8">Agosto</option>
+	  <option ng-selected="mesNumero == 9" ng-value="9">Septiembre</option>
+	  <option ng-selected="mesNumero == 10"  ng-value="10">Octubre</option>
+	  <option ng-selected="mesNumero == 11" ng-value="11">Noviembre</option>
+	  <option ng-selected="mesNumero == 12" ng-value="12">Diciembre</option>
+     </select>
+  </div>
+  
+  <div class="form-group row">
+    <label  for="tipo">Año:</label>
+    <select class="form-control" id="anio" ng-model="anio" ng-change="getGastos(mesNumero, anio)">
+	  <option>2017</option>
+	  <option>2018</option>
+	  <option>2019</option>
+     </select>
+  </div>
 	
-		</thead>
-		<tbody ng-repeat="gasto in gastos | filter:criterio">
-			<tr>
-				<td>{{gasto.monthName}}</td>
-				<td>{{gasto.year}}</td>
-		
-				<!--<td><button class="btn btn-xs  btn-danger" ng-click="confirmDeleteMuestra(muestra)">Eliminar!</button></td>-->
-				<td><button class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Ver Gastos</button></td>
-				<td><button ng-click="getCurrentLibroGasto(gasto)" class="btn btn-xs  btn-info" data-toggle="modal" data-target="#gasto">Agregar Gasto</button></td>
-				<td><button ng-click="getCurrentLibroGasto(gasto);getGastosPorMotivo(currentLibro._id)" class="btn btn-xs  btn-info" data-toggle="modal" data-target="#estadisticaGasto">Estadisticas</button></td>
 
-			</tr>
-			<tr id="row{{$index}}"  class="collapse">
-			<td colspan="12">
-			 <table class="table table-responsive">
-			 <thead style="background-color:#E0F2F7">
-				<td>DÍA</td>
-				<td>MOTIVO</td>
-				<td>COSTO</td>
-				<td>REFERENCIA</td>
-			 </thead>
-			 <tbody ng-repeat="g in gasto.gastos" >
-			  <tr>
-					<td>{{g.dia}}</td>
-					<td>{{g.motivo}}</td>
-					<td>{{g.costo}}</td>
-					<td>{{g.referencia}}</td>
-				</tr>
+			<table class="table table-responsive">
+					<thead>
+						<td>#</td>
+						<td>FECHA</td>
+						<td>MOTIVO</td>
+						<td>REFERENCIA</td>
+						<td>COSTO</td>
+					</thead>
+					<tbody ng-repeat="gasto in gastos">
+						<tr>
+							<td>{{$index+1}}</td>
+							<td>{{gasto.fechaModified}}</td>
+							<td>{{gasto.motivo}}</td>
+							<td>{{gasto.referencia}}</td>
+							<td>{{gasto.costo}}</td>
+						</tr>
+					</tbody>
+					<tr>
+							<td><b>TOTAL</b></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td><b>{{calcularGasto()}}</b></td>
+					</tr>
+				</table>
 				
-			 </tbody>
-			 <tfoot style="background-color:#E0F2F7" >
-			 <tr>
-					<td><b>TOTAL</b></td>
-					<td></td>
-					<td>{{ getTotalPorMes(gastos[$index])}}</td>
-					<td></td>
-			 </tr>
-			 </tfoot>
-				<!--<tr>Total Gastos para {{gasto.monthName}} de {{gasto.year}}</tr>-->
-			 </table>
-			 
-			 </td>
-			</tr>
-		</tbody>
-		
-	</table>
-	
-	
-	<div class="modal fade"  id="gasto" role="dialog" >
-					<div class="modal-dialog">
-					
-					  <!-- Modal content-->
-					  <div class="modal-content" >
-						<div class="modal-header">
-						  <button type="button" class="close" data-dismiss="modal">&times;</button>
-						  <h4 class="modal-title">Gasto</h4>
-						</div>
-						<div class="modal-body">
-						    
-							
-							<input type="number" class="form-control"  ng-model="newGasto.dia" placeholder="Ingrese el Dia" aria-describedby="basic-addon2" >
-							<div ng-init="getMotivos()">
-								<label  for="motivo">Motivo:</label>
-								<select  ng-options="motivo.nombre as motivo.nombre for motivo in motivosgastos"  class="form-control" id="motivo" ng-model="newGasto.motivo">
-								  <option ng-value={{motivo.nombre}}>{{motivo.nombre}}</option>
-								 </select>
-							  </div>
-							<!--<input type="text" class="form-control"  ng-model="newGasto.motivo" placeholder="Ingrese el MOTIVO" aria-describedby="basic-addon2" >-->
-							<input type="text" class="form-control"  ng-model="newGasto.referencia" placeholder="Ingrese la REFERENCIA" aria-describedby="basic-addon2" >
-							<input type="number" class="form-control"  ng-model="newGasto.costo" placeholder="Ingrese el COSTO" aria-describedby="basic-addon2" >
-							
-							
-							<button ng-click="createGasto(currentLibro)" class="btn  btn-info" data-toggle="modal" data-target="#gasto">Agregar Gasto</button></td>
-
-							</div>
-						<div class="modal-footer">
-						  <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
-						</div>
-					  </div>
-					  
-					</div>
-			</div>
 			
-			<div class="modal fade"  id="estadisticaGasto" role="dialog" >
-					<div class="modal-dialog">
-					
-					  <!-- Modal content-->
-					  <div class="modal-content" >
-						<div class="modal-header">
-						  <button type="button" class="close" data-dismiss="modal">&times;</button>
-						  <h4 class="modal-title">Gasto</h4>
-						</div>
-						<div class="modal-body">
-						    
-							<div >
-								<table class="table table-striped" >
-								<thead>
-								<td>Gasto</td>
-								<td>Costo</td>
-								</thead>
-								<tbody  ng-repeat="gpm in gastosPorMotivo">
-								<tr>
-									<td>{{gpm._id}}</td>
-									<td>{{gpm.subtotal}}</td>
-									<td>{{(gpm.subtotal/getTotalPorMes(currentLibro))*100 | number:2}} %<td>
-								</tr>
-								</tbody>
-								</table>
-							  </div>
-							<!--<input type="text" class="form-control"  ng-model="newGasto.motivo" placeholder="Ingrese el MOTIVO" aria-describedby="basic-addon2" >-->
-	                              
-							</div>
-							<p ng-show="gastosPorMotivo.length >0">El porcentaje se puede interpretar como: El {{(gastosPorMotivo[0].subtotal/getTotalPorMes(currentLibro))*100 | number:2}}% de los costos del mes fue en {{gastosPorMotivo[0]._id}}</p>
-						<div class="modal-footer">
-						  <button type="button" class="btn btn-default"  data-dismiss="modal">Cerrar</button>
-						</div>
-						
-					  </div>
-					  
-					</div>
-			</div>
+			
 </div>

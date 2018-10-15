@@ -291,52 +291,6 @@
 					  
 					</div>
 					</div>
-		    
-	
-	
-				<div class="modal fade"  id="Item1" role="dialog" >
-					<div class="modal-dialog">
-					
-					  <!-- Modal content-->
-					  <div class="modal-content" >
-						<div class="modal-header">
-						  <button type="button" class="close" data-dismiss="modal">&times;</button>
-						  <h4 class="modal-title">Items para Orina</h4>
-						</div>
-						<div class="modal-body">
-						
-						<table class="table table-hover" >
-								<thead>
-									<tr>
-										<th>Item</th>
-										<th>Valor Hallado</th>
-									</tr>
-								</thead>
-								<tbody ng-repeat="item in itemsOrina track by $index">
-									<tr>
-										
-										<td>{{item}}</td>
-										<td><input class="form-control"  ng-model="valorHallado"/></td>
-										<td><button type="button" class="btn btn-xs btn-primary"  ng-click="addItem(item,valorHallado, $index)">Agregar</button>
-										</td>
-										<td>
-											<span ng-show="$index==indice"class="glyphicon glyphicon-ok-circle"></span>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-							</div>
-						<div class="modal-footer">
-						  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-						</div>
-					  </div>
-					  
-					</div>
-					</div>
-					
-					
-					
-				
 	
 <!-- Modal -->
 			<div class="modal fade" id="myModal" role="dialog" >

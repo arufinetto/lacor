@@ -21,7 +21,6 @@ starter.factory("servicio", function(){
 			$scope.pedidosPorPacienteList ={},
 			$scope.newPedidoId= "";
 			$scope.currentPage=1,
-			$scope.totalItems=1300,
 			$scope.page=25,
 			$scope.progreso=0;
 			$scope.abiertosCount =0;
@@ -29,6 +28,7 @@ starter.factory("servicio", function(){
 			$scope.entregadosCount =0;
 			$scope.invalidosCount =0;
 			$scope.creadosCount =0;
+			//$scope.pedidoFinanza = {};
 
 			
 	$scope.getPedidoPorPaciente = function(id_paciente){
@@ -40,8 +40,11 @@ starter.factory("servicio", function(){
 			console.log('Error: '+err);
 		});
 	}		
-
-	//$scope.$watch($scope.progreso);
+    
+	$scope.selectPedido = function(pedido){
+		$scope.pedidoFinanza = pedido;
+		console.log($scope.pedidoFinanza.paciente.apellido)
+	}
 
 	$scope.calcularProgreso = function(pedido){
 		
@@ -75,7 +78,6 @@ starter.factory("servicio", function(){
 			array.push("progress-bar-striped progress-bar-success");
 		} 
 	
-		
 		return  array;
 
 	}
@@ -131,6 +133,7 @@ starter.factory("servicio", function(){
 		var logo = new Image; logo.src = 'reporte.jpg'; 
 			doc.addImage(logo, 'JPEG', 0, 0,210,297); 
 	}
+	
 	 
 	 $scope.generatePDFExtraccion = function(pedido){
 		 var doc = new jsPDF("p", "mm", "a4");

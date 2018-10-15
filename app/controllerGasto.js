@@ -1,75 +1,60 @@
 var Gasto = require('./modelo/gasto');
-var LibroGasto = require('./modelo/libroGasto');
-var MotivoGasto = require('./modelo/motivoGasto');
 var ObjectId = require('mongoose').Types.ObjectId;
+var moment = require('moment');
 
-exports.findLibroGasto = function(req, res) {  
-//var page = req.query.page || 1;
-//var perPage = 25; 
-//var skip =(perPage*page)-perPage;
-  LibroGasto.find({}, null, {sort:{year:-1,month:-1,'gastos.dia':1}},function(err, data) {
-	  if(err) res.send(500, err);
-			res.status(200).jsonp(data);
-		});
-}
 
-exports.findLibroGasto1 = function(req, res) {  
-//var page = req.query.page || 1;
-//var perPage = 25; 
-//var skip =(perPage*page)-perPage;
-  LibroGasto.aggregate([{ $unwind: '$gastos' }],function(err, data) {
-		LibroGasto.find({},null,{sort:{year:-1,month:-1,'gastos.$.dia':1 }},function(err,gastos){
-			res.json(gastos);
-				if(err) res.send(500, err);
-				res.status(200).jsonp(data);
-		});
-    });
-	 
-}
 
-exports.findMotivoGastos = function(req, res) {  
-
-		MotivoGasto.find({},null,{sort:{nombre:1 }},function(err,data){
-				if(err) res.send(500, err);
-				res.status(200).jsonp(data);
-		});
-	 
-}
-
-exports.agregarGasto = function(req, res) {  
-   LibroGasto.update({
-	   _id:req.params.id},
- 
-		 {$push:{
-			 gastos:{
-				$each:[{dia: req.body.dia, costo:req.body.costo,referencia:req.body.referencia,motivo:req.body.motivo}],
-				$sort:{dia:1}
-				
-				}
+exports.findGastos = function(req, res) {  
+       var month= req.query.mes
+		Gasto.aggregate([
+		{ $project: {
+			fechaModified: { $dateToString: { format: "%d/%m/%Y", date: "$fecha" } },
+			fecha:1,
+			motivo:1,
+			referencia:1,
+			costo:1,
+			mes:{$month:'$fecha'},
+			anio:{$year:'$fecha'}
 		 }
-    	},function(err,gastos){
-    		LibroGasto.find({},null,{sort:{year:-1,month:-1}},function(err,gastos){
-    			res.json(gastos);
-    		});
-    	});
-};
+		},
+		
+		{$match: {$and:[{mes: parseInt(req.query.mes) },{anio:parseInt(req.query.anio)}]}},
+		//{$group:{_id:'$fechaModified', gasto:{"$push": {motivo:"$motivo",referencia:"$referencia",costo:"$costo"}}}},
+			
+			
+			{$sort: {fecha:1}}
+		],function(err,data){
+				if(err) res.send(500, err);
+				console.log(data)
+				res.status(200).jsonp(data);
+		});
+	 
+}
 
-exports.createLibroGasto = function(req, res) {  
-  var libroGasto = new LibroGasto ({
-	  year: req.body.year,
-	  month: req.body.month,
-	  monthName: req.body.monthName,
-	  gastos:req.body.gastos
+exports.getLastResult1 = function(req, res){
+	Gasto.find({},{fecha:{$ne:"Invalido"}}, function(err, pedido) {
+				if(err) res.send(500, err.message);
+				res.status(200).jsonp(pedido);
+}) 
+}
+
+
+exports.createGasto = function(req, res) {  
+  var gasto = new Gasto ({
+	  fecha: req.body.fecha,
+	  referencia: req.body.referencia,
+	  motivo: req.body.motivo,
+	  costo: req.body.costo
   });
-  libroGasto.save(function(err, gasto) {
-    LibroGasto.find({},null,{sort:{year:-1,month:-1}},function(err, data) {
+  gasto.save(function(err, gasto) {
+    Gasto.find({},function(err, data) {
 		if(err) res.send(500, err);
 			res.status(200).jsonp(data);
 		});
   })
 };
 
-exports.agruparGastoPorMotivo = function(req, res) {  
+/*exports.agruparGastoPorMotivo = function(req, res) {  
 LibroGasto.aggregate([
 
 
@@ -100,5 +85,5 @@ LibroGasto.aggregate([
         }
     });
 
-};
+};*/
 

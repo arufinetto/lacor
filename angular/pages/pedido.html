@@ -100,6 +100,10 @@
  
   <div class="form-group row" ng-controller="medicoController">
     <label  for="medico">Medico:</label>
+	<!--<div class="input-group">
+	  <input type="text" class="form-control" autocomplete="off" ng-model="medicoSelected" id="medico" placeholder="Ingrese el NOMBRE o MATRICULA del medico..." aria-describedby="basic-addon2" ng-model="muestra.nombre">
+	  <a class="btn btn-info input-group-addon"  href="#/medicos">Crear Medico</a>
+	</div>-->
 	<input type="text" class="form-control" autocomplete="off" ng-model="medicoSelected" id="medico" placeholder="Ingrese el NOMBRE o MATRICULA del medico...">
     	<div class="form-group row" ng-show="!isEmpty(medicoSelected)">
 			<table class="table table-striped">
@@ -109,8 +113,7 @@
 				<tr>
 					<td>{{medico.nombre}}</td>
 					<td>{{medico.matricula}}</td>
-					<td><a href ng-click="agregarMedico(medico)" ng-model="newPedido.medico" data-toggle="collapse"><span class="glyphicon glyphicon-plus"></span></a>
-					</td>
+					<td><a href ng-click="agregarMedico(medico)" ng-model="newPedido.medico" data-toggle="collapse"><span class="glyphicon glyphicon-plus"></span></a></td>
 				</tr>
 				</tbody>
 			</table>
@@ -170,7 +173,7 @@
 	</div>
  
 
-	<div class="form-group row">
+	<div class="form-group row" >
 	<label  class="control-label " for="analisisfilter"></label>
 	
 				<div class="panel panel-info" id="analisisfilter">
@@ -182,17 +185,36 @@
 							<tr>
 								<th>Codigo</th>
 								<th>Determinaciones</th>
+								<th>UB</th>
+								<th>Costo Unitario</th>
+								<th></th>
+								<th>Costo Total</th>
+								
 							</tr>
 						</thead>
 						<tbody ng-repeat="an in analisisListFiltered track by $index">
 							<tr>
 								<td>{{an.codigo}}</td>
 								<td>{{an.determinaciones}}</td>
+								<td>{{an.UB}}</td>
+								<td>{{an.valor}}</td>
+								<td><a href data-toggle="collapse"><span class="glyphicon glyphicon-edit"></span></a></td>
+								<td>{{an.UB * an.valor}}</td>
 								<td><button ng-click="removeAnalisis($index)" class="btn btn-xs  btn-danger" data-toggle="collapse">Eliminar!</button></td>
 							</tr>
+								
 						</tbody>
+						<tr>
+									<td><b>COSTO TOTAL PEDIDO</b></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td><b>{{calcularCostoPedido()}}</b></td>
+							</tr>
 					</table>
 				</div>
+				
 			</div>
  </div>
  
@@ -200,5 +222,6 @@
   <a href="#/pedidos-creados" type="submit" style="float:right" class="btn btn-primary" ng-click="createPedido()">Generar Pedido</a>
 
 </form>
+
 </div>
 </div>

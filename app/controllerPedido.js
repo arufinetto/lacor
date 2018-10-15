@@ -8,7 +8,6 @@ var Medico = require('./modelo/medico');
 var ObjectId = require('mongoose').Types.ObjectId;
 var moment = require('moment');
 var async = require('async');
-var moment = require('moment')
 
 //GET - Return all pedido in the DB
 // con exports conseguimos modularizarlo y que pueda ser llamado desde el archivo principal de la aplicación.
@@ -33,7 +32,8 @@ Pedido.aggregate([
 		estado:1,
 		protocolo:1,
 		diagnostico:1,
-		derivadorDescripcion:1
+		derivadorDescripcion:1,
+		obrasocial:1
 		  }
        }, 
 	   
@@ -255,6 +255,29 @@ Pedido.aggregate([
 
 };	
 
+exports.proporcionEstudiosDerivados = function(req, res) {  
+var start_date = new Date("2018-08-31T00:00:00.000Z");
+var end_date = new Date("2018-09-31T24:59:00.000Z");
+
+Pedido.aggregate([
+{$match:{$and:[{fecha:{"$gte": start_date.toISOString()}},{fecha:{"$lte": end_date.toISOString()}}]}},
+{$unwind:"$analisisList"},
+{$group: {
+           _id: "$analisisList.analisis",  
+           count: {$sum: 1}
+          }},
+            {$sort:{count:-1}}
+        ], function (err, result) {
+        if (err) {
+            res.send(500, err);
+        } else {
+			Analisis.populate(result, {path: "_id",select:{determinaciones:1}},function(err,result){
+				res.status(200).jsonp(result);
+				
+			})
+        }
+    });
+}
 
 exports.getPedido = function(req, res) {  
  Pedido.aggregate([
