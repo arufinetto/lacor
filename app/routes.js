@@ -82,6 +82,8 @@ module.exports = function(app,passport) {
 	/**Controler pedido**/
 	app.get('/api/pedidos/count', ControllerPedidos.count);
 	
+	app.put('/api/pedido/:id/analisis/:analisis/include', ControllerPedidos.includeAnalysis);
+	
 	app.get('/api/pedidos', ControllerPedidos.findAll);
 	
 	app.get('/api/pedidosBy', ControllerPedidos.filter);

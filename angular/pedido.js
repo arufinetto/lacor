@@ -189,7 +189,7 @@ starter.factory("servicio", function(){
 			//console.log(doc.internal.pageSize.height)
 			
 			for(var i=0; i< item.length;i++){
-			
+			if(item[i].imprimir){
 				if (position >= height)
 				{
 				  doc.addPage();
@@ -502,6 +502,7 @@ starter.factory("servicio", function(){
 				position = position+8.5;
 				doc.setTextColor(45,46,47);
 				doc.setFontSize(10);
+				}
 			} //fin For
 				
 				
@@ -528,8 +529,8 @@ starter.factory("servicio", function(){
 				window.open(doc.output('bloburl'), '_blank');
 			}
 			
-			
-		}
+		
+	}
 	
 		
 		$scope.getVarsUrl =function (){
@@ -959,5 +960,14 @@ starter.factory("servicio", function(){
 		});
 		$route.reload()
 	}
+	
+	 $scope.includeAnalysis = function (pedido, analisis, include){
+			 $http.put('/api/pedido/'+ pedido +'/analisis/'+ analisis +'/include',{imprimir: include })
+				.success(function(data) {
+				})
+				.error(function(err) {
+					console.log('Error: '+err);
+				});
+			}
 		
 	})

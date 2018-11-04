@@ -17,6 +17,11 @@ var analisisSchema = new Schema({
 	formula: [],
 	multiple: Boolean
 	
-});
+},{
+        timestamps: {
+            createdAt: 'created_at',
+            updatedAt: 'updated_at'
+        }
+    });
 
 module.exports = mongoose.model("analisis", analisisSchema); 

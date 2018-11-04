@@ -104,6 +104,7 @@ exports.update = function(req, res) {
 			unidad: req.body.unidad,
 			formula: req.body.formula,
 			valor: req.body.valor,
+			UB: req.body.UB,
 			metodoDefault:req.body.metodoDefault,
 			muestraDefault:req.body.muestraDefault,
 			multiple: req.body.multiple

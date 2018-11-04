@@ -7,6 +7,8 @@
 /*nth es una psudo clase que permite seleccionar el enésimo elemento hijo de un elemento padre, siendo el número del elemento el argumento x, odd:impar, even:par*/
 
 
+
+
 .table-striped>tbody>tr:nth-child(even)>th{
    background-color: green; 
  }

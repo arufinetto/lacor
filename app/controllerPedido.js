@@ -515,6 +515,28 @@ exports.saveResults = function(req, res) {
     
 }
 
+exports.includeAnalysis = function(req, res) {  
+
+    Pedido.update({
+    	_id:req.params.id,
+		"analisisList.analisis":req.params.analisis,
+	
+		}, 
+
+		{$set : {"analisisList.$.imprimir": req.body.imprimir}
+			
+   		},function(err,pedido){
+			if(err) res.status(500).json("Error " +err)
+				else{ res.status(200).json("Updated")}
+			/*	Pedido.find({},function(err,pedido){
+					if(err) res.status(500).json("Error " +err)
+					res.json(pedido);
+				});
+			}*/
+});
+    
+}
+
 exports.saveObservaciones = function(req, res) {  
 
     Pedido.update({

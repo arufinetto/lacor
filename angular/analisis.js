@@ -8,9 +8,12 @@ starter.factory("servicio", function(){
 	$scope.analisisListFiltered = [];
 	$scope.analisisListFilteredObject = [];
     $scope.estudio = {};
-	$scope.totalItems=1350;
+	$scope.totalItems=1500;
 	$scope.currentPage=1;
 	$scope.page=50;
+	//$scope.selectedAnalisis = {};
+	
+	
 	
 	$scope.calcularCostoPedido = function(){
 		var costoTotal = 0;
@@ -44,7 +47,7 @@ starter.factory("servicio", function(){
 			console.log('Error: '+err);
 		});
 	}
-    
+	
 	$scope.getAnalisis = function(page){
 		$http.get('/api/analisis/'+ page)
 		.success(function(data) {
@@ -114,7 +117,7 @@ starter.factory("servicio", function(){
 	};
 	
 	$scope.updateAnalisis = function(analisis){
-		$http.put('/api/analisis/' + analisis._id, {determinaciones:analisis.determinaciones,valorReferencia:analisis.valorReferencia,unidad:analisis.unidad,formula:analisis.formula,valor:analisis.valor,metodoDefault:analisis.metodoDefault,muestraDefault:analisis.muestraDefault,multiple:analisis.multiple})
+		$http.put('/api/analisis/' + analisis._id, {UB:analisis.UB,determinaciones:analisis.determinaciones,valorReferencia:analisis.valorReferencia,unidad:analisis.unidad,formula:analisis.formula,valor:analisis.valor,metodoDefault:analisis.metodoDefault,muestraDefault:analisis.muestraDefault,multiple:analisis.multiple})
 		.success(function(data) {
 			//$scope.analisisList = data;
 		})
@@ -139,6 +142,7 @@ starter.factory("servicio", function(){
 	
 	$scope.selectAnalisis = function (analisis){
 		$scope.selectedAnalisis = analisis;
+		console.log("el seleccionado:" + $scope.selectedAnalisis.UB)
 	}
 	$scope.addAnalisis = function(analisis){
 		$scope.resultado = [];
@@ -154,7 +158,7 @@ starter.factory("servicio", function(){
 				$scope.resultado.push($scope.obj);
 			}
 		}
-		$scope.objeto = {"analisis":analisis._id,"metodo":analisis.metodoDefault,"muestra":analisis.muestraDefault,"repetido":false,"observacion":"","resultado":$scope.resultado};
+		$scope.objeto = {"imprimir":true,"analisis":analisis._id,"metodo":analisis.metodoDefault,"muestra":analisis.muestraDefault,"repetido":false,"observacion":"","resultado":$scope.resultado};
 		$scope.analisisListFiltered.push(analisis); //lo necesito para la UI que muestre todo
 		console.log($scope.analisisListFiltered)
 		$scope.analisisListFilteredObject.push($scope.objeto);
@@ -187,6 +191,9 @@ starter.factory("servicio", function(){
 				console.log('Error: '+err);
 			});
 		 }
+		 
+		 
+	
 		
 		
 	})

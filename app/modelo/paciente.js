@@ -17,6 +17,11 @@ var pacienteSchema = new Schema({
 		celular:{type:String},
 		email:{type:String},
 		ciudad: {type:String}
-});
+},{
+        timestamps: {
+            createdAt: 'created_at',
+            updatedAt: 'updated_at'
+        }
+    });
 
 module.exports = mongoose.model("paciente", pacienteSchema); 

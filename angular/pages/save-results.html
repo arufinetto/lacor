@@ -47,14 +47,16 @@
 				   
 					<table class="table table-responsive" style="font-family: Verdana;font-size:12px;">
 						<thead>
+						<th></th>
 						<th>Codigo</th>
-						<th>Determinacion o Dosaje</th>
+						<th>Dosaje</th>
 						<th>Metodo</th>
 						<th>Muestra</th>
 						<th>Valor Hallado</th>
 						</thead>
 						<tbody ng-repeat="lab in pedido.analisisList track by $index" ng-init="rowIndex=$index">
 						<tr>
+						    <td><input type="checkbox"  class="checkbox checkbox-primary"  ng-model="lab.imprimir" ng-change="includeAnalysis(pedido._id,lab.analisis._id, lab.imprimir)"/>Imprimir</td>
 							<td>{{lab.analisis.codigo}} &nbsp;</td>
 							<td>{{lab.analisis.determinaciones}}&nbsp;</td>
 							<td>
@@ -349,7 +351,6 @@
 							<table class="table table-hover" >
 								<thead>
 									<tr>
-										
 										<th>Protocolo</th>
 										<th>Fecha</th>
 										<th>Diagnostico</th>
