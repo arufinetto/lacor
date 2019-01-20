@@ -441,8 +441,8 @@ starter.factory("servicio", function(){
 						}
 						
 						if((item[i].resultado[z].valorHallado[f]!=""&& item[i].analisis.codigo==="0035")||item[i].analisis.codigo!="0035"){
-						if(c==0){doc.text(20,position,item[i].resultado[z].formula);
-						doc.text(20,position+5,item[i].resultado[z].valorHallado[f])
+						if(c==0){doc.setFontType("bold"); doc.text(20,position,item[i].resultado[z].formula);
+						doc.setFontType("normal");doc.text(20,position+5,item[i].resultado[z].valorHallado[f])
 						c++; position = position+5;}
 						else{doc.text(20,position,item[i].resultado[z].valorHallado[f]);}
 						position = position+5;
