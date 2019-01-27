@@ -24,8 +24,7 @@ starter.factory("servicio", function(){
 		celular:'',
 		email:'',
 		ciudad:'',
-		obraSocial:[],
-		fallecio:false
+		obraSocial:[]
 		
 	};
 	$scope.pacienteSelected = null;
@@ -184,7 +183,7 @@ starter.factory("servicio", function(){
 	
 	$scope.updatePaciente = function (paciente) {
 		$http.put('/api/paciente/' + paciente._id, {nombre:paciente.nombre,apellido:paciente.apellido,fechaNacimiento:paciente.fechaNacimiento,ciudad:paciente.ciudad, email:paciente.email,obraSocial:paciente.obraSocial,
-		documento:paciente.documento,tipoDocumento:paciente.tipoDocumento,telefono:paciente.telefono,medicacion:paciente.medicacion,celular:paciente.celular,domicilio:paciente.domicilio,fallecio:paciente.fallecio})
+		documento:paciente.documento,tipoDocumento:paciente.tipoDocumento,telefono:paciente.telefono,medicacion:paciente.medicacion,celular:paciente.celular,domicilio:paciente.domicilio})
 		.success(function(data) {
 			//$scope.pacienteList = data;
 			$ngBootbox.alert("El paciente ha sido actualizado exitosamente!")

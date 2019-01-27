@@ -30,8 +30,7 @@ exports.add = function(req, res) {
 		telefono: req.body.telefono,
 		celular: req.body.celular,
 		email:req.body.email,
-		ciudad:req.body.ciudad,
-		fallecio:req.body.fallecio
+		ciudad:req.body.ciudad
     });
 
     paciente.save(function(err, paciente) {
@@ -57,8 +56,7 @@ exports.update = function(req, res) {
 			medicacion: req.body.medicacion,
 			telefono: req.body.telefono,
 			celular: req.body.celular,
-			domicilio: req.body.domicilio,
-			fallecio:req.body.fallecio
+			domicilio: req.body.domicilio
 		
     		}
 
