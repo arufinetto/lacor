@@ -3,11 +3,20 @@ starter.controller("estadisticasController", function($route,$scope, $http) {
 $scope.pedidosPorMedico = {}
 $scope.pedidosPorAnalisis = {}
 $scope.pedidosPorDiagnostico = {}
+$scope.pacientesPorCiudad = {}
 $scope.total=0
 $scope.fechaDesde= new Date("2017-08-01").toISOString();
 $scope.fechaHasta= new Date("2017-08-15").toISOString();
 $scope.pedidoObraSocialSelected = {}
 $scope.myStyle={}
+
+
+	$http.get('/api/paciente/ciudad').success(
+	function(data){
+		$scope.pacientesPorCiudad = data;
+	}).error(function(err) {
+			console.log('Error: '+err);
+	});
 
 	$http.get('/api/pedidoByMedico')
 		.success(function(data) {

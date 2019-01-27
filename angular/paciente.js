@@ -42,22 +42,32 @@ starter.factory("servicio", function(){
 		})
 	}
 	
-	
-	$scope.calcularEdad = function(birthday){
+
+		
+		$scope.calcularEdad = function(birthday){
 			if(birthday !=null){
 				var hoy = new Date();
 				var cumpleanos = new Date(birthday);
-				var edad = hoy.getFullYear() - cumpleanos.getFullYear();
-				var m = hoy.getMonth() - cumpleanos.getMonth();
+				var anosdiff = hoy.getFullYear() - cumpleanos.getFullYear();
+				var mesdiff = hoy.getMonth() - cumpleanos.getMonth();
 
-				if (m < 0 || (m === 0 && hoy.getDate() < cumpleanos.getDate())) {
-					edad--;
+		
+				if (mesdiff < 0 || (mesdiff === 0 && hoy.getDate() < cumpleanos.getDate())) {
+					anosdiff--;
 				}
+				
+				if( anosdiff === 0){
+						var days= hoy.getTime()-cumpleanos.getTime();
+						var contdias = Math.trunc(days/(1000*60*60*24)); 
+						var month = Math.trunc(contdias/30);
+						if(month === 0){ if(contdias === 0) {return "RECIEN NACIDO";} if(contdias === 1){ return "1 d\u00EDa";} return contdias + " d\u00EDas";}
+						if(month === 1){ return "1 mes";}return month + " meses"; 
+					}
 
-				return edad;	
+				 if(anosdiff === 1){ return "1 a\u00F1o";} return anosdiff + " a\u00F1os";
 			}
 			
-		}
+		}	
 	
 	$scope.pedidosByPacienteList = {}
 		

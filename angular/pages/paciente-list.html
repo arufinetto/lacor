@@ -20,7 +20,7 @@
 			<tr>
 				<td>{{paciente.apellido}}</td>
 				<td>{{paciente.nombre}}</td>
-				<td>{{calcularEdad(paciente.fechaNacimiento)}} años</td>
+				<td>{{calcularEdad(paciente.fechaNacimiento)}}</td>
 				<td>{{paciente.tipoDocumento}}</td>
 				<td>{{paciente.documento}}</td>
 				<td><button ng-click="pacienteModificado(pacienteList[$index])" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Editar</button></td>
