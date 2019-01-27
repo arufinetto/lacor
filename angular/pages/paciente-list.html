@@ -23,10 +23,11 @@
 				
 				<td>{{paciente.apellido}}</td>
 				<td>{{paciente.nombre}}</td>
-				<td>{{calcularEdad(paciente.fechaNacimiento)}}</td>
+				<td ng-show="!paciente.fallecio">{{calcularEdad(paciente.fechaNacimiento)}}</td>
+				<td ng-show="paciente.fallecio"><i class="fa fa-heartbeat"></i></td>
 				<td>{{paciente.tipoDocumento}}</td>
 				<td>{{paciente.documento}}</td>
-				<td ng-show="paciente.fallecio"><i class="fa fa-heartbeat"></i></td>
+				<!--<td ng-show="paciente.fallecio"><i class="fa fa-heartbeat"></i></td>-->
 				<!--<td><a><span><img src="muerte.jpg" width="6" height="6"></span></a></td>-->
 				<td><button ng-click="pacienteModificado(pacienteList[$index])" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Editar</button></td>
 				<!--<td><button ng-click="#row($index)" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row1{{$index}}">Obra Social</button></td>-->
