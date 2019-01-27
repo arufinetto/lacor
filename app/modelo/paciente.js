@@ -16,7 +16,8 @@ var pacienteSchema = new Schema({
 		telefono: {type:String},
 		celular:{type:String},
 		email:{type:String},
-		ciudad: {type:String}
+		ciudad: {type:String},
+		fallecio: Boolean
 },{
         timestamps: {
             createdAt: 'created_at',

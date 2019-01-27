@@ -9,23 +9,29 @@
 	<table class="table table-striped" >
 		<thead>
 		 <tr>
+				
 				<td><b>Apellido</b></td>
 				<td><b>Nombre</b></td>
 				<td><b>Edad</b></td>
 				<td><b>Tipo de Documento</b></td>
 				<td><b>Numero de Documento</b></td>
+				<td><b></b></td>
 			</tr>
 		</thead>
 		<tbody ng-repeat="paciente in pacienteList track by $index" ng-init="indice=$index">
 			<tr>
+				
 				<td>{{paciente.apellido}}</td>
 				<td>{{paciente.nombre}}</td>
 				<td>{{calcularEdad(paciente.fechaNacimiento)}}</td>
 				<td>{{paciente.tipoDocumento}}</td>
 				<td>{{paciente.documento}}</td>
+				<td ng-show="paciente.fallecio"><i class="fa fa-heartbeat"></i></td>
+				<!--<td><a><span><img src="muerte.jpg" width="6" height="6"></span></a></td>-->
 				<td><button ng-click="pacienteModificado(pacienteList[$index])" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Editar</button></td>
 				<!--<td><button ng-click="#row($index)" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row1{{$index}}">Obra Social</button></td>-->
 				<td><button ng-click="validatePaciente(paciente)" class="btn btn-xs  btn-danger" data-toggle="collapse" >Eliminar!</button></td>
+			
 			</tr>
 			<tr id="row{{$index}}"  class="collapse" >
 				<td colspan="12">
@@ -53,6 +59,8 @@
 							<tr><td>Domicilio:</td><td><input placeholder="Domicilio" class="form-control" type="text" ng-model="paciente.domicilio"/></td></tr>
 							<tr><td>Celular:</td><td><input placeholder="Celular" class="form-control" type="text" ng-model="paciente.celular"/></td></tr>							
 							<tr><td>Email:</td><td><input placeholder="Email" class="form-control" type="text" ng-model="paciente.email"/></td></tr>
+							<tr><td>Falleció:</td><td><input class="form-control" type="checkbox" ng-model="paciente.fallecio"/></td></tr>
+
 							<!--<tr><td>Obra Social:</td><td><select  class="form-control" ng-options="ob.obraSocial for ob in paciente.obraSocial" ng-model="ob"></td> </tr>
 						    <tr><td><button type="button" class="btn btn-xs btn-info pull-right" data-toggle="modal" data-target="#myModal">Agregar</button></td></tr>-->
 					
