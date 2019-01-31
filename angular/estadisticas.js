@@ -9,7 +9,18 @@ $scope.fechaDesde= new Date("2017-08-01").toISOString();
 $scope.fechaHasta= new Date("2017-08-15").toISOString();
 $scope.pedidoObraSocialSelected = {}
 $scope.myStyle={}
+$scope.pacientesPorCiudad = {}
+$scope.pacientesNuevos = {}
+$scope.pacientesNuevosCount = 0
+$scope.currentDate = new Date();
 
+	$http.get('/api/nuevos/pacientes').success(
+	function(data){
+		$scope.pacientesNuevosCount = data.length;
+		$scope.pacientesNuevos = data;
+	}).error(function(err) {
+			console.log('Error: '+err);
+	});
 
 	$http.get('/api/paciente/ciudad').success(
 	function(data){

@@ -38,6 +38,31 @@
 	</table>
 </div>
 </div>
+  <div class="panel-heading" style="background-color:#d9534f;color:#FFFFFF"><b>{{pacientesNuevosCount}} NUEVOS PACIENTES DURANTE {{currentDate.getMonth()+1}} DE {{currentDate.getFullYear()}}</b></div>                    
+	<div class="panel-body" style="max-height:450px; overflow-y:scroll">
+	<table class="table table-striped">
+		<thead>
+		 <tr>
+				<!--<td>Numero</td>-->
+				<td>Localidad</td>
+				<td>Apellido</td>
+				<td>Nombre</td>
+				
+			</tr>
+		</thead>
+		<tbody ng-repeat="paciente in pacientesNuevos" >
+			<tr>
+			
+				<td>{{paciente.ciudad}}</td>
+				<td>{{paciente.apellido}}</td>
+				<td>{{paciente.nombre}}</td>
+			</tr>
+		</tbody>
+		
+		
+	</table>
+</div>
+</div>
 </div>
 
 	

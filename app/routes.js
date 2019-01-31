@@ -75,6 +75,7 @@ module.exports = function(app,passport) {
 	app.put('/api/paciente/:id/obrasocial/:ob_id', ControllerPacientes.updateObraSocial);
 	
 	app.get('/api/paciente/ciudad', ControllerPacientes.getPacienteByCiudad);
+	app.get('/api/nuevos/pacientes', ControllerPacientes.nuevosPacientes);
 
 	
 	/**fin controler paciente**/

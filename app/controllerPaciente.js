@@ -30,7 +30,8 @@ exports.add = function(req, res) {
 		telefono: req.body.telefono,
 		celular: req.body.celular,
 		email:req.body.email,
-		ciudad:req.body.ciudad
+		ciudad:req.body.ciudad,
+		fechaCreacion: new Date()
     });
 
     paciente.save(function(err, paciente) {
@@ -123,4 +124,30 @@ exports.getPacienteByCiudad = function(req, res){
 	})
 }
 	
+	
+exports.nuevosPacientes = function(req, res) {  
+       var today = new Date();
+		Paciente.aggregate([
+		{ $project: {
+			//fechaModified: { $dateToString: { format: "%d/%m/%Y", date: "$fechaCreacion" } },
+			fechaCreacion:1,
+			apellido:1,
+			nombre:1,
+			ciudad:1,
+			mes:{$month:'$fechaCreacion'},
+			anio:{$year:'$fechaCreacion'}
+		 }
+		},
+		
+		{$match: {$and:[{mes: parseInt(today.getMonth()+1) },{anio:parseInt(today.getFullYear())}]}},
+		//{$group:{_id:'$fechaModified', gasto:{"$push": {motivo:"$motivo",referencia:"$referencia",costo:"$costo"}}}},
+			
+			
+			{$sort: {fechaCreacion:1}}
+		],function(err,data){
+				if(err) res.send(500, err);
+				res.status(200).jsonp(data);
+		});
+	 
+}
 
