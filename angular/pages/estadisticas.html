@@ -41,6 +41,37 @@
 </div>
 </div>
 
+
+
+<div class="col-lg-6 col-md-6" >
+<div class="panel panel-default">
+    <div class="panel-heading" style="background-color:#a10684;color:#FFFFFF"><b>{{pedidosNuevosCount}}  PEDIDOS DURANTE EL CORRIENTE MES</b></div>                    
+	<div class="panel-body" style="max-height:450px; overflow-y:scroll">
+
+	<table class="table table-striped" >
+
+		<thead>
+		 <tr>
+				<!--<td>Numero</td>-->
+				<td>Protocolo</td>
+				<td>Paciente</td>
+					<td>Medico</td>
+			</tr>
+		</thead>
+		<tbody  ng-repeat="pedido in pedidosNuevos"  >
+			<tr>
+				<!--<td>{{pedido.numero}}</td>-->
+				<td>{{pedido.protocolo}}</td>
+				<td>{{pedido.paciente.apellido}}, {{pedido.paciente.nombre}}</td>
+				<td>{{pedido.medico.nombre}}</td>
+				
+			</tr>
+		</tbody>	
+	</table>
+</div>
+</div>
+</div>
+
 	
 <div class="col-lg-6 col-md-6" >
 <div class="panel panel-default">

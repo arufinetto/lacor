@@ -572,4 +572,37 @@ exports.deletePedido = function(req, res) {
     	});
 	});
 };
+
+
+exports.nuevosPedidos = function(req, res) {  
+     // var today = new Date(2018, 05, 01, 10, 33, 30, 0);
+	 var today = new Date();
+		Pedido.aggregate([
+		{ $project: {
+			fecha:1,
+			protocolo:1,
+			paciente:1,
+			medico:1,
+			mes:{$month:'$fecha'},
+			anio:{$year:'$fecha'}
+		 }
+		},
+		
+		{$match: {$and:[{mes: parseInt(today.getMonth()+1) },{anio:parseInt(today.getFullYear())}]}},
+			
+			{$sort: {fecha:1}}
+		],function(err,data){
+				if(err) res.send(500, err);
+				else{
+					Paciente.populate(data, {path: "paciente",select:{nombre:1,apellido:1,ciudad:1}},function(err,data){
+					Medico.populate(data, {path: "medico"},function(err,data){
+							res.status(200).jsonp(data);
+				});
+			
+		});
+		
+	}
+})
+	 
+}
   

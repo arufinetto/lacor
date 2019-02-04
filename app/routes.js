@@ -127,7 +127,9 @@ module.exports = function(app,passport) {
 	
 	app.get('/api/last-result/:paciente/analisis/:analisis/protocolo/:protocolo', ControllerPedidos.getLastResult)
 
-	app.get('api/pedidos/proporcion-estudios-derivados', ControllerPedidos.proporcionEstudiosDerivados)
+	app.get('/api/pedidos/proporcion-estudios-derivados', ControllerPedidos.proporcionEstudiosDerivados)
+
+	app.get('/api/nuevos-pedidos', ControllerPedidos.nuevosPedidos)
 	/**fin controler pedido**/
 	
 	/**Controler Medico**/

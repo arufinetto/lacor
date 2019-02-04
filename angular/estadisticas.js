@@ -12,7 +12,16 @@ $scope.myStyle={}
 $scope.pacientesPorCiudad = {}
 $scope.pacientesNuevos = {}
 $scope.pacientesNuevosCount = 0
+$scope.pedidosNuevos = {};
 $scope.currentDate = new Date();
+
+	$http.get('/api/nuevos-pedidos').success(
+	function(data){
+		$scope.pedidosNuevos = data;
+			$scope.pedidosNuevosCount = data.length;
+	}).error(function(err) {
+			console.log('Error: '+err);
+	});
 
 	$http.get('/api/nuevos/pacientes').success(
 	function(data){
