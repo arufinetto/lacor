@@ -575,8 +575,10 @@ exports.deletePedido = function(req, res) {
 
 
 exports.nuevosPedidos = function(req, res) {  
-     // var today = new Date(2018, 05, 01, 10, 33, 30, 0);
-	 var today = new Date();
+	var currentMonth=req.query.mes;
+	var currentYear=req.query.anio;
+     var today = new Date(currentYear,currentMonth , 01, 10, 33, 30, 0);
+	console.log("FECHA: " +today)
 		Pedido.aggregate([
 		{ $project: {
 			fecha:1,
@@ -588,7 +590,7 @@ exports.nuevosPedidos = function(req, res) {
 		 }
 		},
 		
-		{$match: {$and:[{mes: parseInt(today.getMonth()+1) },{anio:parseInt(today.getFullYear())}]}},
+		{$match: {$and:[{mes: parseInt(today.getMonth()) },{anio:parseInt(today.getFullYear())}]}},
 			
 			{$sort: {fecha:1}}
 		],function(err,data){

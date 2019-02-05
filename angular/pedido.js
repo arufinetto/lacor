@@ -534,9 +534,9 @@ starter.factory("servicio", function(){
 			doc.text(49,286, 'CITOLOGA: M.E. 556');*/
 			
 			
-			doc.text(83,280, 'Dra. MARÍA JULIA QUINTEROS');
-			doc.text(93,283, 'BIOQUÍMICA');
-			doc.text(95,286, 'M.P. 5102');
+			doc.text(86,280, 'CARLOS B. AGUILAR');
+			doc.text(93,283, 'BIOQUÍMICO');
+			doc.text(95,286, 'M.P. 1773');
 			if(descargar){
 				doc.save('protocolo-'+pedido.protocolo);
 			}
