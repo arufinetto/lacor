@@ -1,6 +1,7 @@
 <div ng-controller="estadisticasController" >
 <div ng-include="'header.html'"></div>
 
+<div class="container" ng-controller="gastoController">
 
 <div class="form-group row">
     <label  for="tipo">Mes:</label>
@@ -29,8 +30,9 @@
       <option>2020</option>
      </select>
   </div>
+  
 
-<div class="col-lg-6 col-md-6" >
+<div class="col-lg-12 col-md-12" >
 <div class="panel panel-default">
     <div class="panel-heading" style="background-color:#a10684;color:#FFFFFF"><b>{{pedidosNuevosCount}}  PEDIDOS DURANTE EL MES</b></div>                    
 	<div class="panel-body" style="max-height:450px; overflow-y:scroll">
@@ -41,14 +43,16 @@
 		 <tr>
 				<!--<td>Numero</td>-->
 				<td>Protocolo</td>
+                <td>Fecha</td>
 				<td>Paciente</td>
-					<td>Medico</td>
+				<td>Medico</td>
 			</tr>
 		</thead>
 		<tbody  ng-repeat="pedido in pedidosNuevos"  >
 			<tr>
 				<!--<td>{{pedido.numero}}</td>-->
 				<td>{{pedido.protocolo}}</td>
+                <td>{{pedido.fechaModified}}</td>
 				<td>{{pedido.paciente.apellido}}, {{pedido.paciente.nombre}}</td>
 				<td>{{pedido.medico.nombre}}</td>
 				
@@ -58,8 +62,7 @@
 </div>
 </div>
 </div>
-
-	
+</div>
   
 </div>
 

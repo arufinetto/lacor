@@ -575,31 +575,36 @@ exports.deletePedido = function(req, res) {
 
 
 exports.nuevosPedidos = function(req, res) {  
-	var currentMonth=req.query.mes;
-	var currentYear=req.query.anio;
-     var today = new Date(currentYear,currentMonth , 01, 10, 33, 30, 0);
-	console.log("FECHA: " +today)
+	//var currentMonth=parseInt(req.query.mes);
+	//var currentYear=parseInt(req.query.anio);
+    // var today = new Date(2019,02 , 01, 10, 33, 30, 0);
+		
 		Pedido.aggregate([
 		{ $project: {
+			fechaModified: { $dateToString: { format: "%d/%m/%Y", date: "$fecha" } },
 			fecha:1,
 			protocolo:1,
 			paciente:1,
 			medico:1,
 			mes:{$month:'$fecha'},
-			anio:{$year:'$fecha'}
+			anio:{$year:'$fecha'},
+			analisisList:1
 		 }
 		},
 		
-		{$match: {$and:[{mes: parseInt(today.getMonth()) },{anio:parseInt(today.getFullYear())}]}},
+			{$match: {$and:[{mes: parseInt(req.query.mes) },{anio:parseInt(req.query.anio)}]}},
 			
 			{$sort: {fecha:1}}
 		],function(err,data){
 				if(err) res.send(500, err);
 				else{
 					Paciente.populate(data, {path: "paciente",select:{nombre:1,apellido:1,ciudad:1}},function(err,data){
+					//Analisis.populate(data, {path: "analisisList.analisis"},function(err,data){
 					Medico.populate(data, {path: "medico"},function(err,data){
 							res.status(200).jsonp(data);
-				});
+							});
+							
+				//});
 			
 		});
 		

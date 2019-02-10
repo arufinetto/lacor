@@ -15,9 +15,15 @@ $scope.pacientesNuevosCount = 0
 $scope.pedidosNuevos = {};
 $scope.currentDate = new Date();
 
-
+$scope.calcularCostoPedido = function(pedido){
+	var total=0;
+	for(var i = 0; i<pedido.analisisList.length;i++){
+		total = total + pedido.analisisList[i].analisis.UB*pedido.analisisList[i].analisis.valor;
+	}
+	return total;
+}
    $scope.getPedidosPorMes = function(mes,anio){
-				$http.get('/api/pedidos/estadisticas?mes='+mes+'&anio='+anio)
+				$http.get('/api/pedidos-estadisticas?mes='+mes+'&anio='+anio)
 					.success(function(data) {
 						$scope.pedidosNuevos = data;
 						$scope.pedidosNuevosCount = data.length;
