@@ -146,8 +146,10 @@ starter.factory("servicio", function(){
 		}	
 	
 	$scope.insertImage = function(doc){
-		var logo = new Image; logo.src = 'reporte.jpg'; 
-			doc.addImage(logo, 'JPEG', 0, 0,210,297); 
+		//var logo = new Image; logo.src = 'reporte.jpg'; 
+			//doc.addImage(logo, 'JPEG', 0, 0,210,297); 
+			var logo1 = new Image; logo1.src = 'allAnimals.gif'; 
+			doc.addImage(logo1, 'GIF', 1, 1,39,37); 
 	}
 	
 	 
@@ -537,6 +539,8 @@ starter.factory("servicio", function(){
 			doc.text(86,280, 'CARLOS B. AGUILAR');
 			doc.text(93,283, 'BIOQUÍMICO');
 			doc.text(95,286, 'M.P. 1773');
+			doc.text(13,295, 'Laboratorio autorizado por el Colegio de Bioquímicos de la provincia de Córdoba según la resolución N° 12818/2019. Válido hasta 20/02/2020.');
+
 			if(descargar){
 				doc.save('protocolo-'+pedido.protocolo);
 			}
@@ -544,7 +548,6 @@ starter.factory("servicio", function(){
 				//doc.autoPrint(true);
 				window.open(doc.output('bloburl'), '_blank');
 			}
-			
 		
 	}
 	
