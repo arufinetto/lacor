@@ -15,6 +15,7 @@
 				<td>Fecha</td>
 				<td>Estado</td>
 				<td>Paciente</td>
+				<td></td>
 			</tr>
 		</thead>
 		<tbody ng-repeat="pedido in pedidosEntregadosList | filter:search" >
@@ -24,9 +25,30 @@
 				<td>{{pedido.fechaModified}}</td>
 				<td>{{pedido.estado}}</td>
 				<td>{{pedido.paciente.apellido}}, {{pedido.paciente.nombre}}</td>
+				<td><button ng-click="#row($index)" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Ver</button></td>
 
 				<td><button ng-click="generatePDF(pedido, true)" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Descargar Informe</button></td>
 				
+			</tr>
+			<tr id="row{{$index}}" class="collapse" >
+			   
+				<td colspan="10">
+				<table class="table table-responsive" style="font-family: Verdana;font-size:12px;">
+						<thead>
+					    <th>Imprimir</th>
+						<th>Codigo</th>
+						<th>Dosaje</th>
+				
+						</thead>
+						<tbody ng-repeat="lab in pedido.analisisList track by $index" ng-init="rowIndex=$index">
+						<tr>
+						    <td><input type="checkbox"  class="checkbox checkbox-primary"  ng-model="lab.imprimir" ng-change="includeAnalysis(pedido._id,lab.analisis._id, lab.imprimir)"/>Imprimir</td>
+							<td>{{lab.analisis.codigo}} &nbsp;</td>
+							<td>{{lab.analisis.determinaciones}}&nbsp;</td>
+							</tr>
+						</tbody>
+				</table>
+				</td>
 			</tr>
 			
 
