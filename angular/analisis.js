@@ -11,9 +11,16 @@ starter.factory("servicio", function(){
 	$scope.totalItems=1500;
 	$scope.currentPage=1;
 	$scope.page=50;
+	$scope.precio=0;
 	//$scope.selectedAnalisis = {};
 	
-	
+	$scope.updateUB= function(){
+		$http.put('/api/unidad-bioquimica/precio', {valor:$scope.precio})
+		.success(function(data) {
+		}).error(function(err) {
+			console.log('Error: '+err);
+		});
+	}
 	
 	$scope.calcularCostoPedido = function(){
 		var costoTotal = 0;

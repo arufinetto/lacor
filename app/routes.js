@@ -35,6 +35,8 @@ module.exports = function(app,passport) {
 	
 	app.put('/api/analisis/:id', ControllerAnalisis.update);
 	
+	app.put('/api/unidad-bioquimica/precio', ControllerAnalisis.updatePrice);
+	
 	app.get('/api/excel', ControllerAnalisis.convertExcelToJson);
 	
 	

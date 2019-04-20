@@ -119,4 +119,19 @@ exports.update = function(req, res) {
    );
 };
 
+exports.updatePrice = function(req, res) {  
+    Analisis.update({
+    	
+    }, {
+    	$set:{
+			valor: req.body.valor
+		}
+	},
+		{multi:true},function(err,analisis){
+    		Analisis.find(function(err,analisis){
+    			res.json("Se actualizo correctamente el precio de la Unidad Bioquimica");
+    		});
+    	}
+   );
+};
  
