@@ -19,12 +19,20 @@
 <div>
 <form data-toggle="validator" role="form" ng-keypress="keyPressOnForm($event)">
 <div ng-controller="pacienteController">
- <div class="form-group row" >
-  <label  for="paciente">Paciente:</label>
-  <div class="input-group">
-		<input type="text" class="form-control" autocomplete="off" ng-model="nombrePaciente" id="paciente" placeholder="Ingrese el APELLIDO, NOMBRE o DOCUMENTO del paciente..."/>
-		<span class="btn btn-info input-group-addon" id="basic-addon2" ng-click="pacienteListFilter=search()" ng-disabled="isEmpty(nombrePaciente)">Buscar</span>
-   </div>
+
+	<div class="form-group row">
+			<label  for="fecha">Fecha de Recepci&oacuten: </label>
+			<div class="input-group">
+			<input type="date"  id="fecha" class="form-control"  ng-model="newPedido.fecha">
+			</div>
+	</div>
+	 <div class="form-group row" >
+	  <label  for="paciente">Paciente:</label>
+	  <div class="input-group">
+			<input type="text" class="form-control" autocomplete="off" ng-model="nombrePaciente" id="paciente" placeholder="Ingrese el APELLIDO, NOMBRE o DOCUMENTO del paciente..."/>
+			<span class="btn btn-info input-group-addon" id="basic-addon2" ng-click="pacienteListFilter=search()" ng-disabled="isEmpty(nombrePaciente)">Buscar</span>
+	   </div>
+		  
 		<div class="form-group row" ng-show="!isEmpty(pacienteListFilter)">
 			<table class="table table-striped">
 				<thead>

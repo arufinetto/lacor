@@ -857,6 +857,7 @@ starter.factory("servicio", function(){
 		
 		$scope.newPedido = {
 			medico: '',
+			fecha: new Date(),
 			paciente: null,
 			estado: 'Creado',
 			derivador: '',

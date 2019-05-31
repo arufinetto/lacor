@@ -377,7 +377,7 @@ exports.add = function(req, res) {
   var pedido = new Pedido({
 		paciente: req.body.paciente,
 		medico: req.body.medico,
-		fecha: Date.now(),
+		fecha: req.body.fecha,
 		estado: req.body.estado,
 		derivador: req.body.derivador,
 		derivadorDescripcion: req.body.derivadorDescripcion,
