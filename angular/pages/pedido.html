@@ -28,11 +28,14 @@
 	</div>
 	<div class="form-group row" ng-controller="animalController" >
 	 <div>
-	  <label  for="animal">Animal:</label>
+	  <label  for="animal"><span><img src="animales.jpg" width="30" height="30"></span>Animal:</label>
+	   
 	  <div class="input-group">
 			<input type="text" class="form-control" autocomplete="off" ng-model="nombreAnimal" id="animal" placeholder="Ingrese el NOMBRE..."/>
 			<span class="btn btn-info input-group-addon" id="basic-addon2" ng-click="getAnimalsByName(nombreAnimal)" ng-disabled="isEmpty(nombre)">Buscar</span>
-	   </div>
+	       
+
+	  </div>
 	   
 		  
 		<div class="form-group row" ng-show="!isEmpty(animalsFilteredList)">

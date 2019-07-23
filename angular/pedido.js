@@ -208,7 +208,7 @@ starter.factory("servicio", function(){
 				doc.text(30,48,"Animal: "+ pedido.animal.tipo)
 				doc.text(30,53,"Nombre: "+ pedido.animal.nombre)
 				doc.text(30,58,"Raza: "+ pedido.animal.raza)
-				doc.text(100,48,"Solicitado por Veterinario: " + pedido.medico.nombre)
+				doc.text(100,48,"Solicitado por Veterinario/a: " + pedido.medico.nombre)
 				doc.text(100,58,"Fecha de Recepción: "+ pedido.fechaModified)
 				
 			}
