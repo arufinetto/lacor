@@ -2,12 +2,13 @@
 <div class="container" ng-controller="pedidoController" ng-init="getPedidosCreados()" >
  <a href="#pedido"><span class="btn btn-primary pull-right">Nuevo Pedido</span></a>
  <h4><b>LISTA DE PEDIDOS CREADOS</b></h4>
-	<br/>
+
+	 <br/>
 	<!--Filtrar: <input class="ani" type="text" ng-model="criterio"/> <br/>-->
 	<table class="table table-striped">
 		<thead>
 		 <tr>
-				<!--<td>Numero</td>-->
+				<td></td>
 				<td>Fecha</td>
 				<td>Estado</td>
 				<td>Paciente</td>
@@ -16,10 +17,11 @@
 		</thead>
 		<tbody ng-repeat="pedido in pedidosCreadosList" >
 			<tr>
-				<!--<td>{{pedido.numero}}</td>-->
+				<td><span ng-show="pedido.animal !=null"><img src="animales.jpg" width="30" height="30"></span></td>
 				<td>{{pedido.fechaModified}}</td>
 				<td>{{pedido.estado}}</td>
-				<td>{{pedido.paciente.apellido}}, {{pedido.paciente.nombre}}</td>
+				<td ng-show="pedido.paciente !=null"><div>{{pedido.paciente.apellido}}, {{pedido.paciente.nombre}}</div></td>
+				<td ng-show="pedido.animal !=null">{{pedido.animal.tipo}} - {{pedido.animal.nombre}}</td>
 				<td>{{pedido.diagnostico}}</td>
 				<td><button ng-click="#row($index)" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Editar</button></td>
 				<td><button ng-click="generatePDFExtraccion(pedido)" class="btn btn-xs  btn-info" data-toggle="collapse" >Ver Informe</button></td>
@@ -60,160 +62,9 @@
 			</tr>
 		</tbody>			
 	</table>
-	
-	
-	<div class="modal fade" id="finanzas" role="dialog">
-					<div class="modal-dialog">
-					
-					  <!-- Modal content-->
-					  <div class="modal-content">
-						<div class="modal-header">
-						  <button type="button" class="close" data-dismiss="modal">&times;</button>
-						  <h4 class="modal-title"></h4>
-						</div>
-						<div class="modal-body" ng-controller="finanzaController">
-						<form data-toggle="validator" role="form" class="" ng-keypress="keyPressOnForm($event)">
-							<div >
-							  <div class="form-group row">
-								<label  for="pedido">Pedido:</label>
-								<input autocomplete="off" type="text"  class="form-control" id="pedido" editable="false" ng-model="pedidoFinanza.protocolo">
-							 </div>
-							   <div class="form-group row">
-								<label  for="paciente">Paciente:</label>
-								<input autocomplete="off" type="text"  class="form-control" id="paciente" editable="false"/>{{pedidoFinanza.paciente.apellido}}, {{newFinanza.pedido.paciente.nombre}}
-							  </div>
-							  
-							  <div class="form-group row">
-								<label  for="obrasocial">Obra Social:</label>
-								<input autocomplete="off" type="text"  class="form-control" id="obrasocial" editable="false" ng-model="pedidoFinanza.obrasocial">
-							  </div>
-							   <div class="form-group row">
-								<label  for="costo">Costo:</label>
-								<input autocomplete="off" type="text"  class="form-control"  ng-model="newFinanza.costo" id="costo">
-							  </div>
-							   <div class="form-group row">
-								<label  for="pago">Pago:</label>
-								<input autocomplete="off" type="text"  class="form-control"  ng-model="newFinanza.pago" id="pago">
-							  </div>
-
-								<div class="form-group row">
-								<label class="control-label" for="obrasocial" >Autorizado:</label>
-								<div id="autorizado" >
-									
-									<select class="form-control" ng-model="newFinanza.autorizado" >
-										<option>SI</option>
-										<option>NO</option>
-								  </select>
-								</div>
-								</div>
-							 <hr style="border:1px dotted black;"></hr>
-							  <div class="form-group row">
-								<label  for="gastos">Gastos:</label>
-								<input autocomplete="off" type="text"  class="form-control" id="gastos"  ng-model="newFinanza.gasto">
-							  </div>
-							  
-							  <div class="form-group row">
-								<label  for="motivo">Motivo:</label>
-								<input autocomplete="off" type="text"  class="form-control" id="motivo"  ng-model="newFinanza.motivo">
-							  </div>
-								
-							  <div class="form-group row">
-								<label  for="aporte">Aporte:</label>
-								<input autocomplete="off" type="text"  class="form-control" id="aporte"  ng-model="newFinanza.aporte">
-							  </div>
-								
-							  <div class="form-group row">
-								<label  for="egreso">Egreso:</label>
-								<input autocomplete="off" type="text"  class="form-control" id="egreso"  ng-model="newFinanza.egreso">
-							  </div>
-							  
-							</form>
-						</div>
-							
-								
-						<div class="modal-footer">
-						  <button type="button" class="btn btn-info" ng-click="createFinanza(pedidoFinanza)" data-dismiss="modal">Guardar</button>
-						</div>
-					  </div>
-					  
-					</div>
-				  </div>
-  
- </div>
-	
-	
-	
-<div class="modal fade" id="finanzas1" role="dialog" >
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-body">
-<form data-toggle="validator" role="form" class="" ng-keypress="keyPressOnForm($event)">
-<div ng-controller="pedidoController">
-  <div class="form-group row">
-    <label  for="pedido">Pedido:</label>
-    <input autocomplete="off" type="text"  class="form-control" id="pedido" editable="false" ng-model="pedidoFinanza.protocolo">
- </div>
-   <div class="form-group row">
-    <label  for="paciente">Paciente:</label>
-    <input autocomplete="off" type="text"  class="form-control" id="paciente" editable="false"/>{{pedidoFinanza.paciente.apellido}}, {{pedidoFinanza.paciente.nombre}}
-  </div>
-  
-  <div class="form-group row">
-    <label  for="obrasocial">Obra Social:</label>
-    <input autocomplete="off" type="text"  class="form-control" id="obrasocial" editable="false" ng-model="pedidoFinanza.obrasocial">
-  </div>
-   <div class="form-group row">
-    <label  for="costo">Costo:</label>
-    <input autocomplete="off" type="text"  class="form-control" id="costo">
-  </div>
-   <div class="form-group row">
-    <label  for="pago">Pago:</label>
-    <input autocomplete="off" type="text"  class="form-control" id="pago">
-  </div>
-
-	<div class="form-group row">
-	<label class="control-label" for="obrasocial">Autorizado:</label>
-	<div id="autorizado" >
-		
-		<select class="form-control" ng-model="autorizado" >
-			<option>SI</option>
-			<option>NO</option>
-      </select>
 	</div>
-	</div>
- <hr style="border:1px dotted black;"></hr>
-  <div class="form-group row">
-    <label  for="gastos">Gastos:</label>
-    <input autocomplete="off" type="text"  class="form-control" id="gastos" ng-model="newPedido.diagnostico">
-  </div>
-  
-  <div class="form-group row">
-    <label  for="motivo">Motivo:</label>
-    <input autocomplete="off" type="text"  class="form-control" id="motivo" ng-model="newPedido.diagnostico">
-  </div>
-    
-  <div class="form-group row">
-    <label  for="aporte">Aporte:</label>
-    <input autocomplete="off" type="text"  class="form-control" id="aporte" ng-model="newPedido.diagnostico">
-  </div>
-    
-  <div class="form-group row">
-    <label  for="egreso">Egreso:</label>
-    <input autocomplete="off" type="text"  class="form-control" id="egreso" ng-model="newPedido.diagnostico">
-  </div>
-  
-  <a href="#/pedidos-creados" type="submit" style="float:right" class="btn btn-primary" ng-click="createPedido()">Guardar</a>
+	
 
-</form>
-</div>
-</div>
 
-</div>
-<div class="modal-footer">
- <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-</div>
-</div>
-
-</div>
 
 

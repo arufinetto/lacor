@@ -7,6 +7,8 @@ var ControllerMuestraMetodo= require('./controllerMuestraMetodo');
 var ControllerLogin= require('./controllerLogin');
 var ControllerPerfil= require('./controllerPerfil');
 var ControllerGasto= require('./controllerGasto');
+var ControllerAnimal= require('./controllerAnimal');
+
 
 var isAuthenticated = function (req, res, next) {
   // if user is authenticated in the session, call the next() to call the next request handler 
@@ -22,6 +24,7 @@ var isAuthenticated = function (req, res, next) {
 
 module.exports = function(app,passport) {
 	
+	app.get('/api/opendb', ControllerAnalisis.openFile);
 	
 	/**Controler Analisis**/
 
@@ -39,6 +42,7 @@ module.exports = function(app,passport) {
 	
 	app.get('/api/excel', ControllerAnalisis.convertExcelToJson);
 	
+	app.put('/api/valor-referencia-animal/:id', ControllerAnalisis.updateValorReferenciaAnimal);
 	
 	/**Fin Controler Analisis**/
 	
@@ -154,6 +158,9 @@ module.exports = function(app,passport) {
 	//app.get('/api/motivos', ControllerGasto.findMotivoGastos);
 	//app.get('/api/gasto-motivo/:id', ControllerGasto.agruparGastoPorMotivo);
 	
-
+  /**Controller Animal**/
+  app.post('/api/animal', ControllerAnimal.create);
+  app.get('/api/animal', ControllerAnimal.getByName);
+ 
 	
 };

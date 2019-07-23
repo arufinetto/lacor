@@ -1,0 +1,38 @@
+
+<div ng-include="'header.html'"></div>
+<div class="container"  ng-controller="animalController">
+<h4> <span><img src="animales.jpg" width="75" height="75"></span>
+</h4>
+<div>
+<form data-toggle="validator" role="form"> 
+ <div class="form-group row">
+  <label  for="name">* Nombre:</label>
+  <input type="text"  class="form-control" id="name" ng-model="newAnimal.nombre" required class="form-control">
+  
+</div> 
+ 
+  <div class="form-group row">
+    <label  for="tipo">Tipo:</label>
+    <select class="form-control" id="tipo" ng-model="newAnimal.tipo">
+	  <option>GATO</option>
+	  <option>PERRO</option>
+	  <option>CABALLO</option>
+	  <option>VACA</option>
+	  <option>CERDO</option>
+	   <option>PALOMA</option>
+     </select>
+  </div>
+  <div class="form-group row">
+    <label  for="raza">Raza:</label>
+    <input type="text"  class="form-control" id="raza" ng-model="newAnimal.raza">
+  </div>
+  <div class="form-group row">
+    <label  for="contacto">Contacto:</label>
+    <input type="text"  class="form-control" id="contacto" ng-model="newAnimal.contacto">
+  </div>
+ 
+  <a href="#" type="submit" style="float:right" class="btn btn-primary" ng-click="createAnimal()">Guardar</a>
+  <p>(*) Campo Obligatorio a cargar</p>
+</form>
+</div>
+</div>

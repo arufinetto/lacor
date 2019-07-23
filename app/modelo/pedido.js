@@ -4,13 +4,14 @@ var autoIncrement = require('mongoose-auto-increment');
 
 
 var pedidoSchema = new Schema({  
-	paciente: { type: Schema.Types.ObjectId, ref: "paciente",required:true}, 
+	paciente: { type: Schema.Types.ObjectId, ref: "paciente",required:false}, 
+	animal: { type: Schema.Types.ObjectId, ref: "animal",required:false}, 
 	medico: { type: Schema.Types.ObjectId, ref:"medico", required:true},
 	protocolo: { type:Number, unique:true},
 	fecha:  { type: Date },
 	obrasocial:  { type: String },
 	afiliado:  { type: String },
-	derivador: {type:String,enum:['Ambulatorio','Derivado','Internado'],required:false},
+	derivador: {type:String,enum:['Ambulatorio','Derivado','Internado'],required:false, default:"Ambulatorio"},
 	derivadorDescripcion:{type:String},
 	diagnostico:{type:String},
 	estado: { type: String, enum: ['Creado','Abierto','Para Entregar','Entregado','Invalido']},
@@ -27,7 +28,8 @@ var pedidoSchema = new Schema({
 });
 autoIncrement.initialize(mongoose.connection);
 pedidoSchema.plugin(autoIncrement.plugin, { model: 'pedido',field: 'protocolo',startAt:"0000000000",
-incrementBy:1});
+incrementBy:1})
+
 module.exports = mongoose.model("pedido", pedidoSchema); 
 
 

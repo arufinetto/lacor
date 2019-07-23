@@ -7,7 +7,7 @@
 	<table id="pedidosAbiertos" class="table table-striped" cellspacing="0">
 		<thead >
 		 <tr>
-				<!--<td>Numero</td>-->
+				<td></td>
 				<th>Protocolo</th>
 				<th>Fecha</th>
 				<th>Estado</th>
@@ -19,12 +19,13 @@
 		</thead> <!--ng-class-odd="'odd'" ng-class-even="'even'"-->
 		<tbody ng-repeat="pedido in pedidosAbiertosList">
 			<tr>
-				<!--<td>{{pedido.numero}}</td>-->
+				<td><span ng-show="pedido.animal !=null"><img src="animales.jpg" width="30" height="30"></span></td>
 				<td>{{pedido.protocolo}}</td>
 				<td>{{pedido.fechaModified}}</td>
 				<td>{{pedido.estado}}</td>
 				<td>{{pedido.derivadorDescripcion}}</td>
-				<td>{{pedido.paciente.apellido}}, {{pedido.paciente.nombre}}</td>
+				<td ng-show="pedido.paciente !=null"><div>{{pedido.paciente.apellido}}, {{pedido.paciente.nombre}}</div></td>
+				<td ng-show="pedido.animal !=null">{{pedido.animal.tipo}} - {{pedido.animal.nombre}}</td>
 				<td>{{pedido.diagnostico}}</td>
 				
 				<!--<td><div class="progress" ng-init="progreso=calcularProgreso(pedido)" data-toggle="collapse"> <div class="progress-bar progress-bar-warning" role="progressbar" style="width:100%">Progreso {{progreso}} %</div></div></td>-->
@@ -244,12 +245,14 @@
 									<tr>
 										
 										<td>{{formula.formula}}</td>
+									
 										<td>
 										<table>
 											<tbody  ng-repeat="vr in formula[rowIndex1].valorHallado track by $index">
 											<tr><input class="form-control" ng-model="currentLab.resultado[rowIndex1].valorHallado[0]"/></tr>
 											</tbody>
 										</table>
+										
 										</td>
 										<!--<td><button type="button" class="btn btn-xs btn-primary"  ng-click="addItem(item,valorHallado, $index)">Agregar</button>-->
 										
@@ -257,9 +260,13 @@
 									</tr>
 									
 								</tbody>
+								
 							</table>
 							
-							
+							<!--<div ng-show="currentLab.analisis.codigo== '0475'"  >
+							<p ng-if="calcularSumaGlobulosBlancos(currentLab.resultado)== 100">TODO OK</p>
+							<p ng-if="calcularSumaGlobulosBlancos(currentLab.resultado)!= 100">REVISAR LOS RESULTADOS DE GLOBULOS BLANCOS</p>
+							</div>-->
 
 						   <td ><button ng-show="currentLab.analisis.codigo== '0711'" ng-click="viewMoreItems()" ng-click="$event.stopPropagation()" class='btn btn-sm btn-primary'>Ver Mas</button></td>
 							<div ng-show="moreitems">

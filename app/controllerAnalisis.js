@@ -1,5 +1,23 @@
 var Analisis = require('./modelo/analisis');
+var fs = require('fs');
+var ObjectId = require('mongoose').Types.ObjectId;
+//const sqlite3 = require('sqlite3').verbose();
+//var path = process.cwd() + "\\app\\Equipo\\Data\\";
+//var db = new sqlite3.Database('RESULTST.DB');
 
+exports.openFile = function(){
+var path = process.cwd();
+console.log("PATH:" + path)
+var buffer = fs.readFileSync(path + "\\app\\Equipo\\Data\\RESULTST.DB");
+console.log(buffer.toString());
+}
+
+exports.openFile1 = function(){
+}
+
+
+
+       
 //GET - Return all analisis in the DB
 // con exports conseguimos modularizarlo y que pueda ser llamado desde el archivo principal de la aplicación.
 
@@ -101,6 +119,7 @@ exports.update = function(req, res) {
     	$set:{
 			determinaciones: req.body.determinaciones,
 			valorReferencia: req.body.valorReferencia,
+			valorReferenciaAnimal: req.body.valorReferenciaAnimal,
 			unidad: req.body.unidad,
 			formula: req.body.formula,
 			valor: req.body.valor,
@@ -113,6 +132,24 @@ exports.update = function(req, res) {
 
     	},function(err,analisis){
     		Analisis.find(function(err,analisis){
+    			res.json(analisis);
+    		});
+    	}
+   );
+};
+
+exports.updateValorReferenciaAnimal = function(req, res) {  
+    Analisis.update({
+    	_id:req.params.id
+    }, {
+
+    	$set:{
+			valorReferenciaAnimal: req.body.valorReferenciaAnimal,
+
+			}
+
+    	},function(err,analisis){
+    		Analisis.find({_id:ObjectId(req.params.id)},function(err,analisis){
     			res.json(analisis);
     		});
     	}

@@ -12,7 +12,10 @@ starter.factory("servicio", function(){
 	$scope.currentPage=1;
 	$scope.page=50;
 	$scope.precio=0;
-	//$scope.selectedAnalisis = {};
+	$scope.analisisValorReferenciaAnimal = {};
+	$scope.newValorReferenciaAnimal = "";
+	$scope.selectedAnimal = "";
+	$scope.miFilterReferenciaAnimal = "";
 	
 	$scope.updateUB= function(){
 		$http.put('/api/unidad-bioquimica/precio', {valor:$scope.precio})
@@ -50,6 +53,7 @@ starter.factory("servicio", function(){
 		.success(function(data) {
 			$scope.estudio = data; //filtra en pedidos en proceso
 			$scope.analisisList = data; //para filtrar en la lista de estudios
+			console.log("ARRANCA POR ACA " +$scope.analisisList[0])
 		}).error(function(err) {
 			console.log('Error: '+err);
 		});
@@ -199,8 +203,43 @@ starter.factory("servicio", function(){
 			});
 		 }
 		 
-		 
+	$scope.agregarValorReferenciaAnimal	= function(analisis, animal, valorReferencia){
+		if(analisis.valorReferenciaAnimal[animal]== null){
+			//ASIGNO LA NUEVA KEY (el nombre del animal)
+			//analisis.valorReferenciaAnimal = Object.assign({ animal:[valorReferencia] }, analisis.valorReferenciaAnimal);
+		 analisis.valorReferenciaAnimal[animal]= [valorReferencia]
+		}else{
+			//YA EXISTE LA KEY Y AGREGO UN NUEVO VALOR DE REFERENCIA
+			analisis.valorReferenciaAnimal[animal].push(valorReferencia)
+
+		}
+	} 
 	
+
+	
+		$scope.agregarAnalisis = function(analisis){
+			$scope.analisisValorReferenciaAnimal = analisis;
+			$scope.miFilterReferenciaAnimal = analisis.codigo + "," +analisis.determinaciones;
+
+			
+		}
+	
+	
+	$scope.updateValorReferenciaAnimal =function (analisis){
+			$http.put('/api/valor-referencia-animal/'+ analisis._id,{valorReferenciaAnimal: analisis.valorReferenciaAnimal} )
+			.success(function(data) {
+				$ngBootbox.alert("Los valores de referencia se guardaron exitosamente!")
+				$scope.analisisList = {}
+				$scope.newValorReferenciaAnimal = ""
+				$scope.analisisValorReferenciaAnimal = {}
+				$scope.estudio = {}
+				$scope.selectedAnimal = ""
+				$scope.miFilterReferenciaAnimal = ""
+			})
+			.error(function(err) {
+				console.log('Error: '+err);
+			});
+		 }
 		
 		
 	})
