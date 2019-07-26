@@ -119,7 +119,6 @@ exports.update = function(req, res) {
     	$set:{
 			determinaciones: req.body.determinaciones,
 			valorReferencia: req.body.valorReferencia,
-			valorReferenciaAnimal: req.body.valorReferenciaAnimal,
 			unidad: req.body.unidad,
 			formula: req.body.formula,
 			valor: req.body.valor,
