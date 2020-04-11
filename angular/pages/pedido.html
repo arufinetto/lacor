@@ -18,7 +18,7 @@
 <div class="container" ng-controller="pedidoController">
 <div>
 <form data-toggle="validator" role="form" ng-keypress="keyPressOnForm($event)">
-<div ng-controller="pacienteController">
+<div >
 
 	<div class="form-group row">
 			<label  for="fecha">Fecha de Recepci&oacuten: </label>
@@ -26,7 +26,37 @@
 			<input type="date"  id="fecha" class="form-control"  ng-model="newPedido.fecha">
 			</div>
 	</div>
-	 <div class="form-group row" >
+	<div class="form-group row" ng-controller="animalController" >
+	 <div>
+	  <label  for="animal"><span><img src="animales.jpg" width="30" height="30"></span>Animal:</label>
+	   
+	  <div class="input-group">
+			<input type="text" class="form-control" autocomplete="off" ng-model="nombreAnimal" id="animal" placeholder="Ingrese el NOMBRE..."/>
+			<span class="btn btn-info input-group-addon" id="basic-addon2" ng-click="getAnimalsByName(nombreAnimal)" ng-disabled="isEmpty(nombre)">Buscar</span>
+	       
+
+	  </div>
+	   
+		  
+		<div class="form-group row" ng-show="!isEmpty(animalsFilteredList)">
+			<table class="table table-striped">
+				<thead>
+				</thead>
+				<tbody ng-repeat="animal in animalsFilteredList">
+				<tr>
+					<td>{{animal.nombre}}</td>
+					<td>{{animal.tipo}}</td>
+					<td>{{animal.raza}}</td>
+					<td>{{animal.contacto}}</td>
+					<td><a href ng-click="agregarAnimal(animal)" ng-model="newPedido.animal" data-toggle="collapse"><span class="glyphicon glyphicon-plus"></span></a>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+	 <div class="form-group row" ng-controller="pacienteController" >
 	  <label  for="paciente">Paciente:</label>
 	  <div class="input-group">
 			<input type="text" class="form-control" autocomplete="off" ng-model="nombrePaciente" id="paciente" placeholder="Ingrese el APELLIDO, NOMBRE o DOCUMENTO del paciente..."/>

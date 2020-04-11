@@ -28,6 +28,7 @@ starter.factory("servicio", function(){
 			$scope.entregadosCount =0;
 			$scope.invalidosCount =0;
 			$scope.creadosCount =0;
+			$scope.nombreAnimal = ""
 			//$scope.pedidoFinanza = {};
 
 			
@@ -148,8 +149,8 @@ starter.factory("servicio", function(){
 	$scope.insertImage = function(doc){
 		//var logo = new Image; logo.src = 'reporte.jpg'; 
 			//doc.addImage(logo, 'JPEG', 0, 0,210,297); 
-			var logo1 = new Image; logo1.src = 'allAnimals.gif'; 
-			doc.addImage(logo1, 'GIF', 1, 1,39,37); 
+			var logo1 = new Image; logo1.src = 'animales.jpg'; 
+			doc.addImage(logo1, 'JPEG', 5,40,25,25); 
 	}
 	
 	 
@@ -190,15 +191,28 @@ starter.factory("servicio", function(){
 			
 
 			var item = pedido.analisisList;
-			doc.text(10,48,"Protocolo:"+pedido.protocolo)
+			
+			if(pedido.paciente != null ){
+				doc.text(120,58,"Fecha de Recepción: "+ pedido.fechaModified)
+				doc.text(10,48,"Protocolo:"+pedido.protocolo)
 			if(pedido.derivadorDescripcion != undefined && pedido.derivadorDescripcion != "" )
 			{doc.text(120,48,"Derivador: "+ pedido.derivadorDescripcion)}
 			doc.text(10,53,"Paciente: "+ pedido.paciente.apellido+','+pedido.paciente.nombre)
 			doc.text(10,58,"Solicitado por: "+ "DR/A. "+ pedido.medico.nombre)
-			doc.text(120,58,"Fecha de Recepción: "+ pedido.fechaModified)
+			
 			if(pedido.paciente.fechaNacimiento != undefined && pedido.paciente.fechaNacimiento != "" && pedido.paciente.fechaNacimiento != null){
 				doc.text(120,53,"Edad: "+$scope.calcularEdad(pedido.paciente.fechaNacimiento,pedido.fecha))
+			}}else{
+				//$scope.insertImage(doc);
+				doc.text(100,53,"Protocolo:"+pedido.protocolo)
+				doc.text(30,48,"Animal: "+ pedido.animal.tipo)
+				doc.text(30,53,"Nombre: "+ pedido.animal.nombre)
+				doc.text(30,58,"Raza: "+ pedido.animal.raza)
+				doc.text(100,48,"Solicitado por Veterinario/a: " + pedido.medico.nombre)
+				doc.text(100,58,"Fecha de Recepción: "+ pedido.fechaModified)
+				
 			}
+			
 			
 			//doc.setLineWidth(0.65);
 			//doc.setDrawColor(107, 255, 212);
@@ -250,7 +264,17 @@ starter.factory("servicio", function(){
 				  page = page +1;
 				}
 				doc.setFontType("bold");
-				if(item[i].analisis.valorReferencia.length>0){
+					var rangoReferencia = null;
+				if(pedido.paciente != null){
+					 rangoReferencia =item[i].analisis.valorReferencia;
+				}else{
+					if(item[i].analisis.valorReferenciaAnimal[pedido.animal.tipo] == undefined){
+						rangoReferencia = []
+					}else{
+						rangoReferencia =item[i].analisis.valorReferenciaAnimal[pedido.animal.tipo]
+					}
+				}
+				if(rangoReferencia.length>0){
 					doc.text(100,position+22,"VALOR HALLADO: ");
 				}else{
 					
@@ -261,9 +285,10 @@ starter.factory("servicio", function(){
 					position= position +22 //lo que ocupa lo comun de todos los estudios
 				}
 				doc.setFontType("normal");
+			
+			
 				
-				
-		if(item[i].analisis.valorReferencia.length>0){
+		if(rangoReferencia.length>0){
 			
 				doc.setFontSize(7.5);
 				doc.setTextColor(132,134,136);
@@ -372,12 +397,12 @@ starter.factory("servicio", function(){
 					position=initial;
 					
 				}
-				
 			
 					position=position+5;
 					doc.setFontSize(7.5);
 					doc.setTextColor(132,134,136);
-					for(var k=0;k<item[i].analisis.valorReferencia.length;k++){
+					
+					for(var k=0;k<rangoReferencia.length;k++){
 						inicial=position;
 						if (position >= height)
 						{
@@ -387,7 +412,7 @@ starter.factory("servicio", function(){
 							position=45;
 							initial=40;							
 						}
-						doc.text(15,position,item[i].analisis.valorReferencia[k]);
+						doc.text(15,position,rangoReferencia[k]);
 						position=position+5;
 						ref=position;
 					}
@@ -399,7 +424,7 @@ starter.factory("servicio", function(){
 					
 					doc.setTextColor(45,46,47);
 				//doc.setFontSize(9.5);
-
+			
 			}
 
 			
@@ -859,6 +884,7 @@ starter.factory("servicio", function(){
 			medico: '',
 			fecha: new Date(),
 			paciente: null,
+			animal: null,
 			estado: 'Creado',
 			derivador: '',
 			derivadorDescripcion:'',
@@ -905,8 +931,9 @@ starter.factory("servicio", function(){
 				$scope.newPedido.analisisList.push(servicio.data.analisisListPedido[i]);
 			}
 			
-			$scope.newPedido.paciente = servicio.data.paciente._id
-			$scope.newPedido.medico = servicio.data.medico._id
+			$scope.newPedido.paciente = servicio.data.paciente == null ? null : servicio.data.paciente._id
+			$scope.newPedido.medico =servicio.data.medico == null ? null : servicio.data.medico._id
+			$scope.newPedido.animal = servicio.data.animal == null ? null : servicio.data.animal._id
 			if($scope.obra != null){
 				$scope.newPedido.obrasocial = $scope.obra.obraSocial;
 				$scope.newPedido.afiliado = $scope.obra.afiliado;
@@ -989,5 +1016,22 @@ starter.factory("servicio", function(){
 					console.log('Error: '+err);
 				});
 			}
-		
+	$scope.calcularSumaGlobulosBlancos = function (analisisList){
+			var sum = 0;
+			for(var i=9;i<15;i++){
+				if(analisisList[i].valorHallado[0] == ""){
+					analisisList[i].valorHallado[0] =0
+				}
+				
+				sum = sum + parseInt(analisisList[i].valorHallado[0],10)
+				
+			}
+
+			return sum;
+		}
+	
 	})
+	
+	 
+
+	

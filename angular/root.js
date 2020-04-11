@@ -94,5 +94,11 @@ var starter = angular.module("MainApp", ["ngRoute","ngBootbox","ui.bootstrap"])
             }).when("/gastos", {
                 controller: "gastoController",
                 templateUrl: "pages/gasto.html"
+            }).when("/nuevo-rango-referencia", {
+                controller: "analisisController",
+                templateUrl: "pages/nuevo-rango-referencia.html"
+            }).when("/nuevo-animal", {
+                controller: "animalController",
+                templateUrl: "pages/nuevo-animal.html"
             })
 })

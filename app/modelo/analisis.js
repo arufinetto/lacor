@@ -1,6 +1,10 @@
 var mongoose = require('mongoose'); 
 var Schema = mongoose.Schema;  
 
+/*var ValorReferenciaAnimal = new Schema({
+	key: String,
+	value: [String]
+})*/
 var analisisSchema = new Schema({  
 	codigo: {type:String,unique:true,require:true, validate: /[0-9]+[a-zA-Z]*[-]*/},
 	determinaciones: {type:String,require:true},
@@ -10,6 +14,7 @@ var analisisSchema = new Schema({
 	valor: String,
 	otro: String,
 	valorReferencia:[String],
+	valorReferenciaAnimal:Map,
 	unidad:String,
 	muestraDefault:String,
 	metodoDefault: String,

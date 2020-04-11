@@ -63,6 +63,7 @@ starter.factory("servicio", function(){
 			
 			$scope.agregarAnalisis = function(analisis){
 				$scope.analisisPerfil.push(analisis); 
+			
 			}
 			
 			$scope.removeAnalisis = function(index){

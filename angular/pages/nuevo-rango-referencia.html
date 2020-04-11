@@ -1,0 +1,78 @@
+<!--<HTML>
+<HEAD>
+	<TITLE>Listado de Examenes</TITLE>
+	<script src="js/angular.min.js"></script>
+
+	
+	<!-- jQuery library 
+	<link rel="stylesheet" href="js/jquery-2.1.3.js">
+	<META http-equiv=Content-Type content="text/html; charset=windows-1252">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/main.css">
+	<!-- Latest compiled JavaScript
+	<script src="js/main.js"></script>
+</HEAD>
+<body>
+<!--BODY ng-app="MainApp" ng-controller="pacienteController">-->
+<div ng-include="'header.html'"></div>
+<div class="container" ng-controller="analisisController">
+
+<div>
+<form data-toggle="validator" role="form"> 
+ 
+  <div class="form-group row" >
+        <label for="analisis">Estudios:</label>
+		<div class="input-group">
+			<input type="text" class="form-control" ng-model="miFilterReferenciaAnimal" id="analisis" placeholder="Ingrese el nombre/codigo del analisis...">
+			<span class="btn btn-info input-group-addon" id="basic-addon2" ng-click="findAnalisisByName(miFilterReferenciaAnimal)" ng-disabled="isEmpty(miFilterReferenciaAnimal)">Buscar</span>
+		</div>
+		<div class="form-group row">
+			<table class="table table-striped">
+				<thead>
+				</thead>
+				<tbody ng-repeat="est in estudio" >
+				<tr>
+					<td>{{est.codigo}}</td>
+					<td>{{est.determinaciones}}</td>
+					<td><a href ng-click="agregarAnalisis(est)" data-toggle="collapse"><span class="glyphicon glyphicon-plus"></span></a>
+				</tr>
+				</tbody>
+				</tbody>
+			</table>
+		</div>
+</div>
+
+  <div class="form-group row">
+    <label  for="tipo">Animal:</label>
+    <select class="form-control" id="tipo" ng-model="selectedAnimal">
+	  <option>GATO</option>
+	  <option>PERRO</option>
+	  <option>CABALLO</option>
+	  <option>VACA</option>
+	  <option>CERDO</option>
+	   <option>PALOMA</option>
+     </select>
+  </div>
+  
+	<div class="form-group row" ng-show="selectedAnimal != ''">
+	<div class="input-group">
+	  <input type="text" class="form-control" placeholder="Rango de Referencia" aria-describedby="basic-addon2" ng-model="newValorReferenciaAnimal">
+	  <span class="btn btn-info input-group-addon" id="basic-addon2" ng-click="agregarValorReferenciaAnimal(analisisValorReferenciaAnimal,selectedAnimal,newValorReferenciaAnimal)">Agregar</span>
+	</div>
+	<div>
+	
+			<table class="table table-bordered table-striped"  >
+			<tbody ng-repeat="vr in analisisValorReferenciaAnimal.valorReferenciaAnimal[selectedAnimal]">
+			<td>{{vr}}</td>
+			<!--<td ><input style="border-radius: 10px 10px;width:500px" type="text" ng-model="analisis.valorReferenciaAnimal['GATO'][$index]"  /></td>
+			<td><button ng-click="" class="btn btn-xs  btn-danger" data-toggle="collapse" >Eliminar!</button></td>-->
+			</tbody>
+			</table>
+
+		</div>
+	</div>
+ 
+  <button ng-click="updateValorReferenciaAnimal(analisisValorReferenciaAnimal)" type="submit" style="float:right" class="btn btn-primary" data-toggle="collapse" >Guardar</button>
+</form>
+</div>
+</div>

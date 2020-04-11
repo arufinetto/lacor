@@ -1,5 +1,6 @@
 var Pedido = require('./modelo/pedido');
 var Paciente = require('./modelo/paciente');
+var Animal = require('./modelo/animal');
 var Ciudad = require('./modelo/ciudad');
 var Prestador = require('./modelo/prestador');
 var Analisis = require('./modelo/analisis');
@@ -20,6 +21,7 @@ Pedido.aggregate([
 	{$match:{estado:req.query.estado}},
 	{ $lookup: { from: "medicos", localField: "medico", as:"medico",foreignField: "_id"}},
 	{ $lookup: { from: "pacientes", localField: "paciente", as:"paciente",foreignField: "_id"}},
+	{ $lookup: { from: "animals", localField: "animal", as:"animal",foreignField: "_id"}},
 	{ $project: {
         fechaModified: { $dateToString: { format: "%d/%m/%Y", date: "$fecha" } },
 		fecha:1,
@@ -31,9 +33,11 @@ Pedido.aggregate([
 		medico: {$arrayElemAt: [ '$medico', 0 ]},
 		estado:1,
 		protocolo:1,
+		protocoloAnimal:1,
 		diagnostico:1,
 		derivadorDescripcion:1,
-		obrasocial:1
+		obrasocial:1,
+		animal:{$arrayElemAt: [ '$animal', 0 ]}
 		  }
        }, 
 	   
@@ -41,7 +45,7 @@ Pedido.aggregate([
 	{$skip: skip},
 		{$limit: perPage}
 	], function (err, pedido) {
-		Analisis.populate(pedido, {path: "analisisList.analisis", select:{determinaciones:1,codigo:1,formula:1,valorReferencia:1,unidad:1,muestraDefault:1,metodoDefault:1,multiple:1}},function(err,labs){
+		Analisis.populate(pedido, {path: "analisisList.analisis", select:{determinaciones:1,codigo:1,formula:1,valorReferencia:1,unidad:1,muestraDefault:1,metodoDefault:1,multiple:1,valorReferenciaAnimal:1}},function(err,labs){
 
 		if (err) return res.send(500, err.message)
 		return res.status(200).json(pedido);
@@ -53,16 +57,17 @@ Pedido.aggregate([
 
 exports.filter = function(req, res) {
     Pedido.find({estado:req.query.estado}).sort({fecha: 1}, function(err, pedido) {
+		Animal.populate(pedido, {path: "animal"},function(err,pedido){
 		Paciente.populate(pedido, {path: "paciente"},function(err,pedido){
 			res.status(200).jsonp(pedido);
 		})
-		
+	})
     });
 
 };
 
 exports.count = function(req, res) {
-    Pedido.count({estado:req.query.estado}, function(err, pedido) {
+    Pedido.countDocuments({estado:req.query.estado}, function(err, pedido) {
 			res.status(200).jsonp(pedido);
 		
     });
@@ -78,6 +83,7 @@ Pedido.aggregate([
 		fecha:1,
 		analisisList:1,
 		paciente:1,
+		animal:1,
 		medico:1,
 		estado:1,
 		protocolo:1,
@@ -297,7 +303,7 @@ exports.getPedido = function(req, res) {
    ],function(err, pedido) {
 		Paciente.populate(pedido, {path: "paciente"},function(err,pedido){
 			Medico.populate(pedido,{path: "medico"},function(err,pedido){
-				Analisis.populate(pedido, {path: "analisisList.analisis", select:{determinaciones:1,codigo:1,formula:1,valorReferencia:1,unidad:1,muestraDefault:1,metodoDefault:1,multiple:1}},function(err,labs){
+				Analisis.populate(pedido, {path: "analisisList.analisis", select:{determinaciones:1,codigo:1,formula:1,valorReferencia:1,unidad:1,muestraDefault:1,metodoDefault:1,multiple:1,valorReferenciaAnimal:1}},function(err,labs){
 			
 							res.status(200).jsonp(labs);
 
@@ -376,6 +382,7 @@ exports.createCiudad = function(req, res) {
 exports.add = function(req, res) {  
   var pedido = new Pedido({
 		paciente: req.body.paciente,
+		animal: req.body.animal,
 		medico: req.body.medico,
 		fecha: req.body.fecha,
 		estado: req.body.estado,
@@ -591,23 +598,24 @@ exports.nuevosPedidos = function(req, res) {
 			analisisList:1
 		 }
 		},
-		
-			{$match: {$and:[{mes: parseInt(req.query.mes) },{anio:parseInt(req.query.anio)}]}},
 			
+			{$match: {$and:[{mes: parseInt(req.query.mes) },{anio:parseInt(req.query.anio)}]}},
+	
 			{$sort: {fecha:1}}
 		],function(err,data){
+				
 				if(err) res.send(500, err);
 				else{
 					Paciente.populate(data, {path: "paciente",select:{nombre:1,apellido:1,ciudad:1}},function(err,data){
 					//Analisis.populate(data, {path: "analisisList.analisis"},function(err,data){
 					Medico.populate(data, {path: "medico"},function(err,data){
+							
 							res.status(200).jsonp(data);
 							});
 							
 				//});
-			
+	
 		});
-		
 	}
 })
 	 
