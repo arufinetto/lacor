@@ -4,9 +4,9 @@ var Paciente = require('./modelo/paciente');
 
 //GET - Return all paciente in the DB
 // con exports conseguimos modularizarlo y que pueda ser llamado desde el archivo principal de la aplicación.
-exports.findAll = function(req, res) { 
+exports.findAll = function(req, res) {
 var page = req.params.page || 1;
-var perPage = 25; 
+var perPage = 25;
     Paciente.find({})
 			.sort({apellido:1})
 			.skip((perPage*page)-perPage)
@@ -17,7 +17,17 @@ var perPage = 25;
 			})
 };
 
-exports.add = function(req, res) {  
+exports.findAllWithoutPag = function(req, res) {
+    Paciente.aggregate([
+			{ $project: {id:1, nombre:1, apellido:1 } },
+      { $sort: { apellido:1 } },
+    ],function(err, paciente) {
+				res.status(200).jsonp(paciente);
+	    });
+
+};
+
+exports.add = function(req, res) {
   var paciente = new Paciente({
 		nombre: req.body.nombre,
 		apellido: req.body.apellido,
@@ -40,7 +50,7 @@ exports.add = function(req, res) {
     });
 };
 
-exports.update = function(req, res) {  
+exports.update = function(req, res) {
     Paciente.update({
     	_id:req.params.id
     }, {
@@ -58,7 +68,7 @@ exports.update = function(req, res) {
 			telefono: req.body.telefono,
 			celular: req.body.celular,
 			domicilio: req.body.domicilio
-		
+
     		}
 
     	},function(err,paciente){
@@ -70,11 +80,11 @@ exports.update = function(req, res) {
 };
 
 
-exports.updateObraSocial = function(req, res) {  
+exports.updateObraSocial = function(req, res) {
     Paciente.update({
     	_id:req.params.id,
 		"obraSocial._id":req.params.ob_id
-    }, 
+    },
 
     	{$set :
 			{
@@ -93,13 +103,13 @@ exports.updateObraSocial = function(req, res) {
 	 Paciente.find({$or:[{apellido: {$regex: req.query.apellido, $options:"ix"}},{nombre: {$regex: req.query.apellido,$options:"ix"}},{documento: {$regex:req.query.apellido}}]},function(err,paciente){
 					if(err) return res.status(500).send(err.message);
 					res.status(200).jsonp(paciente);
-					
+
     		});
-			
+
 };
 
 
-exports.deletePaciente = function(req, res) {  
+exports.deletePaciente = function(req, res) {
     Paciente.remove({
      _id:req.params.id
 
@@ -109,7 +119,7 @@ exports.deletePaciente = function(req, res) {
     	});
 	});
 };
-    
+
 exports.getPacienteByCiudad = function(req, res){
 	Paciente.aggregate(
 	[{$group:{_id:"$ciudad", cantidad:{$sum:1}}}, {$sort: {cantidad:-1}}],function (err, result) {
@@ -119,13 +129,13 @@ exports.getPacienteByCiudad = function(req, res){
 			//Pedido.find({},{select:{protocolo:1}},function(err,result){
 				res.status(200).jsonp(result);
 			//})
-			
+
         }
 	})
 }
-	
-	
-exports.nuevosPacientes = function(req, res) {  
+
+
+exports.nuevosPacientes = function(req, res) {
        var today = new Date();
 		Paciente.aggregate([
 		{ $project: {
@@ -138,16 +148,15 @@ exports.nuevosPacientes = function(req, res) {
 			anio:{$year:'$fechaCreacion'}
 		 }
 		},
-		
+
 		{$match: {$and:[{mes: parseInt(today.getMonth()+1) },{anio:parseInt(today.getFullYear())}]}},
 		//{$group:{_id:'$fechaModified', gasto:{"$push": {motivo:"$motivo",referencia:"$referencia",costo:"$costo"}}}},
-			
-			
+
+
 			{$sort: {fechaCreacion:1}}
 		],function(err,data){
 				if(err) res.send(500, err);
 				res.status(200).jsonp(data);
 		});
-	 
-}
 
+}
