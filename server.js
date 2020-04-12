@@ -1,5 +1,5 @@
 /*var express  = require('express');
-var mongoose = require('mongoose'); 
+var mongoose = require('mongoose');
 var app      = express();
 var port	 = 3000;
 var path = require('path');
@@ -12,11 +12,11 @@ mongoose.connect('mongodb://localhost:27017/laboratorios', function(err, res) {
 	throw err;
  }
  else{console.log('Connected to Database');}
- 
+
 });
 
 app.configure(function() {
-	app.use(express.static(__dirname + '/angular')); 
+	app.use(express.static(__dirname + '/angular'));
 	console.log('dirname:'+__dirname)
 	app.use(express.bodyParser());
 });
@@ -32,7 +32,7 @@ var express  = require('express'),
 	bodyParser=require('body-parser'), //para los middleware
 	methodOverride=require('method-override'),
 	queryParams = require('express-query-params');
-	mongoose = require('mongoose'); 
+	mongoose = require('mongoose');
 	path = require('path'); //para hacerlo multiplataforma
 	favicon = require('serve-favicon');
 	//logger = require('morgan');
@@ -40,7 +40,12 @@ var express  = require('express'),
 	passport = require('passport');
 
 app.configure(function() {
-	app.use(express.static(__dirname + '/angular')); 
+  app.use(function(req, res,next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next()
+});
+	app.use(express.static(__dirname + '/angular'));
 	app.use(bodyParser.urlencoded({extended:false})); //para los formularios
 	app.use(express.bodyParser());
 	app.use(methodOverride());

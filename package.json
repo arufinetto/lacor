@@ -22,11 +22,11 @@
     "jsonwebtoken": "^7.4.1",
     "jsreport": "^1.6.0",
     "method-override": "^2.1.2",
-    "mongoose": "~3.6.2",
+    "mongoose": "5.9.7",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0"
   },
-  
+
   "devDependencies": {
 	"nodemon": "^1.14.8",
     "chai": "^3.5.0",

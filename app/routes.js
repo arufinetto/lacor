@@ -7,6 +7,7 @@ var ControllerMuestraMetodo= require('./controllerMuestraMetodo');
 var ControllerLogin= require('./controllerLogin');
 var ControllerPerfil= require('./controllerPerfil');
 var ControllerGasto= require('./controllerGasto');
+var ControllerAnimal= require('./controllerAnimal');
 
 var isAuthenticated = function (req, res, next) {
   // if user is authenticated in the session, call the next() to call the next request handler
@@ -83,6 +84,8 @@ module.exports = function(app,passport) {
 
 	app.get('/api/pacientes', ControllerPacientes.findAllWithoutPag);
 
+  app.get('/api/animal',  ControllerAnimal.getByName)
+  app.post('/api/animal',  ControllerAnimal.create)
 
 	/**fin controler paciente**/
 
