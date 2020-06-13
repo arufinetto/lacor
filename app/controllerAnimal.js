@@ -2,7 +2,7 @@ var Animal = require('./modelo/animal');
 var moment = require('moment');
 
 
-exports.create = function(req, res) {  
+exports.create = function(req, res) {
   var animal = new Animal ({
 	  nombre: req.body.nombre,
 	  tipo: req.body.tipo,
@@ -23,18 +23,24 @@ exports.getByName= function(req, res) {
     });
 };
 
+exports.find = function(req, res) {
+    Animal.aggregate([
+			{ $project: {id:1, nombre:1, raza:1, tipo:1, contacto:1} },
+      { $sort: { nombre:1 } },
+    ],function(err, animal) {
+				res.status(200).jsonp(animal);
+	    });
 
+};
 
-
-
-exports.updateState = function(req, res) {  
+exports.updateState = function(req, res) {
     Pedido.update({
     	_id:req.params.id
     }, {
 
     	$set:{
     	estado: req.body.estado,
-	
+
     		}
 
     	},function(err,pedido){
@@ -50,91 +56,91 @@ exports.updateState = function(req, res) {
 							res.status(200).jsonp(labs);
 
 		//	});
-			
+
 			})
 
 		})
     });
     }
    );
-    
+
 }
 
 
-exports.addAnalysis = function(req, res) {  
+exports.addAnalysis = function(req, res) {
     Pedido.update({
     	_id:req.params.id,
 		estado: 'Abierto',
-		
-		 
-    }, 
+
+
+    },
 
 		{ $push: { 'analisisList': { analisis: req.body.analisis, muestra:req.body.muestra,metodo:req.body.metodo, observacion:req.body.observacion,resultado:req.body.resultado } }
-			
+
    		},function(err,pedido){
     		Pedido.find({estado:"Abierto"},function(err,pedido){
     			res.json(pedido);
     		});
     	}
    );
-    
+
 }
 
 
-/*exports.deleteAnalysis = function(req, res) {  
+/*exports.deleteAnalysis = function(req, res) {
     Pedido.update({
     	_id:req.params.id,
 		estado: 'Creado'
-    }, 
+    },
 
 		{ $pull: { 'analisisList': { analisis: req.body.analisis } }
-			
+
    		},function(err,pedido){
     		Pedido.find({_id:req.params.id},function(err,pedido){
     			res.json(pedido);
     		});
     	}
    );
-    
+
 }*/
 
 
-exports.saveResults = function(req, res) {  
+exports.saveResults = function(req, res) {
 
     Pedido.update({
     	_id:req.params.id,
 		estado: 'Abierto',
 		"analisisList.analisis":req.params.analisis_id,
-	
-    }, 
+
+    },
 
 		{$set : {"analisisList.$.resultado": req.body.resultado,
 		"analisisList.$.muestra": req.body.muestra,
 		"analisisList.$.metodo": req.body.metodo,
 		"analisisList.$.repetido": req.body.repetido}
-			
+
    		},function(err,pedido){
-			
+
 				Pedido.find(function(err,pedido){
 					if(err) res.status(500).json("Error " +err)
 					res.json(pedido);
 				});
 			}
-    	
+
    );
-    
+
 }
 
-exports.includeAnalysis = function(req, res) {  
+exports.includeAnalysis = function(req, res) {
 
     Pedido.update({
     	_id:req.params.id,
 		"analisisList.analisis":req.params.analisis,
-	
-		}, 
+
+		},
 
 		{$set : {"analisisList.$.imprimir": req.body.imprimir}
-			
+
    		},function(err,pedido){
 			if(err) res.status(500).json("Error " +err)
 				else{ res.status(200).json("Updated")}
@@ -144,34 +150,34 @@ exports.includeAnalysis = function(req, res) {
 				});
 			}*/
 });
-    
+
 }
 
-exports.saveObservaciones = function(req, res) {  
+exports.saveObservaciones = function(req, res) {
 
     Pedido.update({
     	_id:req.params.id,
 		estado: 'Abierto',
 		"analisisList.analisis":req.params.analisis_id,
-	
-    }, 
+
+    },
 
 		{$set : {"analisisList.$.observacion": req.body.observacion}
-			
+
    		},function(err,pedido){
-			
+
 				Pedido.find(function(err,pedido){
 					if(err) res.status(500).json("Error " +err)
 					res.json(pedido);
 				});
 			}
-    	
+
    );
-    
+
 }
 
 
-exports.deletePedido = function(req, res) {  
+exports.deletePedido = function(req, res) {
     Pedido.remove({
      _id:req.params.id,
 	 estado: "Invalido"
@@ -184,11 +190,11 @@ exports.deletePedido = function(req, res) {
 };
 
 
-exports.nuevosPedidos = function(req, res) {  
+exports.nuevosPedidos = function(req, res) {
 	//var currentMonth=parseInt(req.query.mes);
 	//var currentYear=parseInt(req.query.anio);
     // var today = new Date(2019,02 , 01, 10, 33, 30, 0);
-		
+
 		Pedido.aggregate([
 		{ $project: {
 			fechaModified: { $dateToString: { format: "%d/%m/%Y", date: "$fecha" } },
@@ -201,26 +207,25 @@ exports.nuevosPedidos = function(req, res) {
 			analisisList:1
 		 }
 		},
-			
+
 			{$match: {$and:[{mes: parseInt(req.query.mes) },{anio:parseInt(req.query.anio)}]}},
-	
+
 			{$sort: {fecha:1}}
 		],function(err,data){
-				
+
 				if(err) res.send(500, err);
 				else{
 					Paciente.populate(data, {path: "paciente",select:{nombre:1,apellido:1,ciudad:1}},function(err,data){
 					//Analisis.populate(data, {path: "analisisList.analisis"},function(err,data){
 					Medico.populate(data, {path: "medico"},function(err,data){
-							
+
 							res.status(200).jsonp(data);
 							});
-							
+
 				//});
-	
+
 		});
 	}
 })
-	 
+
 }
-  

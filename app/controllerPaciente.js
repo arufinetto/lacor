@@ -1,4 +1,5 @@
 var Paciente = require('./modelo/paciente');
+var Pedido= require('./modelo/pedido');
 //var dateFormat = require('dateformat');
 //var moment = require('m');
 
@@ -100,7 +101,9 @@ exports.updateObraSocial = function(req, res) {
    );
 };
  exports.filter= function(req, res) {
-	 Paciente.find({$or:[{apellido: {$regex: req.query.apellido, $options:"ix"}},{nombre: {$regex: req.query.apellido,$options:"ix"}},{documento: {$regex:req.query.apellido}}]},function(err,paciente){
+	 Paciente.find({$or:[{apellido: {$regex: req.query.apellido, $options:"ix"}},{nombre: {$regex: req.query.apellido,$options:"ix"}},{documento: {$regex:req.query.apellido}}]},
+   null,{sort: {apellido:1}},
+   function(err,paciente){
 					if(err) return res.status(500).send(err.message);
 					res.status(200).jsonp(paciente);
 
@@ -108,17 +111,34 @@ exports.updateObraSocial = function(req, res) {
 
 };
 
+exports.findPacienteById= function(req, res) {
+  Paciente.find({_id: req.params.id},
+  function(err,paciente){
+         if(err) return res.status(500).send(err.message);
+         res.status(200).jsonp(paciente);
+
+       });
+
+};
 
 exports.deletePaciente = function(req, res) {
-    Paciente.remove({
-     _id:req.params.id
 
-	},function(err,data){
-		Paciente.find(function(err,data){
-    			res.json(data);
-    	});
-	});
-};
+  Pedido.countDocuments({$and:[{paciente:req.params.id},{estado:{$in:['Creado','Abierto','Entregado','Para Entregar']}}]},
+  function(err,result){
+      if (err) return res.status(500).jsonp(err);
+   if(result > 0){
+      res.status(403).jsonp({message:"El paciente no se puede eliminar porque tiene pedidos asociados."})
+    }else{
+      Paciente.remove({
+         _id:req.params.id
+
+      },function(err,data){
+          if(err) return res.status(500).send(err.message);
+          res.status(200).jsonp({message:"El paciente se elimino correctamente"})
+        });
+    }
+  })
+}
 
 exports.getPacienteByCiudad = function(req, res){
 	Paciente.aggregate(

@@ -109,7 +109,7 @@ exports.getLastResult = function(req, res) {
 
 Pedido.aggregate([
 {$unwind: '$analisisList'},
-{$match:{$and:[{paciente:ObjectId(req.params.paciente)},{estado:{$ne:"Invalido"}}, {protocolo: {$lt:Number(req.params.protocolo)}},{ 'analisisList.analisis':ObjectId(req.params.analisis) }]}},
+{$match:{$and:[{$or:[{paciente:ObjectId(req.params.paciente)},{animal:ObjectId(req.params.paciente)}]},{estado:{$ne:"Invalido"}}, {protocolo: {$lt:Number(req.params.protocolo)}},{ 'analisisList.analisis':ObjectId(req.params.analisis) }]}},
 {$project:  	{
 					fecha:1,
 					protocolo:1,
