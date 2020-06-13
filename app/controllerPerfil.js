@@ -1,7 +1,7 @@
 var Perfil = require('./modelo/perfil');
 var Analisis = require('./modelo/analisis');
 
-exports.findPerfil = function(req, res) {  
+exports.findPerfil = function(req, res) {
   Perfil.find({nombre:req.query.nombre},function(err, data) {
    Analisis.populate(data, {path: "analisisList.analisis", select:{valorReferencia:1,UB:1,valor:1,determinaciones:1,codigo:1,formula:1,unidad:1,muestraDefault:1,metodoDefault:1,multiple:1}},function(err,labs){
 			res.status(200).jsonp(labs);
@@ -11,7 +11,7 @@ exports.findPerfil = function(req, res) {
 
 
 
-exports.findPerfils = function(req, res) {  
+exports.findPerfils = function(req, res) {
   Perfil.find({},null,{sort:{nombre:1}},function(err, data) {
    Analisis.populate(data, {path: "analisisList.analisis", select:{valorReferencia:1,UB:1,determinaciones:1,codigo:1,formula:1,unidad:1,muestraDefault:1,metodoDefault:1,multiple:1}},function(err,labs){
 			res.status(200).jsonp(labs);
@@ -20,7 +20,7 @@ exports.findPerfils = function(req, res) {
 }
 
 
-exports.createPerfil = function(req, res) {  
+exports.createPerfil = function(req, res) {
   var perfil = new Perfil ({
 	  nombre: req.body.nombre,
 	  analisisList: req.body.analisisList
@@ -35,7 +35,7 @@ exports.createPerfil = function(req, res) {
 
 
 
-exports.deleteMetodo = function(req, res) {  
+exports.deleteMetodo = function(req, res) {
     Metodo.remove({
      _id:req.params.id
 
