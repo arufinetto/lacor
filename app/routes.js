@@ -73,6 +73,8 @@ module.exports = function(app,passport) {
 
 	app.delete('/api/paciente/:id', ControllerPacientes.deletePaciente);
 
+  app.get('/api/paciente/:id', ControllerPacientes.findPacienteById);
+
 	app.post('/api/paciente', ControllerPacientes.add);
 
 	app.put('/api/paciente/:id', ControllerPacientes.update);

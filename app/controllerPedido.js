@@ -15,7 +15,7 @@ var async = require('async');
 
 exports.findAll = function(req, res) {
 var page = req.query.page || 1;
-var perPage = 25; 
+var perPage = 25;
 var skip =(perPage*page)-perPage;
 Pedido.aggregate([
 	{$match:{estado:req.query.estado}},
@@ -39,8 +39,8 @@ Pedido.aggregate([
 		obrasocial:1,
 		animal:{$arrayElemAt: [ '$animal', 0 ]}
 		  }
-       }, 
-	   
+       },
+
 	{$sort:{protocolo:1}},
 	{$skip: skip},
 		{$limit: perPage}
@@ -69,15 +69,15 @@ exports.filter = function(req, res) {
 exports.count = function(req, res) {
     Pedido.countDocuments({estado:req.query.estado}, function(err, pedido) {
 			res.status(200).jsonp(pedido);
-		
+
     });
 
 };
 
-exports.getPedidoByPaciente = function(req, res) {  
-
+exports.getPedidoByPaciente = pacienteId = function(req, res) {
+//console.log("LA FUNCION")
 Pedido.aggregate([
-{$match: {paciente:ObjectId(req.params.paciente)}},
+{$match: {paciente:pacienteId/*ObjectId(req.params.paciente)*/}},
 { $project: {
         fechaModified: { $dateToString: { format: "%d/%m/%Y", date: "$fecha" } },
 		fecha:1,
@@ -99,13 +99,13 @@ Pedido.aggregate([
 			res.status(200).jsonp(labs);
 	})
 })
-   
+
 })
 });
 }
 
 
-exports.getLastResult = function(req, res) {  
+exports.getLastResult = function(req, res) {
 
 Pedido.aggregate([
 {$unwind: '$analisisList'},
@@ -130,16 +130,16 @@ Pedido.aggregate([
 
 exports.getLastResult1 = function(req, res){
 	Pedido.find({},{paciente:ObjectId(req.params.paciente)},
-				{estado:{$ne:"Invalido"}}, 
+				{estado:{$ne:"Invalido"}},
 				{ 'analisisList.analisis': { $elemMatch: { analisis:ObjectId(req.params.analisis) } }},function(err, pedido) {
 				if(err) res.send(500, err.message);
 				res.status(200).jsonp(pedido);
-}) 
+})
 }
 
 
-exports.filterPedidoByFechaAndMedico = function(req, res) {  
-	
+exports.filterPedidoByFechaAndMedico = function(req, res) {
+
 Pedido.aggregate([
 		{
 			$match:{estado:{$ne:"Invalido"}}
@@ -163,17 +163,17 @@ Pedido.aggregate([
         }
     });
 
-};	
+};
 
-exports.filterPedidoByDiagnostico = function(req, res) {  
-	
+exports.filterPedidoByDiagnostico = function(req, res) {
+
 Pedido.aggregate([
 		{
 			$match:{estado:{$ne:"Invalido"}}
 		},
         {
             $group: {
-                _id: "$diagnostico",  
+                _id: "$diagnostico",
                 count: {$sum: 1}
             }
         },
@@ -184,14 +184,14 @@ Pedido.aggregate([
         if (err) {
             res.send(500, err);
         } else {
-			
+
 			res.status(200).jsonp(result);
         }
     });
 
 };
 
-exports.filterPedidoByObraSocial = function(req, res) {  
+exports.filterPedidoByObraSocial = function(req, res) {
 
 /*var fech=new Date(req.query.fechahasta).toISOString();
 fech.setUTCHours(26,59,59)
@@ -205,16 +205,16 @@ Pedido.aggregate([
 		},
         {
             $group: {
-                _id: "$obrasocial", 
+                _id: "$obrasocial",
                 count: {$sum: 1},
 				protocolo:{"$push": {id:"$protocolo"}}
 			}
         },
-	
+
 		{
 			$sort:{count:-1}
 		}
-		
+
     ], function (err, result) {
         if (err) {
             res.send(500, err);
@@ -222,26 +222,26 @@ Pedido.aggregate([
 			//Pedido.find({},{select:{protocolo:1}},function(err,result){
 				res.status(200).jsonp(result);
 			//})
-			
+
         }
     });
 
-};	
+};
 
-exports.filterPedidoByAnalisis = function(req, res) {  
-	
+exports.filterPedidoByAnalisis = function(req, res) {
+
 Pedido.aggregate([
 		{
 			$match: {$and:[{estado:{$ne:"Invalido"}}]}
-			
+
 		},
 		{
-			 $unwind: '$analisisList' 
-			  
+			 $unwind: '$analisisList'
+
 		},
         {
             $group: {
-                _id: "$analisisList.analisis",  
+                _id: "$analisisList.analisis",
                 count: {$sum: 1}
             }
         },
@@ -254,14 +254,14 @@ Pedido.aggregate([
         } else {
 			Analisis.populate(result, {path: "_id",select:{determinaciones:1}},function(err,result){
 				res.status(200).jsonp(result);
-				
+
 			})
         }
     });
 
-};	
+};
 
-exports.proporcionEstudiosDerivados = function(req, res) {  
+exports.proporcionEstudiosDerivados = function(req, res) {
 var start_date = new Date("2018-08-31T00:00:00.000Z");
 var end_date = new Date("2018-09-31T24:59:00.000Z");
 
@@ -269,7 +269,7 @@ Pedido.aggregate([
 {$match:{$and:[{fecha:{"$gte": start_date.toISOString()}},{fecha:{"$lte": end_date.toISOString()}}]}},
 {$unwind:"$analisisList"},
 {$group: {
-           _id: "$analisisList.analisis",  
+           _id: "$analisisList.analisis",
            count: {$sum: 1}
           }},
             {$sort:{count:-1}}
@@ -279,13 +279,13 @@ Pedido.aggregate([
         } else {
 			Analisis.populate(result, {path: "_id",select:{determinaciones:1}},function(err,result){
 				res.status(200).jsonp(result);
-				
+
 			})
         }
     });
 }
 
-exports.getPedido = function(req, res) {  
+exports.getPedido = function(req, res) {
  Pedido.aggregate([
 	{$match:{_id:ObjectId(req.params.id)}},
 			{
@@ -299,33 +299,33 @@ exports.getPedido = function(req, res) {
 		diagnostico:1,
 		derivadorDescripcion:1
 		  }
-       } 
+       }
    ],function(err, pedido) {
 		Paciente.populate(pedido, {path: "paciente"},function(err,pedido){
 			Medico.populate(pedido,{path: "medico"},function(err,pedido){
 				Analisis.populate(pedido, {path: "analisisList.analisis", select:{determinaciones:1,codigo:1,formula:1,valorReferencia:1,unidad:1,muestraDefault:1,metodoDefault:1,multiple:1,valorReferenciaAnimal:1}},function(err,labs){
-			
+
 							res.status(200).jsonp(labs);
 
 			});
-			
+
 
 		})
-		
+
 		})
 	})
-		  
+
 }
 
-exports.retrieveAnalisis = function(req, res) {  
+exports.retrieveAnalisis = function(req, res) {
     Pedido.find({_id:req.params.id},{formulaList:1}, function(err, pedido) {
 		Analisis.populate(pedido, {path: "analisisList.analisis", select:{determinaciones:1,codigo:1,formula:1}},function(err,labs){
-			
+
 				Formula.populate(labs, {path: "analisisList.analisis.formula"},function(err,data){
 							res.status(200).jsonp(data);
 
 			});
-			
+
 		})
     });
 };
@@ -346,7 +346,7 @@ exports.getPrestadores= function(req, res) {
 };
 
 
-exports.createPrestadores = function(req, res) {  
+exports.createPrestadores = function(req, res) {
   var prestador = new Prestador ({
 	  nombre: req.body.nombre
   });
@@ -365,7 +365,7 @@ exports.getCiudades= function(req, res) {
 };
 
 
-exports.createCiudad = function(req, res) {  
+exports.createCiudad = function(req, res) {
   var ciudad = new Ciudad ({
 	  nombre: req.body.nombre
   });
@@ -379,7 +379,7 @@ exports.createCiudad = function(req, res) {
 
 
 //db.getCollection('pedidos').find({_id:ObjectId("58ec4c1029cf9d7c27000006")},{formulaList:1})
-exports.add = function(req, res) {  
+exports.add = function(req, res) {
   var pedido = new Pedido({
 		paciente: req.body.paciente,
 		animal: req.body.animal,
@@ -395,7 +395,7 @@ exports.add = function(req, res) {
     });
 
     pedido.save(function(err, pedido) {
-        if(err) return res.status(500).send(err.message); 
+        if(err) return res.status(500).send(err.message);
 		console.log("pedido:"+pedido)
 		res.status(200).jsonp(pedido);
     });
@@ -405,33 +405,33 @@ exports.removeAnalisis = function(req, res){
 	 Pedido.update({
     	_id:req.params.id,
 		estado: 'Abierto'
-	
-    }, 
-		
+
+    },
+
 		{$pull:{ 'analisisList': { analisis: req.body.analisis }}
-			
+
    		},function(err,pedido){
 				Pedido.find({estado:'Abierto'}, function(err, pedido) {
 				Paciente.populate(pedido, {path: "paciente"},function(err,pedido){
 				Analisis.populate(pedido, {path: "analisisList.analisis", select:{determinaciones:1,codigo:1,formula:1}},function(err,labs){
 							res.status(200).jsonp(labs);
-			
+
 			})
 			});
 	});
-	
+
 })
 }
 
 
-exports.updateState = function(req, res) {  
+exports.updateState = function(req, res) {
     Pedido.update({
     	_id:req.params.id
     }, {
 
     	$set:{
     	estado: req.body.estado,
-	
+
     		}
 
     	},function(err,pedido){
@@ -447,91 +447,91 @@ exports.updateState = function(req, res) {
 							res.status(200).jsonp(labs);
 
 		//	});
-			
+
 			})
 
 		})
     });
     }
    );
-    
+
 }
 
 
-exports.addAnalysis = function(req, res) {  
+exports.addAnalysis = function(req, res) {
     Pedido.update({
     	_id:req.params.id,
 		estado: 'Abierto',
-		
-		 
-    }, 
+
+
+    },
 
 		{ $push: { 'analisisList': { analisis: req.body.analisis, muestra:req.body.muestra,metodo:req.body.metodo, observacion:req.body.observacion,resultado:req.body.resultado } }
-			
+
    		},function(err,pedido){
     		Pedido.find({estado:"Abierto"},function(err,pedido){
     			res.json(pedido);
     		});
     	}
    );
-    
+
 }
 
 
-/*exports.deleteAnalysis = function(req, res) {  
+/*exports.deleteAnalysis = function(req, res) {
     Pedido.update({
     	_id:req.params.id,
 		estado: 'Creado'
-    }, 
+    },
 
 		{ $pull: { 'analisisList': { analisis: req.body.analisis } }
-			
+
    		},function(err,pedido){
     		Pedido.find({_id:req.params.id},function(err,pedido){
     			res.json(pedido);
     		});
     	}
    );
-    
+
 }*/
 
 
-exports.saveResults = function(req, res) {  
+exports.saveResults = function(req, res) {
 
     Pedido.update({
     	_id:req.params.id,
 		estado: 'Abierto',
 		"analisisList.analisis":req.params.analisis_id,
-	
-    }, 
+
+    },
 
 		{$set : {"analisisList.$.resultado": req.body.resultado,
 		"analisisList.$.muestra": req.body.muestra,
 		"analisisList.$.metodo": req.body.metodo,
 		"analisisList.$.repetido": req.body.repetido}
-			
+
    		},function(err,pedido){
-			
+
 				Pedido.find(function(err,pedido){
 					if(err) res.status(500).json("Error " +err)
 					res.json(pedido);
 				});
 			}
-    	
+
    );
-    
+
 }
 
-exports.includeAnalysis = function(req, res) {  
+exports.includeAnalysis = function(req, res) {
 
     Pedido.update({
     	_id:req.params.id,
 		"analisisList.analisis":req.params.analisis,
-	
-		}, 
+
+		},
 
 		{$set : {"analisisList.$.imprimir": req.body.imprimir}
-			
+
    		},function(err,pedido){
 			if(err) res.status(500).json("Error " +err)
 				else{ res.status(200).json("Updated")}
@@ -541,34 +541,34 @@ exports.includeAnalysis = function(req, res) {
 				});
 			}*/
 });
-    
+
 }
 
-exports.saveObservaciones = function(req, res) {  
+exports.saveObservaciones = function(req, res) {
 
     Pedido.update({
     	_id:req.params.id,
 		estado: 'Abierto',
 		"analisisList.analisis":req.params.analisis_id,
-	
-    }, 
+
+    },
 
 		{$set : {"analisisList.$.observacion": req.body.observacion}
-			
+
    		},function(err,pedido){
-			
+
 				Pedido.find(function(err,pedido){
 					if(err) res.status(500).json("Error " +err)
 					res.json(pedido);
 				});
 			}
-    	
+
    );
-    
+
 }
 
 
-exports.deletePedido = function(req, res) {  
+exports.deletePedido = function(req, res) {
     Pedido.remove({
      _id:req.params.id,
 	 estado: "Invalido"
@@ -581,11 +581,11 @@ exports.deletePedido = function(req, res) {
 };
 
 
-exports.nuevosPedidos = function(req, res) {  
+exports.nuevosPedidos = function(req, res) {
 	//var currentMonth=parseInt(req.query.mes);
 	//var currentYear=parseInt(req.query.anio);
     // var today = new Date(2019,02 , 01, 10, 33, 30, 0);
-		
+
 		Pedido.aggregate([
 		{ $project: {
 			fechaModified: { $dateToString: { format: "%d/%m/%Y", date: "$fecha" } },
@@ -598,26 +598,25 @@ exports.nuevosPedidos = function(req, res) {
 			analisisList:1
 		 }
 		},
-			
+
 			{$match: {$and:[{mes: parseInt(req.query.mes) },{anio:parseInt(req.query.anio)}]}},
-	
+
 			{$sort: {fecha:1}}
 		],function(err,data){
-				
+
 				if(err) res.send(500, err);
 				else{
 					Paciente.populate(data, {path: "paciente",select:{nombre:1,apellido:1,ciudad:1}},function(err,data){
 					//Analisis.populate(data, {path: "analisisList.analisis"},function(err,data){
 					Medico.populate(data, {path: "medico"},function(err,data){
-							
+
 							res.status(200).jsonp(data);
 							});
-							
+
 				//});
-	
+
 		});
 	}
 })
-	 
+
 }
-  

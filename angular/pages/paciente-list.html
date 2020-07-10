@@ -1,6 +1,6 @@
 <div  ng-include="'header.html'"></div>
 <div class="container" ng-controller="pacienteController">
-	Filtrar: 
+	Filtrar:
 	<div class="input-group" ng-init="pacienteList=getPacientes(1)">
 		<input class="form-control" type="text" ng-model="nombrePaciente" placeholder="Ingrese el nombre o apellido del paciente"/>
 		<span class="btn btn-info input-group-addon" id="basic-addon2" ng-click="search()" ng-disabled="isEmpty(nombrePaciente)">Buscar</span>
@@ -9,7 +9,7 @@
 	<table class="table table-striped" >
 		<thead>
 		 <tr>
-				
+
 				<td><b>Apellido</b></td>
 				<td><b>Nombre</b></td>
 				<td><b>Edad</b></td>
@@ -20,7 +20,7 @@
 		</thead>
 		<tbody ng-repeat="paciente in pacienteList track by $index" ng-init="indice=$index">
 			<tr>
-				
+
 				<td>{{paciente.apellido}}</td>
 				<td>{{paciente.nombre}}</td>
 				<td>{{calcularEdad(paciente.fechaNacimiento)}}</td>
@@ -30,18 +30,18 @@
 				<!--<td><a><span><img src="muerte.jpg" width="6" height="6"></span></a></td>-->
 				<td><button ng-click="pacienteModificado(pacienteList[$index])" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Editar</button></td>
 				<!--<td><button ng-click="#row($index)" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row1{{$index}}">Obra Social</button></td>-->
-				<td><button ng-click="validatePaciente(paciente)" class="btn btn-xs  btn-danger" data-toggle="collapse" >Eliminar!</button></td>
-			
+				<td><button ng-click="removePaciente(paciente._id)" class="btn btn-xs  btn-danger" data-toggle="collapse" >Eliminar!</button></td>
+
 			</tr>
 			<tr id="row{{$index}}"  class="collapse" >
 				<td colspan="12">
-					<table class="table table-responsive"> 
+					<table class="table table-responsive">
 
 					<tbody >
-						
+
 						<tr><td>Apellido:</td><td><input placeholder="Apellido"  class="form-control" type="text" ng-model="paciente.apellido"/></td></tr>
 						<tr><td>Nombre:</td><td><input placeholder="Nombre"  class="form-control" type="text" ng-model="paciente.nombre"/></td></tr>
-							
+
 						<tr><td>Tipo Documento:</td><td><select  class="form-control" ng-model="paciente.tipoDocumento">
 								<option ng-value={{tipoDocumento.nombre}}></option>
 								<option ng-value={{tipoDocumento.nombre}}>DNI</option>
@@ -57,37 +57,37 @@
 								<option ng-value={{ciudad.nombre}}>{{ciudad.nombre}}</option>
 							</select></td></tr>
 							<tr><td>Domicilio:</td><td><input placeholder="Domicilio" class="form-control" type="text" ng-model="paciente.domicilio"/></td></tr>
-							<tr><td>Celular:</td><td><input placeholder="Celular" class="form-control" type="text" ng-model="paciente.celular"/></td></tr>							
+							<tr><td>Celular:</td><td><input placeholder="Celular" class="form-control" type="text" ng-model="paciente.celular"/></td></tr>
 							<tr><td>Email:</td><td><input placeholder="Email" class="form-control" type="text" ng-model="paciente.email"/></td></tr>
 							<!--<tr><td>Falleció:</td><td><input class="form-control" type="checkbox" ng-model="paciente.fallecio"/></td></tr>-->
 
 							<!--<tr><td>Obra Social:</td><td><select  class="form-control" ng-options="ob.obraSocial for ob in paciente.obraSocial" ng-model="ob"></td> </tr>
 						    <tr><td><button type="button" class="btn btn-xs btn-info pull-right" data-toggle="modal" data-target="#myModal">Agregar</button></td></tr>-->
-					
-							
+
+
 					</tbody>
-					
+
 			</table>
-	
-					<button type="button" class="btn btn-primary pull-right" ng-click="updatePaciente(paciente)" data-toggle="collapse" data-target="#row{{$index}}">Guardar</button>	
-					 
+
+					<button type="button" class="btn btn-primary pull-right" ng-click="updatePaciente(paciente)" data-toggle="collapse" data-target="#row{{$index}}">Guardar</button>
+
 				</td>
-				
+
 			</tr>
-			
-			
+
+
 			<!--<tr id="row1{{$index}}" class="collapse">
 				<td colspan="12">
-				<table class="table table-responsive"> 
+				<table class="table table-responsive">
 
 				<tbody>
 					<tr><td>Obra Social:</td><td><select  class="form-control" ng-options="prestador.nombre as prestador.nombre for prestador in prestadores" ng-model="obraSocial">
 									<option ng-value={{prestador.nombre}}>{{prestador.nombre}}</option>
 								</select></td></tr>
 					<tr><td>Numero de Afiliado:</td><td><input ng-model="afiliado" placeholder="Numero de afiliado" class="form-control" type="text" ng-model="paciente.afiliado"/></td></tr>
-				   
+
 				   <tr><td></td><td><button type="button" class="btn btn-xs btn-info pull-right" ng-click="agregarObraSocial(paciente,obraSocial, afiliado)"  data-target="#row1{{$index}}">Agregar</button></td></tr>
-					
+
 					<tr><td></td><td><table class="table table-bordered table-striped"  >
 									<tbody ng-repeat="obraSocial in paciente.obraSocial track by $index">
 									<tr><td >{{obraSocial.obraSocial}} - {{obraSocial.afiliado}}</td></tr>
@@ -96,16 +96,16 @@
 					</td></tr>
 				</tbody>
 				</table>
-					
+
 					<button type="button" class="btn btn-primary pull-right" ng-click="updatePaciente(paciente)" data-toggle="collapse" data-target="#row1{{$index}}">Guardar</button>
 				</td>
-				
+
 			</tr>-->
 		</tbody>
-		
+
 		<div class="modal fade" id="myModal" role="dialog" >
 			<div class="modal-dialog">
-			
+
 			  <!-- Modal content-->
 			  <div class="modal-content" ng-controller="pedidoController">
 				<div class="modal-header">
@@ -118,23 +118,21 @@
 					</select>
 				 <br/>
 				 <input type="text" class="form-control" ng-model="code" placeholder="Ingrese el numero de afiliado" aria-describedby="basic-addon2" >
-				  
+
 				</div>
-				 
+
 				<div class="modal-footer" ng-controller="pacienteController" >
 					<button type="button" class="btn btn-sm btn-primary" ng-click="agregarObraSocial(prestador.nombre,code)" data-dismiss="modal">Agregar</button>
 				  <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
 				</div>
 			  </div>
-			  
+
 			</div>
 		  </div>
-		
+
 	</table>
-	
-	
-	 <ul uib-pagination class="pull-center" total-items="totalItems" items-per-page="page" ng-model="currentPage" previous-text="Anterior" next-text="Siguiente" ng-change="pacienteList=getPacientes(currentPage)" ></ul> 
+
+
+	 <ul uib-pagination class="pull-center" total-items="totalItems" items-per-page="page" ng-model="currentPage" previous-text="Anterior" next-text="Siguiente" ng-change="pacienteList=getPacientes(currentPage)" ></ul>
 
 </div>
-	   
-		 
