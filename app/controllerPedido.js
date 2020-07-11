@@ -74,10 +74,10 @@ exports.count = function(req, res) {
 
 };
 
-exports.getPedidoByPaciente = pacienteId = function(req, res) {
+exports.getPedidoByPaciente  = function(req, res) {
 //console.log("LA FUNCION")
 Pedido.aggregate([
-{$match: {paciente:pacienteId/*ObjectId(req.params.paciente)*/}},
+{$match: {paciente:ObjectId(req.params.paciente)}},
 { $project: {
         fechaModified: { $dateToString: { format: "%d/%m/%Y", date: "$fecha" } },
 		fecha:1,
