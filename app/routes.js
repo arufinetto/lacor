@@ -89,6 +89,7 @@ module.exports = function(app,passport) {
   app.get('/api/animal',  ControllerAnimal.getByName)
   app.post('/api/animal',  ControllerAnimal.create)
   app.get('/api/animales',  ControllerAnimal.find)
+  app.put('/api/valor-referencia-animal/:id', ControllerAnalisis.updateValorReferenciaAnimal);
 
 	/**fin controler paciente**/
 
