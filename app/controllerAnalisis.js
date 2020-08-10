@@ -132,7 +132,8 @@ exports.update = function(req, res) {
 			UB: req.body.UB,
 			metodoDefault:req.body.metodoDefault,
 			muestraDefault:req.body.muestraDefault,
-			multiple: req.body.multiple
+			multiple: req.body.multiple,
+      valorReferenciaAnimal: req.body.valorReferenciaAnimal
 
 			}
 

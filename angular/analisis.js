@@ -16,7 +16,7 @@ starter.factory("servicio", function(){
 	$scope.newValorReferenciaAnimal = "";
 	$scope.selectedAnimal = "";
 	$scope.miFilterReferenciaAnimal = "";
-	
+
 	$scope.updateUB= function(){
 		$http.put('/api/unidad-bioquimica/precio', {valor:$scope.precio})
 		.success(function(data) {
@@ -24,7 +24,7 @@ starter.factory("servicio", function(){
 			console.log('Error: '+err);
 		});
 	}
-	
+
 	$scope.calcularCostoPedido = function(){
 		var costoTotal = 0;
 		 for(var i =0; i<$scope.analisisListFiltered.length;i++){
@@ -32,22 +32,22 @@ starter.factory("servicio", function(){
 		 }
 		 return costoTotal;
 	}
-	
+
 	$scope.agregarFormula = function(nombre, unidad, analisis){
 		if(unidad == null || unidad == undefined){unidad = ""};
 		$scope.newFormula = {"nombre": nombre, "unidad":unidad};
 		analisis.formula.push($scope.newFormula);
 
 	}
-	
+
 	//para detener el submit cuando se hace enter
 	$scope.keyPressOnForm = function(event) {
- 
+
 			if (event.keyCode === 13) {
 				event.preventDefault();
 			}
-		}  
-	
+		}
+
 	$scope.findAnalisisByName =function(code){
 		$http.get('/api/analisisByCode/'+code)
 		.success(function(data) {
@@ -58,7 +58,7 @@ starter.factory("servicio", function(){
 			console.log('Error: '+err);
 		});
 	}
-	
+
 	$scope.getAnalisis = function(page){
 		$http.get('/api/analisis/'+ page)
 		.success(function(data) {
@@ -67,7 +67,7 @@ starter.factory("servicio", function(){
 			console.log('Error: '+err);
 		});
 	}
-	
+
 	$scope.newAnalisis = {
 		codigo: '',
         determinaciones: '',
@@ -83,7 +83,7 @@ starter.factory("servicio", function(){
 		unidad:'',
 		metodoDefault:'',
 		muestraDefault:''
-		
+
 	};
 	$scope.createAnalisis = function(){
 	$http.post('/api/analisis', $scope.newAnalisis)
@@ -103,21 +103,21 @@ starter.factory("servicio", function(){
 				unidad:'',
 				metodoDefault:'',
 				muestraDefault:''
-				
+
 			};
 			$ngBootbox.alert("El analisis se ha creado exitosamente!")
 		}).error(function(err) {
 			$ngBootbox.alert("Se produjo un error al crear el analisis: " + err)
 	 });
 	}
-	
-	
+
+
 	$scope.isEmpty = function(value){
 		return (value == "" || value == null);
 	};
 	$scope.searchAnalisis = function() {
 		$http.get('/api/analisisBy?codigo='+ $scope.codigo)
-		
+
 		.success(function(data) {
 			$scope.analisis = data;
 			console.log(data)
@@ -126,31 +126,31 @@ starter.factory("servicio", function(){
 			console.log('Error: '+err);
 		});
 	};
-	
+
 	$scope.updateAnalisis = function(analisis){
-		$http.put('/api/analisis/' + analisis._id, {UB:analisis.UB,determinaciones:analisis.determinaciones,valorReferencia:analisis.valorReferencia,unidad:analisis.unidad,formula:analisis.formula,valor:analisis.valor,metodoDefault:analisis.metodoDefault,muestraDefault:analisis.muestraDefault,multiple:analisis.multiple})
+		$http.put('/api/analisis/' + analisis._id, {UB:analisis.UB,determinaciones:analisis.determinaciones,valorReferencia:analisis.valorReferencia,unidad:analisis.unidad,formula:analisis.formula,valor:analisis.valor,metodoDefault:analisis.metodoDefault,muestraDefault:analisis.muestraDefault,multiple:analisis.multiple,valorReferenciaAnimal:analisis.valorReferenciaAnimal})
 		.success(function(data) {
 			//$scope.analisisList = data;
 		})
 		.error(function(err) {
 			console.log('Error: '+err);
 		});
-		
+
 	}
 
 	$scope.addValorReferencia= function(analisis,nuevoValorReferencia){
 		if(nuevoValorReferencia !=undefined || nuevoValorReferencia!=null)
 		{analisis.valorReferencia.push(nuevoValorReferencia);}
 		}
-	
+
 		$scope.deleteValorReferencia= function(analisis,index){
 		analisis.valorReferencia.splice(index,1);
 		}
-	
+
 	$scope.updateRangoReferencia = function(index,value){
 	  $scope.selectedAnalisis.valorReferencia[index] = value;
 	}
-	
+
 	$scope.selectAnalisis = function (analisis){
 		$scope.selectedAnalisis = analisis;
 		console.log("el seleccionado:" + $scope.selectedAnalisis.UB)
@@ -159,12 +159,12 @@ starter.factory("servicio", function(){
 		$scope.resultado = [];
 		var valorHallado = [""];
 		if(analisis.formula.length==0){
-			
+
 			$scope.obj={"formula":"","valorHallado":valorHallado};
 			$scope.resultado.push($scope.obj);
 		}else{
 			for (var i=0;i<analisis.formula.length;i++){
-				
+
 				$scope.obj={"formula":analisis.formula[i].nombre,"valorHallado":valorHallado};
 				$scope.resultado.push($scope.obj);
 			}
@@ -175,23 +175,23 @@ starter.factory("servicio", function(){
 		$scope.analisisListFilteredObject.push($scope.objeto);
 		servicio.data.analisisListPedido = $scope.analisisListFilteredObject;
 	}
-	
-	
-	
-	
+
+
+
+
 	$scope.removeAnalisis = function(index){
 		$scope.analisisListFilteredObject.splice(index,1);
 		$scope.analisisListFiltered.splice(index,1);
 		//$scope.analisisListFilteredObject.slice(analisis._id);
 		//servicio.data.analisisListPedido=$scope.analisisListFilteredObject
 	}
-	
+
 	$scope.clearAnalisis = function(){
 		$scope.analisisListFiltered = [];
 		$scope.analisisListFilteredObject = [] ;
-		
+
 	}
-	
+
 		 $scope.addAnalisisByPressingEnter =function (code){
 			$http.get('/api/analisisByCode/'+code)
 			.success(function(data) {
@@ -202,7 +202,7 @@ starter.factory("servicio", function(){
 				console.log('Error: '+err);
 			});
 		 }
-		 
+
 	$scope.agregarValorReferenciaAnimal	= function(analisis, animal, valorReferencia){
 		if(analisis.valorReferenciaAnimal[animal]== null){
 			//ASIGNO LA NUEVA KEY (el nombre del animal)
@@ -213,18 +213,18 @@ starter.factory("servicio", function(){
 			analisis.valorReferenciaAnimal[animal].push(valorReferencia)
 
 		}
-	} 
-	
+	}
 
-	
+
+
 		$scope.agregarAnalisis = function(analisis){
 			$scope.analisisValorReferenciaAnimal = analisis;
 			$scope.miFilterReferenciaAnimal = analisis.codigo + "," +analisis.determinaciones;
 
-			
+
 		}
-	
-	
+
+
 	$scope.updateValorReferenciaAnimal =function (analisis){
 			$http.put('/api/valor-referencia-animal/'+ analisis._id,{valorReferenciaAnimal: analisis.valorReferenciaAnimal} )
 			.success(function(data) {
@@ -240,6 +240,6 @@ starter.factory("servicio", function(){
 				console.log('Error: '+err);
 			});
 		 }
-		
-		
+
+
 	})
