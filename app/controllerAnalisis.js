@@ -76,20 +76,21 @@ if (req.body.batch){
 // Single JSON Object
 else {
   var analisis = new Analisis({
-        codigo: req.body.codigo,
-        determinaciones: req.body.determinaciones,
+    codigo: req.body.codigo,
+    determinaciones: req.body.determinaciones,
 		urgencia:req.body.urgencia,
 		NI: req.body.NI,
 		UB: req.body.UB,
-        valor: req.body.valor,
+    valor: req.body.valor,
 		otro:req.body.otro,
 		pedidoList:[],
 		formula:req.body.formula,
-		valorReferencia:[],
+		valorReferencia:req.body.valorReferencia,
 		unidad:req.body.unidad,
 		metodoDefault:req.body.metodoDefault,
 		muestraDefault:req.body.muestraDefault,
-		multiple: req.body.multiple
+		multiple: req.body.multiple,
+    valorReferenciaAnimal: req.body.valorReferenciaAnimal
 
     });
 
