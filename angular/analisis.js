@@ -16,9 +16,11 @@ starter.factory("servicio", function(){
 	$scope.newValorReferenciaAnimal = "";
 	$scope.selectedAnimal = "";
 	$scope.miFilterReferenciaAnimal = "";
+	$scope.token= "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjY3OGQ4ZjNmOGZmZDVhN2FjNDM1ZTgiLCJleHAiOjE2MzIxNjI5ODIsImlhdCI6MTYwMDYyNjk4Mn0.1Z1utQmTt1FunQtqINJ3A9cFg2GHNaJgZM1Sk4CueE8";
+
 
 	$scope.updateUB= function(){
-		$http.put('/api/unidad-bioquimica/precio', {valor:$scope.precio})
+		$http.put('/api/unidad-bioquimica/precio', {valor:$scope.precio},{headers:{"authorization":$scope.token}})
 		.success(function(data) {
 		}).error(function(err) {
 			console.log('Error: '+err);
@@ -49,7 +51,7 @@ starter.factory("servicio", function(){
 		}
 
 	$scope.findAnalisisByName =function(code){
-		$http.get('/api/analisisByCode/'+code)
+		$http.get('/api/analisisByCode/'+code,{headers:{"authorization":$scope.token}})
 		.success(function(data) {
 			$scope.estudio = data; //filtra en pedidos en proceso
 			$scope.analisisList = data; //para filtrar en la lista de estudios
@@ -60,7 +62,7 @@ starter.factory("servicio", function(){
 	}
 
 	$scope.getAnalisis = function(page){
-		$http.get('/api/analisis/'+ page)
+		$http.get('/api/analisis/'+ page,{headers:{"authorization":$scope.token}})
 		.success(function(data) {
 			$scope.analisisList = data;
 		}).error(function(err) {
@@ -86,7 +88,7 @@ starter.factory("servicio", function(){
 
 	};
 	$scope.createAnalisis = function(){
-	$http.post('/api/analisis', $scope.newAnalisis)
+	$http.post('/api/analisis', $scope.newAnalisis,{headers:{"authorization":$scope.token}})
 		.success(function(data) {
 			$scope.newAnalisis = {
 				codigo: '',
@@ -116,7 +118,7 @@ starter.factory("servicio", function(){
 		return (value == "" || value == null);
 	};
 	$scope.searchAnalisis = function() {
-		$http.get('/api/analisisBy?codigo='+ $scope.codigo)
+		$http.get('/api/analisisBy?codigo='+ $scope.codigo,{headers:{"authorization":$scope.token}})
 
 		.success(function(data) {
 			$scope.analisis = data;
@@ -128,7 +130,7 @@ starter.factory("servicio", function(){
 	};
 
 	$scope.updateAnalisis = function(analisis){
-		$http.put('/api/analisis/' + analisis._id, {UB:analisis.UB,determinaciones:analisis.determinaciones,valorReferencia:analisis.valorReferencia,unidad:analisis.unidad,formula:analisis.formula,valor:analisis.valor,metodoDefault:analisis.metodoDefault,muestraDefault:analisis.muestraDefault,multiple:analisis.multiple,valorReferenciaAnimal:analisis.valorReferenciaAnimal})
+		$http.put('/api/analisis/' + analisis._id, {UB:analisis.UB,determinaciones:analisis.determinaciones,valorReferencia:analisis.valorReferencia,unidad:analisis.unidad,formula:analisis.formula,valor:analisis.valor,metodoDefault:analisis.metodoDefault,muestraDefault:analisis.muestraDefault,multiple:analisis.multiple,valorReferenciaAnimal:analisis.valorReferenciaAnimal},{headers:{"authorization":$scope.token}})
 		.success(function(data) {
 			//$scope.analisisList = data;
 		})
@@ -193,7 +195,7 @@ starter.factory("servicio", function(){
 	}
 
 		 $scope.addAnalisisByPressingEnter =function (code){
-			$http.get('/api/analisisByCode/'+code)
+			$http.get('/api/analisisByCode/'+code,{headers:{"authorization":$scope.token}})
 			.success(function(data) {
 				$scope.estudio = data; //filtra en pedidos en proceso
 				$scope.addAnalisis($scope.estudio[0])
@@ -226,7 +228,7 @@ starter.factory("servicio", function(){
 
 
 	$scope.updateValorReferenciaAnimal =function (analisis){
-			$http.put('/api/valor-referencia-animal/'+ analisis._id,{valorReferenciaAnimal: analisis.valorReferenciaAnimal} )
+			$http.put('/api/valor-referencia-animal/'+ analisis._id,{valorReferenciaAnimal: analisis.valorReferenciaAnimal},{headers:{"authorization":$scope.token}})
 			.success(function(data) {
 				$ngBootbox.alert("Los valores de referencia se guardaron exitosamente!")
 				$scope.analisisList = {}

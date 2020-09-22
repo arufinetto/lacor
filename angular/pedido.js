@@ -30,10 +30,11 @@ starter.factory("servicio", function(){
 			$scope.creadosCount =0;
 			$scope.nombreAnimal = ""
 			//$scope.pedidoFinanza = {};
+			$scope.token= "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjY3OGQ4ZjNmOGZmZDVhN2FjNDM1ZTgiLCJleHAiOjE2MzIxNjI5ODIsImlhdCI6MTYwMDYyNjk4Mn0.1Z1utQmTt1FunQtqINJ3A9cFg2GHNaJgZM1Sk4CueE8";
 
 
 	$scope.getPedidoPorPaciente = function(id_paciente){
-		$http.get('/api/pedidosByPaciente/'+id_paciente)
+		$http.get('/api/pedidosByPaciente/'+id_paciente,{headers:{"authorization":$scope.token}})
 		.success(function(data) {
 			$scope.pedidosPorPacienteList = data;
 			console.log($scope.pedidosPorPacienteList)
@@ -84,7 +85,7 @@ starter.factory("servicio", function(){
 	}
 
 	$scope.getCount = function(estado){
-		$http.get('/api/pedidos/count?estado='+estado)
+		$http.get('/api/pedidos/count?estado='+estado,{headers:{"authorization":$scope.token}})
 			.success(function(data) {
 				if(estado == "Abierto"){
 					$scope.abiertosCount= data;
@@ -582,7 +583,7 @@ starter.factory("servicio", function(){
 		}
 
 		$scope.physicalRemoveAnalisis = function(id_pedido,id_analisis){
-			$http.put('/api/pedidos/'+id_pedido+'/remove-analisis', {analisis:id_analisis})
+			$http.put('/api/pedidos/'+id_pedido+'/remove-analisis', {analisis:id_analisis},{headers:{"authorization":$scope.token}})
 			.success(function(data) {
 			})
 			.error(function(err) {
@@ -591,7 +592,7 @@ starter.factory("servicio", function(){
 		}
 
 	$scope.getPedidosAbiertos = function(){
-		$http.get('/api/pedidos?estado=Abierto')
+		$http.get('/api/pedidos?estado=Abierto',{headers:{"authorization":$scope.token}})
 		.success(function(data) {
 			$scope.pedidosAbiertosList = data;
 			//console.log(data)
@@ -609,7 +610,7 @@ starter.factory("servicio", function(){
 		$scope.lastResults = {},
 
 		$scope.getLastResults = function(paciente, analisis,protocolo){
-			$http.get('/api/last-result/'+ paciente +'/analisis/'+ analisis+'/protocolo/'+protocolo)
+			$http.get('/api/last-result/'+ paciente +'/analisis/'+ analisis+'/protocolo/'+protocolo,{headers:{"authorization":$scope.token}})
 			.success(function(data) {
 				$scope.lastResults = data;
 				console.log("Last results "+$scope.lastResults)
@@ -619,7 +620,7 @@ starter.factory("servicio", function(){
 		}
 
 		$scope.getPedidosCreados = function(){
-		$http.get('/api/pedidos?estado=Creado')
+		$http.get('/api/pedidos?estado=Creado',{headers:{"authorization":$scope.token}})
 		.success(function(data) {
 			$scope.pedidosCreadosList = data;
 			//console.log(data)
@@ -630,7 +631,7 @@ starter.factory("servicio", function(){
 
 
 		$scope.getPedidosEntregados = function(page){
-			$http.get('/api/pedidos?estado=Entregado&page='+page)
+			$http.get('/api/pedidos?estado=Entregado&page='+page,{headers:{"authorization":$scope.token}})
 		.success(function(data) {
 			$scope.pedidosEntregadosList = data;
 		}).error(function(err) {
@@ -641,7 +642,7 @@ starter.factory("servicio", function(){
 
 		$scope.pedidosInvalidosList = {};
 		$scope.getPedidosInvalidos = function(){
-		$http.get('/api/pedidos?estado=Invalido')
+		$http.get('/api/pedidos?estado=Invalido',{headers:{"authorization":$scope.token}})
 		.success(function(data) {
 			$scope.pedidosInvalidosList = data;
 		}).error(function(err) {
@@ -650,7 +651,7 @@ starter.factory("servicio", function(){
 		}
 
 		$scope.getPedidosParaEntregar = function(){
-			$http.get('/api/pedidos?estado=Para Entregar')
+			$http.get('/api/pedidos?estado=Para Entregar',{headers:{"authorization":$scope.token}})
 			.success(function(data) {
 				$scope.pedidosCompletosList = data;
 			}).error(function(err) {
@@ -661,7 +662,7 @@ starter.factory("servicio", function(){
 		$scope.getPedidos = function(){
 			$scope.estado=["Entregado","Invalido"]
 			for(var i=0;i<2;i++){
-			$http.get('/api/pedidos?estado='+$scope.estado[i])
+			$http.get('/api/pedidos?estado='+$scope.estado[i],{headers:{"authorization":$scope.token}})
 			.success(function(data) {
 				$scope.pedidosList = data;
 				console.log(data)
@@ -680,7 +681,7 @@ starter.factory("servicio", function(){
 			}
 
 			$scope.getPedido = function(id){
-			$http.get('/api/pedidos/'+id)
+			$http.get('/api/pedidos/'+id,{headers:{"authorization":$scope.token}})
 			.success(function(data) {
 				$scope.pedido = data
 			}).error(function(err) {
@@ -689,7 +690,7 @@ starter.factory("servicio", function(){
 			}
 
 			$scope.getPedidoAndDownload= function(id){
-			$http.get('/api/pedidos/'+id)
+			$http.get('/api/pedidos/'+id,{headers:{"authorization":$scope.token}})
 			.success(function(data) {
 				//$scope.pedido = data
 				$scope.generatePDFExtraccion(data[0])
@@ -700,7 +701,7 @@ starter.factory("servicio", function(){
 
 
 		   $scope.getPrestadores = function(){
-			$http.get('/api/prestadores')
+			$http.get('/api/prestadores',{headers:{"authorization":$scope.token}})
 			.success(function(data) {
 				$scope.prestadores =data
 				//return data;
@@ -710,7 +711,7 @@ starter.factory("servicio", function(){
 		   }
 
 			$scope.createPrestador = function(){
-				$http.post('/api/prestadores', $scope.prestador)
+				$http.post('/api/prestadores', $scope.prestador,{headers:{"authorization":$scope.token}})
 				.success(function(data) {
 					$scope.prestadores =data
 					//return data;
@@ -720,7 +721,7 @@ starter.factory("servicio", function(){
 			}
 
 		$scope.updateEstadoPedido = function(id, estado){
-		$http.put('/api/updateState/pedido/'+id,{estado:estado})
+		$http.put('/api/updateState/pedido/'+id,{estado:estado},{headers:{"authorization":$scope.token}})
 		.success(function(data) {
 			if(estado == 'Para Entregar')
 			{$scope.pedidosAbiertosList = data;}
@@ -853,7 +854,7 @@ starter.factory("servicio", function(){
 
 			pedido.analisisList[orden].resultados = valorHallado
 
-			$http.put('/api/loadResults/pedido/'+pedido._id+'/analisis/'+id_analisis,{'metodo':metodo,'muestra':muestra,'repetido': repetido,'resultado':pedido.analisisList[orden].resultado})
+			$http.put('/api/loadResults/pedido/'+pedido._id+'/analisis/'+id_analisis,{'metodo':metodo,'muestra':muestra,'repetido': repetido,'resultado':pedido.analisisList[orden].resultado},{headers:{"authorization":$scope.token}})
 			.success(function(data) {
 				//$scope.calcularProgreso(pedido);
 				//$route.reload();
@@ -869,7 +870,7 @@ starter.factory("servicio", function(){
 
 		$scope.saveObservaciones = function (pedido,id_analisis,observaciones) {
 
-			$http.put('/api/saveObservaciones/pedido/'+pedido._id+'/analisis/'+id_analisis,{'observacion':observaciones})
+			$http.put('/api/saveObservaciones/pedido/'+pedido._id+'/analisis/'+id_analisis,{'observacion':observaciones},{headers:{"authorization":$scope.token}})
 			.success(function(data) {
 			})
 			.error(function(err) {
@@ -906,7 +907,7 @@ starter.factory("servicio", function(){
 
 
 		$scope.deleteAnalisisForPedido = function(pedido_id,analisis_id){
-			$http.put('/api/pedidos/'+pedido_id+'/remove-analisis', {analisis:analisis_id})
+			$http.put('/api/pedidos/'+pedido_id+'/remove-analisis', {analisis:analisis_id},{headers:{"authorization":$scope.token}})
 			.success(function(data) {
 				$scope.analisisList = data;
 
@@ -939,7 +940,7 @@ starter.factory("servicio", function(){
 
 			//$scope.createPedidoApi();
 
-		$http.post('/api/pedidos', $scope.newPedido)
+		$http.post('/api/pedidos', $scope.newPedido,{headers:{"authorization":$scope.token}})
 			.success(function(data) {
 
 				servicio.data.newPedidoId= data._id;
@@ -996,7 +997,7 @@ starter.factory("servicio", function(){
 				}
 			}
 			$scope.objeto = {"analisis":analisis._id,"metodo":analisis.metodoDefault,"muestra":analisis.muestraDefault,"repetido":false,"observacion":"","resultado":$scope.resultado};
-		$http.put('/api/pedidos/'+servicio.data.pedidoId+'/add-analisis',$scope.objeto)
+		$http.put('/api/pedidos/'+servicio.data.pedidoId+'/add-analisis',$scope.objeto,{headers:{"authorization":$scope.token}})
 		.success(function(data) {
 		})
 		.error(function(err) {
@@ -1006,7 +1007,7 @@ starter.factory("servicio", function(){
 	}
 
 	 $scope.includeAnalysis = function (pedido, analisis, include){
-			 $http.put('/api/pedido/'+ pedido +'/analisis/'+ analisis +'/include',{imprimir: include })
+			 $http.put('/api/pedido/'+ pedido +'/analisis/'+ analisis +'/include',{imprimir: include },{headers:{"authorization":$scope.token}})
 				.success(function(data) {
 				})
 				.error(function(err) {

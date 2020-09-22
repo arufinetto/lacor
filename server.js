@@ -56,6 +56,13 @@ app.configure(function() {
 	app.use(queryParams());
 	app.disable('x-powered-by');
 	app.use(passport.initialize());
+	app.use(function (err, req, res, next) {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401);
+    res.json({"message" : err.name + ": " + err.message});
+  }
+});
+
 });
 app.set('port', process.env.PORT || 3000 );
 console.log(process.env.PORT)
@@ -64,6 +71,8 @@ console.log(process.env.PORT)
 
 //seccion de rutas
 require('./app/routes.js')(app);
+//require('./app/modelo/user');
+require('./app/config/passport');
 
 
 mongoose.connect('mongodb://127.0.0.1:27017/laboratorios',function(err,res){

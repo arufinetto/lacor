@@ -4,7 +4,7 @@ starter.factory("servicio", function(){
 					},
 				} ;
 }).controller("animalController", function($scope, $http, $ngBootbox,servicio) {
-	
+
 	$scope.newAnimal = {
 		nombre: '',
 		raza:'',
@@ -14,19 +14,21 @@ starter.factory("servicio", function(){
 	};
 	$scope.animalsFilteredList = {};
 	$scope.nombreAnimal =""
-	
+	$scope.token= "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjY3OGQ4ZjNmOGZmZDVhN2FjNDM1ZTgiLCJleHAiOjE2MzIxNjI5ODIsImlhdCI6MTYwMDYyNjk4Mn0.1Z1utQmTt1FunQtqINJ3A9cFg2GHNaJgZM1Sk4CueE8";
+
+
 
 	$scope.getAnimalsByName = function (name){
-		$http.get('/api/animal?nombre=' + name)
+		$http.get('/api/animal?nombre=' + name,{headers:{"authorization":$scope.token}})
 		.success(function(data) {
 			$scope.animalsFilteredList = data;
-	
+
 		})
 		.error(function(err) {
 			console.log('Error: '+err);
 		});
 	}
-	
+
 	$scope.agregarAnimal = function (animal){
 		console.log("ANIMAL " + animal)
 		servicio.data.animal = animal
@@ -34,7 +36,7 @@ starter.factory("servicio", function(){
 	}
 
 	$scope.createAnimal = function () {
-		$http.post('/api/animal', $scope.newAnimal)
+		$http.post('/api/animal', $scope.newAnimal,{headers:{"authorization":$scope.token}})
 		.success(function(data) {
 			$scope.newAnimal = {};
 			$scope.animalsFilteredList = data;
@@ -46,10 +48,3 @@ starter.factory("servicio", function(){
 		});
 	};
 })
-	
-	
-	
-	
-	
-	
-	

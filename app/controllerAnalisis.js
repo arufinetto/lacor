@@ -29,16 +29,23 @@ exports.findAllAnalysisWithoutPag = function(req, res) {
 // con exports conseguimos modularizarlo y que pueda ser llamado desde el archivo principal de la aplicación.
 
 exports.findAllAnalysis = function(req, res) {
-	var page = req.params.page || 1;
-	var perPage = 50;
-   Analisis.find({})
-			.sort({codigo:1})
-			.skip((perPage*page)-perPage)
-			.limit(perPage)
-			.exec(function(err, lab) {
-				if(err) res.send(500, err.message);
-				res.status(200).jsonp(lab);
-			})
+  /*jwt.verify(req.token,"MY_SECRET",(err, authData) => {
+    if(err){
+      res.status(401).send({"message":'Not Authorized'});
+    }else{
+*/
+    	var page = req.params.page || 1;
+    	var perPage = 50;
+       Analisis.find({})
+    			.sort({codigo:1})
+    			.skip((perPage*page)-perPage)
+    			.limit(perPage)
+    			.exec(function(err, lab) {
+    				if(err) res.send(500, err.message);
+    				res.status(200).jsonp(lab);
+    			})
+      //  }
+  //  })
 
 };
 
