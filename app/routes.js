@@ -21,8 +21,7 @@ var verifyToken = function (req, res, next) {
   const authHeader = req.headers['authorization']
   if(typeof authHeader !== 'undefined'){
     const token = authHeader.split(' ')
-    req.token = token[1]
-    jwt.verify(req.token,"MY_SECRET",(err, authData) => {
+   jwt.verify(token[1],"MY_SECRET",(err, authData) => {
       if(err){
         res.status(401).send({"message":'Not Authorized'});
       }else{
@@ -34,9 +33,21 @@ var verifyToken = function (req, res, next) {
   }
 }
 
+/*var expiredToken = function(req, res){
+  const authHeader = req.headers['authorization']
+    const token = authHeader.split(' ')
+  jwt.verify(token[1],"MY_SECRET",(err, authData) => {
+    if(err){
+    return  res.status(200).send({"expired":true});
+  }else{
+    return res.status(200).send({"expired":false});
+  }
+})
+}*/
 
 module.exports = function(app,passport) {
 	/**Controler Analisis**/
+	//app.get('/api/expired-token', expiredToken);
 
 	app.get('/api/analisis/:page', verifyToken, ControllerAnalisis.findAllAnalysis);
 

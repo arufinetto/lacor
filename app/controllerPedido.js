@@ -295,6 +295,7 @@ exports.getPedido = function(req, res) {
 		medico:1,
 		analisisList:1,
 		paciente:1,
+		animal:1,
 		protocolo:1,
 		diagnostico:1,
 		derivadorDescripcion:1
@@ -303,12 +304,13 @@ exports.getPedido = function(req, res) {
    ],function(err, pedido) {
 		Paciente.populate(pedido, {path: "paciente"},function(err,pedido){
 			Medico.populate(pedido,{path: "medico"},function(err,pedido){
+			Animal.populate(pedido, {path: "animal"}, function(err,pedido){
 				Analisis.populate(pedido, {path: "analisisList.analisis", select:{determinaciones:1,codigo:1,formula:1,valorReferencia:1,unidad:1,muestraDefault:1,metodoDefault:1,multiple:1,valorReferenciaAnimal:1}},function(err,labs){
 
 							res.status(200).jsonp(labs);
 
 			});
-
+		})
 
 		})
 

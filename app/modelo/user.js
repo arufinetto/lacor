@@ -29,14 +29,14 @@ userSchema.methods.validPassword = function(password) {
 //Adding a generateJwt method to userSchema in order to return a JWT
 userSchema.methods.generateJwt = function() {
   var expiry = new Date();
-  expiry.setDate(expiry.getDate() + 365); // adding one day
-//  expiry.setMinutes(expiry.getMinutes() + 2);
+  //expiry.setDate(expiry.getDate() + 1); // adding one day
+ expiry.setMinutes(expiry.getMinutes() + 30);
 
   return jwt.sign({
     _id: this._id,
     name: this.name,
     exp: parseInt(expiry.getTime() / 1000),
-  }, co.SECRET);
+  }, 'MY_SECRET');
 };
 
 module.exports = mongoose.model("user", userSchema);

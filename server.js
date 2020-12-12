@@ -46,7 +46,7 @@ app.configure(function() {
     next()*/
 		res.setHeader("Access-Control-Allow-Origin", 'http://localhost:4200');
 		res.setHeader('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT,DELETE');
-		res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Accept');
+		res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Accept,Authorization');
 		next()
 });
 	app.use(express.static(__dirname + '/angular'));
