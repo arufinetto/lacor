@@ -393,7 +393,8 @@ exports.add = function(req, res) {
 		diagnostico: req.body.diagnostico,
 		obrasocial: req.body.obrasocial,
 		afiliado: req.body.afiliado,
-		analisisList : req.body.analisisList
+		analisisList : req.body.analisisList,
+		imprimir: req.body.imprimir
     });
 
     pedido.save(function(err, pedido) {

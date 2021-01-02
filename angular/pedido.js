@@ -850,11 +850,12 @@ starter.factory("servicio", function(){
 
 		$scope.itemsOrina =["CEL.EPIT.PLANAS AGRUP:","LEUCOCITOS AGRUP.:","HEMATÍES:","ESTRIAS DE MUCUS:", "URATOS AMORFOS:", "FOSFATOS AMORFOS:","OXALATOS DE CALCIO:", "CRIST.DE ACIDO URICO:", "CILINDROS:"];
 
-		$scope.saveResult = function (pedido,id_analisis,orden,metodo,muestra,repetido,valorHallado) {
+		$scope.saveResult = function (pedido,id_analisis,orden,metodo,muestra,repetido,valorHallado,imprimir) {
 
+			//console.log("que recibe el save result " + lab + " muestra " + muestra)
 			pedido.analisisList[orden].resultados = valorHallado
 
-			$http.put('/api/loadResults/pedido/'+pedido._id+'/analisis/'+id_analisis,{'metodo':metodo,'muestra':muestra,'repetido': repetido,'resultado':pedido.analisisList[orden].resultado},{headers:{"authorization":$scope.token}})
+			$http.put('/api/loadResults/pedido/'+pedido._id+'/analisis/'+id_analisis,{'metodo':metodo,'muestra':muestra,'imprimir':imprimir,'repetido': repetido,'resultado':pedido.analisisList[orden].resultado},{headers:{"authorization":$scope.token}})
 			.success(function(data) {
 				//$scope.calcularProgreso(pedido);
 				//$route.reload();
@@ -996,7 +997,7 @@ starter.factory("servicio", function(){
 					$scope.resultado.push($scope.obj);
 				}
 			}
-			$scope.objeto = {"analisis":analisis._id,"metodo":analisis.metodoDefault,"muestra":analisis.muestraDefault,"repetido":false,"observacion":"","resultado":$scope.resultado};
+			$scope.objeto = {"analisis":analisis._id,"metodo":analisis.metodoDefault,"muestra":analisis.muestraDefault,"repetido":false,"observacion":"","resultado":$scope.resultado, "imprimir":false};
 		$http.put('/api/pedidos/'+servicio.data.pedidoId+'/add-analisis',$scope.objeto,{headers:{"authorization":$scope.token}})
 		.success(function(data) {
 		})
