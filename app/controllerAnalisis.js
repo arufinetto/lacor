@@ -18,7 +18,7 @@ exports.openFile1 = function(){
 
 exports.findAllAnalysisWithoutPag = function(req, res) {
     Analisis.aggregate([
-			{ $project: {codigo:1, determinaciones:1, muestraDefault:1, metodoDefault:1, multiple:1, formula:1 } }
+			{ $project: {codigo:1, determinaciones:1, muestraDefault:1, metodoDefault:1, multiple:1, formula:1,valor:1,UB:1 } }
 			],function(err, analisis) {
 				res.status(200).jsonp(analisis);
 	    });
