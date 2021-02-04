@@ -591,8 +591,8 @@ starter.factory("servicio", function(){
 			});
 		}
 
-	$scope.getPedidosAbiertos = function(){
-		$http.get('/api/pedidos?estado=Abierto',{headers:{"authorization":$scope.token}})
+	$scope.getPedidosAbiertos = function(page){
+		$http.get('/api/pedidos?estado=Abierto&page='+page,{headers:{"authorization":$scope.token}})
 		.success(function(data) {
 			$scope.pedidosAbiertosList = data;
 			//console.log(data)

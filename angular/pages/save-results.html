@@ -1,9 +1,10 @@
 <div ng-include="'header.html'"></div>
 
-<div  ng-controller="pedidoController" ng-init="getPedidosAbiertos()" >
+<div  ng-controller="pedidoController" >
 <h4><b>LISTA DE PEDIDOS EN PROCESO</b></h4>
 <br/>
 	<!--Filtrar: <input class="ani" type="text" ng-model="criterio"/> <br/>-->
+	<div ng-init="pedidosAbiertosList=getPedidosAbiertos(1);getCount('Abierto')">
 	<table id="pedidosAbiertos" class="table table-striped" cellspacing="0">
 		<thead >
 		 <tr>
@@ -221,6 +222,8 @@
 			</tr>
 		</tbody>
 	</table>
+	<ul uib-pagination class="pull-center" max-size="20" total-items="abiertosCount" items-per-page="page" ng-model="currentPage" previous-text="Anterior" next-text="Siguiente" last-text="Ultimo" ng-change="pedidosAbiertosList=getPedidosAbiertos(currentPage)" ></ul>
+  </div>
 
 
 				<div class="modal fade"  id="Item" role="dialog" >
@@ -423,5 +426,3 @@
 				  </div>
 
  </div>
-
-</div>

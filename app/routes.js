@@ -125,6 +125,8 @@ module.exports = function(app,passport) {
 
 	app.get('/api/pedidosBy', verifyToken, ControllerPedidos.filter);
 
+  app.get('/api/pedidos/open', verifyToken, ControllerPedidos.findAllOpens);
+
 	app.post('/api/pedidos', verifyToken, ControllerPedidos.add);
 
 	app.put('/api/loadResults/pedido/:id/analisis/:analisis_id', verifyToken, ControllerPedidos.saveResults);

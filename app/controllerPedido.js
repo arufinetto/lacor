@@ -55,6 +55,44 @@ Pedido.aggregate([
 
 }
 
+exports.findAllOpens = function(req, res) {
+
+Pedido.aggregate([
+	{$match:{estado:'Abierto'}},
+	{ $lookup: { from: "medicos", localField: "medico", as:"medico",foreignField: "_id"}},
+	{ $lookup: { from: "pacientes", localField: "paciente", as:"paciente",foreignField: "_id"}},
+	{ $lookup: { from: "animals", localField: "animal", as:"animal",foreignField: "_id"}},
+	{ $project: {
+        fechaModified: { $dateToString: { format: "%d/%m/%Y", date: "$fecha" } },
+		fecha:1,
+		//'analisisList.analisis': 1,
+		//'analisisList.resultado': 1,
+		analisisList: 1,
+		//analisisList: {$array:['$analisisList']},
+		paciente: {$arrayElemAt: [ '$paciente', 0 ]},
+		medico: {$arrayElemAt: [ '$medico', 0 ]},
+		estado:1,
+		protocolo:1,
+		protocoloAnimal:1,
+		diagnostico:1,
+		derivadorDescripcion:1,
+		obrasocial:1,
+		animal:{$arrayElemAt: [ '$animal', 0 ]}
+		  }
+       },
+
+	{$sort:{protocolo:1}}
+	], function (err, pedido) {
+		Analisis.populate(pedido, {path: "analisisList.analisis", select:{determinaciones:1,codigo:1,formula:1,valorReferencia:1,unidad:1,muestraDefault:1,metodoDefault:1,multiple:1,valorReferenciaAnimal:1}},function(err,labs){
+
+		if (err) return res.send(500, err.message)
+		return res.status(200).json(pedido);
+	})
+	}
+)
+
+}
+
 exports.filter = function(req, res) {
     Pedido.find({estado:req.query.estado}).sort({fecha: 1}, function(err, pedido) {
 		Animal.populate(pedido, {path: "animal"},function(err,pedido){
