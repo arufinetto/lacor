@@ -5,7 +5,7 @@ var Pedido= require('./modelo/pedido');
 
 //GET - Return all paciente in the DB
 // con exports conseguimos modularizarlo y que pueda ser llamado desde el archivo principal de la aplicación.
-exports.findAll = function(req, res) {
+ exports.findAll = function(req, res) {
 var page = req.params.page || 1;
 var perPage = 25;
     Paciente.find({})
@@ -18,12 +18,23 @@ var perPage = 25;
 			})
 };
 
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
+}
+
 exports.findAllWithoutPag = function(req, res) {
+  console.log("llega hasta aca")
     Paciente.aggregate([
 			{ $project: {id:1, nombre:1, apellido:1 } },
       { $sort: { apellido:1 } },
     ],function(err, paciente) {
-				res.status(200).jsonp(paciente);
+        console.log("response code" + err)
+      	if(err) return res.send(500, err.message);
+        res.status(200).jsonp(paciente);
 	    });
 
 };

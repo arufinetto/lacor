@@ -77,11 +77,12 @@ starter.factory("servicio", function(){
 	$http.get('api/pedidosByPaciente/' + paciente._id, { headers:{"authorization":$scope.token }})
 		.success(function(data) {
 			$scope.pedidosByPacienteList = data;
+
 			//data.listaPedidoPorPaciente = $scope.pedidosByPacienteList;
 		}).error(function(err) {
 			console.log('Error: '+err);
 		});
-	}
+}
 
 	$scope.validatePaciente = function(paciente){
 		$scope.getPedidoByPaciente(paciente);
@@ -107,14 +108,17 @@ starter.factory("servicio", function(){
 			});
 		};
 	$scope.getPacientes = function (page){
-		$http.get('/api/pacientes/' + page, { headers:{"authorization":$scope.token }})
+	//	for(var x = 0; x <2000; x++){
+	//	console.log('pacientes '+ x);
+		$http.get('/api/pacientes', { headers:{"authorization":$scope.token }})
 		.success(function(data) {
 			$scope.pacienteList = data;
 		})
 		.error(function(err) {
 			console.log('Error: '+err);
 		});
-	}
+	//}
+}
 
 	$scope.search = function() {
 		$http.get('/api/pacienteBy?apellido='+ $scope.nombrePaciente.toUpperCase(),{ headers:{"authorization":$scope.token }})
