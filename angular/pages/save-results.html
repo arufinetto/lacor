@@ -32,6 +32,7 @@
 				<!--<td><div class="progress" ng-init="progreso=calcularProgreso(pedido)" data-toggle="collapse"> <div class="progress-bar progress-bar-warning" role="progressbar" style="width:100%">Progreso {{progreso}} %</div></div></td>-->
 				<td>
 				<button  class={{calcularProgreso(pedido)[1]}}  role="progressbar" style="width:100%">Progreso {{calcularProgreso(pedido)[0]}} %</button>
+				<!--<button ng-if="calcularProgreso(pedido)[0] == 100" ng-click="sendSMS(pedido.paciente.celular, pedido.protocolo)">Enviar SMS {{getSMSbyProtocol(pedido.protocolo)}}</button>-->
 
 				</td>
 

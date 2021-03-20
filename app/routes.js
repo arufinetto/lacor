@@ -9,6 +9,8 @@ var ControllerPerfil= require('./controllerPerfil');
 var ControllerGasto= require('./controllerGasto');
 var ControllerAnimal= require('./controllerAnimal');
 var ControllerUser= require('./controllerUsers');
+var ControllerPayment= require('./controllerPayment');
+var ControllerSms= require('./controllerSMS');
 var jwt = require('jsonwebtoken');
 
 /*var auth = jwt({
@@ -168,6 +170,7 @@ module.exports = function(app,passport) {
 	app.get('/api/pedidos/proporcion-estudios-derivados', verifyToken, ControllerPedidos.proporcionEstudiosDerivados)
 
 	app.get('/api/pedidos-estadisticas', verifyToken, ControllerPedidos.nuevosPedidos)
+  app.get('/api/send-sms/:phoneNumber/protocol/:protocolo', ControllerPedidos.sendSMS);
 	/**fin controler pedido**/
 
 	/**Controler Medico**/
@@ -193,6 +196,20 @@ module.exports = function(app,passport) {
 	//app.get('/api/motivos', ControllerGasto.findMotivoGastos);
 	//app.get('/api/gasto-motivo/:id', ControllerGasto.agruparGastoPorMotivo);
 
+	/**Controller Payment**/
+  app.post('/api/payment', verifyToken, ControllerPayment.addPayment);
+  app.put('/api/payment/:id', verifyToken, ControllerPayment.updatePayment);
+  app.get('/api/payment/:id', verifyToken, ControllerPayment.findPaymentByOrder);
 
+  app.post('/api/payment-health-insurance', verifyToken, ControllerPayment.addPaymentHealthInsurance);
+  app.put('/api/payment-health-insurance/:id', verifyToken, ControllerPayment.updatePaymentHealthInsurance);
+  app.get('/api/payment-health-insurance/:id', verifyToken, ControllerPayment.findPaymentHealthInsuranceByOrder);
+
+  /*Controller SMS*/
+  app.get('/api/sent-sms/:protocolo', ControllerSms.findSentSMSbyProtocol);
+  app.get('/api/sms/:protocolo', ControllerSms.findSMSbyProtocol);
+
+  app.get('/api/sms-status/:referenceId', ControllerSms.updateInProgressSMS);
+  app.get('/api/sms', ControllerSms.process);
 
 };

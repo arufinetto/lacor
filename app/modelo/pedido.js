@@ -1,11 +1,11 @@
-var mongoose = require('mongoose'); 
-var Schema = mongoose.Schema; 
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 var autoIncrement = require('mongoose-auto-increment');
 
 
-var pedidoSchema = new Schema({  
-	paciente: { type: Schema.Types.ObjectId, ref: "paciente",required:false}, 
-	animal: { type: Schema.Types.ObjectId, ref: "animal",required:false}, 
+var pedidoSchema = new Schema({
+	paciente: { type: Schema.Types.ObjectId, ref: "paciente",required:false},
+	animal: { type: Schema.Types.ObjectId, ref: "animal",required:false},
 	medico: { type: Schema.Types.ObjectId, ref:"medico", required:true},
 	protocolo: { type:Number, unique:true},
 	fecha:  { type: Date },
@@ -24,15 +24,13 @@ var pedidoSchema = new Schema({
 	"imprimir": {type: Boolean},
 	"observacion": {type:String}
 	}]
-	
+
 });
 autoIncrement.initialize(mongoose.connection);
 pedidoSchema.plugin(autoIncrement.plugin, { model: 'pedido',field: 'protocolo',startAt:"0000000000",
 incrementBy:1})
 
-module.exports = mongoose.model("pedido", pedidoSchema); 
+module.exports = mongoose.model("pedido", pedidoSchema);
 
 
 //npm install mongoose-schema-formatdate
-
-	

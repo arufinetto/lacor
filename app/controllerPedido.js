@@ -6,6 +6,7 @@ var Prestador = require('./modelo/prestador');
 var Analisis = require('./modelo/analisis');
 var Formula = require('./modelo/formula');
 var Medico = require('./modelo/medico');
+var SMS = require('./modelo/sms');
 var ObjectId = require('mongoose').Types.ObjectId;
 var moment = require('moment');
 var async = require('async');
@@ -445,7 +446,7 @@ exports.add = function(req, res) {
 exports.removeAnalisis = function(req, res){
 	 Pedido.update({
     	_id:req.params.id,
-		estado: 'Abierto'
+		  estado: 'Abierto'
 
     },
 
@@ -502,9 +503,7 @@ exports.updateState = function(req, res) {
 exports.addAnalysis = function(req, res) {
     Pedido.update({
     	_id:req.params.id,
-		estado: 'Abierto',
-
-
+				estado: 'Abierto',
     },
 
 		{ $push: { 'analisisList': { analisis: req.body.analisis, muestra:req.body.muestra,metodo:req.body.metodo, observacion:req.body.observacion,resultado:req.body.resultado } }
@@ -661,5 +660,158 @@ exports.nuevosPedidos = function(req, res) {
 		});
 	}
 })
+}
+
+
+
+var TeleSignSDK = require('telesignsdk');
+
+const customerId = "69088F88-661C-45BE-BFA6-4F42A4451D1E";
+const apiKey = "TN+9C3H2t60tZw0+gr8Rx9CeKMch8tAddZ93h02VAVJaTjwFE5y1bZqKLXB7pWJuCydNQKEOoaEzHf3ir+t0Ng==";
+const rest_endpoint = "https://rest-api.telesign.com";
+const timeout = 1000; // 10 secs
+
+var client = new TeleSignSDK( customerId,
+		apiKey,
+		rest_endpoint,
+		timeout // optional
+		// userAgent
+);
+
+
+/*function messageCallback(error, responseBody, req, res) {
+		if (error === null) {
+
+			var sms = new SMS({
+		    phoneNumber: phoneNumber,
+		    fecha:  new Date(),
+		    reason:	`${responseBody['status']['description']}`,
+		    status: `${responseBody['status']['code']}`
+		    });
+
+		    sms.save(function(err, sms) {
+		       // if(err) {return res.status(500).send( err.message);}
+					//	else{	res.status(200).jsonp(medico);}
+		    });
+
+				console.log(`Messaging response for messaging phone number: ${phoneNumber}` +
+						` => code: ${responseBody['status']['code']}` +
+						`, description: ${responseBody['status']['description']}`);
+		} else {
+			var sms = new SMS({
+		    phoneNumber: phoneNumber,
+		    fecha:  new Date(),
+		    reason:	error,
+		    status: `${responseBody['status']['code']}`
+		    });
+
+		    sms.save(function(err, sms) {
+		        if(err) {return res.status(500).send( err.message);}
+						else{	res.status(200).jsonp(medico);}
+		    });
+
+				console.error("Unable to send message. " + error);
+		}
+}
+
+
+exports.sendSMS10 = function(req, res) {
+   //client.sms.message(messageCallback, phoneNumber, message, messageType);
+
+	 client.sms.message(function(err, reply){
+            if(err){
+                console.log("Error: Could not reach TeleSign's servers");
+                console.error(err); // network failure likely cause for error
+            }
+            else{
+                console.log("YAY!, the SMS message is being sent now by TeleSign!" + reply.reference_id);
+                console.log(reply);
+
+								var sms = new SMS({
+							    phoneNumber: phoneNumber,
+							    fecha:  new Date(),
+							    referenceId: reply.reference_id,  // save the reference_id to check status of the message
+									code: reply.status.code,
+									description: reply.status.description,
+
+							    });
+
+							    sms.save(function(err, sms) {});
+            }
+        },
+        phoneNumber,
+        message,
+        messageType
+    );
+
+};*/
+
+const message = "LACOR informa que ya se encuentran sus resultados. Puede retirarlos de LUNES a VIERNES de 17:00 a 20:00 hs, en calle 10 numero 240. No responda a este mensaje";
+const messageType = "ARN";
+var referenceId = null;
+
+exports.sendSMS = function(req, res){
+	var Client = require('node-rest-client').Client;
+
+var client = new Client();
+let data = customerId+":"+apiKey;
+let buf = Buffer.from(data);
+let encodedData = buf.toString('base64');
+
+var phoneNumber = req.params.phoneNumber
+
+if (!phoneNumber.startsWith("54")){
+	phoneNumber = "54" + phoneNumber
+}
+console.log("COMO MANDA EL TELEFONO " + phoneNumber)
+var args = {
+	 data: { message: message, message_type:messageType, phone_number: phoneNumber },
+	 headers: { "Content-Type":"application/x-www-form-urlencoded", "Authorization": 'Basic '+ encodedData}
+};
+
+client.post("https://rest-api.telesign.com/v1/messaging", args, function (data, response) {
+    // parsed response body as js object
+    console.log(data);
+		var sms = new SMS({
+			phoneNumber: phoneNumber,
+			fecha:  new Date(),
+			referenceId: data.reference_id,  // save the reference_id to check status of the message
+			code: data.status.code,
+			description: data.status.description,
+			protocolo: req.params.protocolo
+
+			});
+
+		sms.save(function(err, sms) {});
+			if(data.status.code == 290 || data.status.code == 200){
+
+			/*	{
+					const data = {
+				  referenceId:data.reference_id
+					};
+
+					const options = {
+							 delay: 0,
+							 attempts: 3
+					};
+					//const options = {delay: 5000, attempts: 3}; // 5 sec. in millisecond/** Adding a Job to the Queue */
+				/*	sendSMSQueue.add(data, options);
+
+					sendSMSQueue.process(async job => {
+  					await sendRatingMailTo(job.data.referenceId)
+					})*/
+					res.status(200).jsonp(data.status.description);
+				
+			}
+			else{
+				res.status(400).jsonp("No se pudo realizar el envio del SMS.");
+			}
+
+});
 
 }
+
+function sendRatingMailTo(id){
+	console.log("que notifico " + id)
+}
+//const sendSMSQueue = require('smsNotification');

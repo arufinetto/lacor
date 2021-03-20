@@ -4,6 +4,7 @@ starter.factory("servicio", function(){
 					},
 				} ;
 }).controller("pedidoController",  function($route,$scope, $http,servicio,$ngBootbox, $rootScope) {
+		//	var TeleSignSDK = require('telesignsdk');
 			$scope.pedidosAbiertosList = {}
 			$scope.pedidosCompletosList = {}
 			$scope.created=false
@@ -32,6 +33,29 @@ starter.factory("servicio", function(){
 			//$scope.pedidoFinanza = {};
 			$scope.token= "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjY3OGQ4ZjNmOGZmZDVhN2FjNDM1ZTgiLCJleHAiOjE2MzIxNjI5ODIsImlhdCI6MTYwMDYyNjk4Mn0.1Z1utQmTt1FunQtqINJ3A9cFg2GHNaJgZM1Sk4CueE8";
 
+			$scope.sendSMS = function(phoneNumber, protocol) {
+			$http.get('/api/send-sms/' + phoneNumber + '/protocol/'+ protocol)
+			.success(function(data) {
+				$ngBootbox.alert(data)
+
+			}).error(function(err) {
+				console.log('Error: '+JSON.stringify(err));
+				$ngBootbox.alert(err)
+			});
+
+		};
+  $scope.smsSent = false
+	$scope.getSMSbyProtocol = function(protocol) {
+		$http.get('/api/sms/'+ protocol)
+		.success(function(data) {
+			console.log("respuesta " +data)
+		 return data.length > 0
+		}).error(function(err) {
+			console.log("respuesta " +err)
+		});
+
+	};
+
 
 	$scope.getPedidoPorPaciente = function(id_paciente){
 		$http.get('/api/pedidosByPaciente/'+id_paciente,{headers:{"authorization":$scope.token}})
@@ -42,6 +66,7 @@ starter.factory("servicio", function(){
 			console.log('Error: '+err);
 		});
 	}
+
 
 	$scope.selectPedido = function(pedido){
 		$scope.pedidoFinanza = pedido;
@@ -79,10 +104,9 @@ starter.factory("servicio", function(){
 		else{
 			array.push("progress-bar-striped progress-bar-success");
 		}
-
 		return  array;
-
 	}
+
 
 	$scope.getCount = function(estado){
 		$http.get('/api/pedidos/count?estado='+estado,{headers:{"authorization":$scope.token}})
@@ -1028,5 +1052,8 @@ starter.factory("servicio", function(){
 
 			return sum;
 		}
+
+
+
 
 	})
