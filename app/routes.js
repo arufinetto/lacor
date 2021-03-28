@@ -115,6 +115,7 @@ module.exports = function(app,passport) {
   app.post('/api/animal', verifyToken, ControllerAnimal.create)
   app.get('/api/animales', verifyToken, ControllerAnimal.find)
   app.put('/api/valor-referencia-animal/:id', verifyToken, ControllerAnalisis.updateValorReferenciaAnimal);
+  app.put('/api/animal/:id', verifyToken, ControllerAnimal.update);
 
 	/**fin controler paciente**/
 
@@ -170,7 +171,7 @@ module.exports = function(app,passport) {
 	app.get('/api/pedidos/proporcion-estudios-derivados', verifyToken, ControllerPedidos.proporcionEstudiosDerivados)
 
 	app.get('/api/pedidos-estadisticas', verifyToken, ControllerPedidos.nuevosPedidos)
-  app.get('/api/send-sms/:phoneNumber/protocol/:protocolo', ControllerPedidos.sendSMS);
+  app.get('/api/send-sms/:phoneNumber/protocol/:protocolo/patient/:patientName', ControllerPedidos.sendSMS);
 	/**fin controler pedido**/
 
 	/**Controler Medico**/

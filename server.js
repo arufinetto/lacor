@@ -38,6 +38,7 @@ var express  = require('express'),
 	//logger = require('morgan');
 	cookieParser = require('cookie-parser');
 	passport = require('passport');
+	sms = require('./app/src/lib/queue');
 
 app.configure(function() {
   app.use(function(req, res,next) {
@@ -54,6 +55,7 @@ app.configure(function() {
 	app.use(express.bodyParser());
 	app.use(methodOverride());
 	app.use(queryParams());
+	app.use(sms);
 	app.disable('x-powered-by');
 	app.use(passport.initialize());
 	app.use(function (err, req, res, next) {
@@ -81,6 +83,13 @@ mongoose.connect('mongodb://127.0.0.1:27017/laboratorios',function(err,res){
     app.listen(app.get('port'),function(){
 	console.log("APP por el puerto 3000");
     });
+});
+
+var redis = require('redis');
+var client = redis.createClient("redis://127.0.0.1:6379");
+
+client.on('connect', function() {
+    console.log('connected');
 });
 
 module.exports = app;

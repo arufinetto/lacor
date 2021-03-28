@@ -746,7 +746,8 @@ exports.sendSMS10 = function(req, res) {
 
 };*/
 
-const message = "LACOR informa que ya se encuentran sus resultados. Puede retirarlos de LUNES a VIERNES de 17:00 a 20:00 hs, en calle 10 numero 240. No responda a este mensaje";
+//const message = "LACOR informa que ya se encuentran sus resultados. Puede retirarlos de LUNES a VIERNES de 17:30 a 20:00 hs, en calle 10 numero 240."+
+//"/n No responda a este mensaje";
 const messageType = "ARN";
 var referenceId = null;
 
@@ -759,11 +760,16 @@ let buf = Buffer.from(data);
 let encodedData = buf.toString('base64');
 
 var phoneNumber = req.params.phoneNumber
+var patientName = req.params.patientName
+
+const message = "LACOR informa que ya se encuentran los resultados de "+ patientName.toUpperCase()+ "." +
+'\n'+ "Puede retirarlos de LUNES a VIERNES de 17:30 a 20:00 hs, en calle 10 número 240."+
+'\n'+ "No responda a este mensaje";
 
 if (!phoneNumber.startsWith("54")){
 	phoneNumber = "54" + phoneNumber
 }
-console.log("COMO MANDA EL TELEFONO " + phoneNumber)
+console.log("COMO MANDA EL TELEFONO " + message)
 var args = {
 	 data: { message: message, message_type:messageType, phone_number: phoneNumber },
 	 headers: { "Content-Type":"application/x-www-form-urlencoded", "Authorization": 'Basic '+ encodedData}
@@ -783,25 +789,28 @@ client.post("https://rest-api.telesign.com/v1/messaging", args, function (data, 
 			});
 
 		sms.save(function(err, sms) {});
-			if(data.status.code == 290 || data.status.code == 200){
+			if(data.status.code == 290 || data.status.code == 200  || data.status.code == 10033){
 
-			/*	{
-					const data = {
-				  referenceId:data.reference_id
-					};
+					const Queue = require('bull');
+						const myFirstQueue = new Queue('smsNotification', 'redis://127.0.0.1:6379');
 
-					const options = {
-							 delay: 0,
-							 attempts: 3
-					};
-					//const options = {delay: 5000, attempts: 3}; // 5 sec. in millisecond/** Adding a Job to the Queue */
-				/*	sendSMSQueue.add(data, options);
-
-					sendSMSQueue.process(async job => {
-  					await sendRatingMailTo(job.data.referenceId)
-					})*/
+				//	mytasklist.forEach(obj => {
+					  // console.log('adding job for: ', obj);
+						if(data.status.code == 290 || data.status.code == 200){
+							const mytasklist =
+								{ referenceId: data.reference_id }
+							//	smsQueue.notify(mytasklist)
+					  myFirstQueue.add('sms', mytasklist);
+					}else{
+						const data1 = {
+							referenceId:data.status.code
+						};
+					//	myFirstQueue.add('sms', data1);
+							smsQueue.notify(data1)
+					}
+				//	});
 					res.status(200).jsonp(data.status.description);
-				
+
 			}
 			else{
 				res.status(400).jsonp("No se pudo realizar el envio del SMS.");
@@ -811,7 +820,4 @@ client.post("https://rest-api.telesign.com/v1/messaging", args, function (data, 
 
 }
 
-function sendRatingMailTo(id){
-	console.log("que notifico " + id)
-}
-//const sendSMSQueue = require('smsNotification');
+//var smsQueue = require('./src/lib/queue');

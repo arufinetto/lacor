@@ -227,5 +227,21 @@ exports.nuevosPedidos = function(req, res) {
 		});
 	}
 })
-
 }
+
+exports.update = function(req, res) {
+    Animal.update({
+    	_id:req.params.id
+    }, {
+
+    	$set:{
+    	nombre: req.body.nombre,
+      contacto: req.body.contacto,
+      celularContacto: req.body.celularContacto
+
+    		}
+
+    	},function(err,animal){
+			     res.status(200).jsonp("Animal " + animal.nombre + " actualizado ");
+       }
+    )}
