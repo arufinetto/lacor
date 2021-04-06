@@ -791,24 +791,21 @@ client.post("https://rest-api.telesign.com/v1/messaging", args, function (data, 
 		sms.save(function(err, sms) {});
 			if(data.status.code == 290 || data.status.code == 200  || data.status.code == 10033){
 
-					const Queue = require('bull');
+				/*	const Queue = require('bull');
 						const myFirstQueue = new Queue('smsNotification', 'redis://127.0.0.1:6379');
 
-				//	mytasklist.forEach(obj => {
-					  // console.log('adding job for: ', obj);
+
 						if(data.status.code == 290 || data.status.code == 200){
 							const mytasklist =
 								{ referenceId: data.reference_id }
-							//	smsQueue.notify(mytasklist)
-					  myFirstQueue.add('sms', mytasklist);
-					}else{
+					  		myFirstQueue.add('sms', mytasklist);
+						}else{
 						const data1 = {
 							referenceId:data.status.code
 						};
-					//	myFirstQueue.add('sms', data1);
 							smsQueue.notify(data1)
-					}
-				//	});
+					}*/
+
 					res.status(200).jsonp(data.status.description);
 
 			}
