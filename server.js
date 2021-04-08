@@ -38,7 +38,7 @@ var express  = require('express'),
 	//logger = require('morgan');
 	cookieParser = require('cookie-parser');
 	passport = require('passport');
-	sms = require('./app/src/lib/queue');
+	//sms = require('./app/src/lib/queue');
 	cron = require('node-cron');
 
 app.configure(function() {
@@ -56,7 +56,7 @@ app.configure(function() {
 	app.use(express.bodyParser());
 	app.use(methodOverride());
 	app.use(queryParams());
-	app.use(sms);
+	//app.use(sms);
 	app.disable('x-powered-by');
 	app.use(passport.initialize());
 	app.use(function (err, req, res, next) {
