@@ -25,7 +25,7 @@ exports.getByName= function(req, res) {
 
 exports.find = function(req, res) {
     Animal.aggregate([
-			{ $project: {id:1, nombre:1, raza:1, tipo:1, contacto:1} },
+			{ $project: {id:1, nombre:1, raza:1, tipo:1, contacto:1, celularContacto:1} },
       { $sort: { nombre:1 } },
     ],function(err, animal) {
 				res.status(200).jsonp(animal);

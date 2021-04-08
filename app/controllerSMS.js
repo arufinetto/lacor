@@ -11,32 +11,20 @@ exports.findSentSMSbyProtocol= function(req, res) {
 exports.findSMSbyProtocol= function(req, res) {
   SMS.find({$and:[{protocolo:req.params.protocolo}]},function(err, sms) {
     if(err) res.send(500, err.message);
-        res.status(200).jsonp(sms);
+      var smsList = sms
+      if(smsList.length == 0) return res.status(200).jsonp("Never try")
+      for(var i=0; i<smsList.length;i++){
+        if(smsList[i].code == 200){
+          return res.status(200).jsonp("Sent OK")
+        }
+      }
+      return res.status(200).jsonp("Fail")
+
     });
 };
 
-
-
-exports.updateInProgressSMS = function(referenceId, code, description, fecha){
-    console.log("intenta actualizar el sms")
-      SMS.update({
-       	referenceId:referenceId
-       },
-
-   		{
-        $set:{ code: code, description: description, fecha: fecha }
-
-    },function(err,sms){
-
-       console.log("update sms")
-   		 //res.status(200).jsonp(sms);
-
-   	});
-}
-
-
-const Queue = require('bull');
-const smsQueue = new Queue('smsNotification', 'redis://127.0.0.1:6379');
+//const Queue = require('bull');
+//const smsQueue = new Queue('smsNotification', 'redis://127.0.0.1:6379');
 var Client = require('node-rest-client').Client;
 const customerId = "69088F88-661C-45BE-BFA6-4F42A4451D1E";
 const apiKey = "TN+9C3H2t60tZw0+gr8Rx9CeKMch8tAddZ93h02VAVJaTjwFE5y1bZqKLXB7pWJuCydNQKEOoaEzHf3ir+t0Ng==";
@@ -53,8 +41,22 @@ exports.process = function(){
 console.log("test")
 }
 
-function update1(job){
-  var referenceId = job.data.referenceId
+exports.findWipSMSbyProtocol= function(res) {
+  SMS.find({code:290},function(err, sms) {
+    if(err) res.send(500, err.message);
+      else {
+        console.log("respuesta....." + sms)
+        var smsList = sms
+        for(var i=0; i<smsList.length;i++){
+          updateInProgressSMS(smsList[i].referenceId)
+        }
+      };
+    });
+};
+
+
+function updateInProgressSMS(referenceId){
+//  var referenceId = job.data.referenceId
   var args = { headers: { "Content-Type":"application/x-www-form-urlencoded", "Authorization": 'Basic '+ encodedData} };
   console.log("quiereo ver " + referenceId)
   var client = new Client();

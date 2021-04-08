@@ -39,6 +39,7 @@ var express  = require('express'),
 	cookieParser = require('cookie-parser');
 	passport = require('passport');
 	sms = require('./app/src/lib/queue');
+	cron = require('node-cron');
 
 app.configure(function() {
   app.use(function(req, res,next) {
@@ -81,15 +82,20 @@ mongoose.connect('mongodb://127.0.0.1:27017/laboratorios',function(err,res){
 
 	if(err){console.log("Error al conectarse a la db:"+err);}
     app.listen(app.get('port'),function(){
-	console.log("APP por el puerto 3000");
+			console.log("APP por el puerto 3000");
     });
 });
 
-var redis = require('redis');
+/*var redis = require('redis');
 var client = redis.createClient("redis://127.0.0.1:6379");
 
 client.on('connect', function() {
     console.log('connected');
-});
+});*/
+/*var sms =require('./app/controllerSMS')
+cron.schedule('* * * * *', function() {
+  console.log('running a task every minute');
+	sms.findWipSMSbyProtocol()
+})*/
 
 module.exports = app;

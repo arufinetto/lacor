@@ -111,11 +111,11 @@ module.exports = function(app,passport) {
 
 	app.get('/api/pacientes', verifyToken,ControllerPacientes.findAllWithoutPag);
 
-  app.get('/api/animal', verifyToken, ControllerAnimal.getByName)
+  app.get('/api/animal', ControllerAnimal.getByName)
   app.post('/api/animal', verifyToken, ControllerAnimal.create)
-  app.get('/api/animales', verifyToken, ControllerAnimal.find)
+  app.get('/api/animales', ControllerAnimal.find)
   app.put('/api/valor-referencia-animal/:id', verifyToken, ControllerAnalisis.updateValorReferenciaAnimal);
-  app.put('/api/animal/:id', verifyToken, ControllerAnimal.update);
+  app.put('/api/animal/:id', ControllerAnimal.update);
 
 	/**fin controler paciente**/
 
@@ -210,7 +210,7 @@ module.exports = function(app,passport) {
   app.get('/api/sent-sms/:protocolo', ControllerSms.findSentSMSbyProtocol);
   app.get('/api/sms/:protocolo', ControllerSms.findSMSbyProtocol);
 
-  app.get('/api/sms-status/:referenceId', ControllerSms.updateInProgressSMS);
+  //app.get('/api/sms-status/:referenceId', ControllerSms.updateInProgressSMS);
   app.get('/api/sms', ControllerSms.process);
 
 };
