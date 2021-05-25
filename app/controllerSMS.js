@@ -11,14 +11,14 @@ exports.findSentSMSbyProtocol= function(req, res) {
 exports.findSMSbyProtocol= function(req, res) {
   SMS.find({$and:[{protocolo:req.params.protocolo}]},function(err, sms) {
     if(err) res.send(500, err.message);
-      var smsList = sms
+      /*var smsList = sms
       if(smsList.length == 0) return res.status(200).jsonp("Never try")
       for(var i=0; i<smsList.length;i++){
         if(smsList[i].code == 200){
           return res.status(200).jsonp("Sent OK")
         }
-      }
-      return res.status(200).jsonp("Fail")
+      }*/
+      return res.status(200).jsonp(sms)
 
     });
 };
