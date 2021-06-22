@@ -29,8 +29,8 @@ userSchema.methods.validPassword = function(password) {
 //Adding a generateJwt method to userSchema in order to return a JWT
 userSchema.methods.generateJwt = function() {
   var expiry = new Date();
-  //expiry.setDate(expiry.getDate() + 1); // adding one day
- expiry.setMinutes(expiry.getMinutes() + 30);
+ expiry.setDate(expiry.getDate() + 1); // adding one day
+// expiry.setMinutes(expiry.getMinutes() + 30); media hora
 
   return jwt.sign({
     _id: this._id,

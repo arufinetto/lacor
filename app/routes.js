@@ -171,7 +171,7 @@ module.exports = function(app,passport) {
 	app.get('/api/pedidos/proporcion-estudios-derivados', verifyToken, ControllerPedidos.proporcionEstudiosDerivados)
 
 	app.get('/api/pedidos-estadisticas', verifyToken, ControllerPedidos.nuevosPedidos)
-  app.get('/api/send-sms/:phoneNumber/protocol/:protocolo/patient/:patientName', ControllerPedidos.sendSMS);
+  app.get('/api/send-sms/:phoneNumber/protocol/:protocolo/patient/:patientName/message/:message', ControllerPedidos.sendSMS);
 	/**fin controler pedido**/
 
 	/**Controler Medico**/
@@ -210,7 +210,8 @@ module.exports = function(app,passport) {
   app.get('/api/sent-sms/:protocolo', ControllerSms.findSentSMSbyProtocol);
   app.get('/api/sms/:protocolo', ControllerSms.findSMSbyProtocol);
 
-  //app.get('/api/sms-status/:referenceId', ControllerSms.updateInProgressSMS);
+  app.get('/api/sms-status/:referenceId', ControllerSms.updateInProgressSMS);
   app.get('/api/sms', ControllerSms.process);
-
+  app.get('/api/sms-text', ControllerSms.getSmsText);
+  app.put('/api/sms-text', ControllerSms.updateSmsText);
 };

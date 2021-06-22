@@ -55,10 +55,16 @@ exports.findWipSMSbyProtocol= function(res) {
 };
 
 
-function updateInProgressSMS(referenceId){
+exports.updateInProgressSMS = function(req,res){
 //  var referenceId = job.data.referenceId
-  var args = { headers: { "Content-Type":"application/x-www-form-urlencoded", "Authorization": 'Basic '+ encodedData} };
-  console.log("quiereo ver " + referenceId)
+  var args = { headers: { "Content-Type":"application/x-www-form-urlencoded", "Authorization": 'Basic '+ encodedData},
+
+  requestConfig: {
+       followRedirects:false,//whether redirects should be followed(default,true)
+       maxRedirects:3//set max redirects allowed (default:21)
+   },
+ };
+  //console.log("quiereo ver " + referenceId)
   var client = new Client();
 //  client.get("https://rest-api.telesign.com/v1/messaging/" + req.params.referenceId, args, function (data, response) {
   //    console.log("response" + response)
@@ -78,10 +84,12 @@ function updateInProgressSMS(referenceId){
   });*/
  //})
 
+var referenceId = req.params.referenceId
  client.get("https://rest-api.telesign.com/v1/messaging/" + referenceId, args, function (data, response) {
     // parsed response body as js object
     console.log(data);
-    SMS.update({
+    res.status(200).jsonp(data)
+    /*SMS.update({
         referenceId:referenceId
        },
 
@@ -93,6 +101,36 @@ function updateInProgressSMS(referenceId){
        if (err){
          console.log("error update sms")
        }
-    });
+    });*/
 });
+}
+
+exports.updateSmsText = function(req,res){
+  //var sms = { sms: req.body.message}
+  // convert JSON object to a string
+ // const data = JSON.stringify(sms);
+  const fs = require("fs");
+  // write file to disk
+  fs.writeFile("./app/sms.txt", req.body.message, (err) => {
+
+      if (err) {
+          console.log(`Error writing file: ${err}`);
+            res.status(500).jsonp("File Updated")
+      } else {
+          console.log(`File is written successfully!`);
+          res.status(200).jsonp("File Updated")
+      }
+
+  });
+}
+
+exports.getSmsText = function(req, res){
+
+  const fs = require("fs");
+  // write file to disk
+    console.log("algo intenta leer");
+  fs.readFile('./app/sms.txt', 'utf8',(err, data) => {
+    res.status(200).jsonp(data.split('\n')[0])
+ })
+
 }

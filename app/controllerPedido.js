@@ -664,19 +664,7 @@ exports.nuevosPedidos = function(req, res) {
 
 
 
-var TeleSignSDK = require('telesignsdk');
 
-const customerId = "69088F88-661C-45BE-BFA6-4F42A4451D1E";
-const apiKey = "TN+9C3H2t60tZw0+gr8Rx9CeKMch8tAddZ93h02VAVJaTjwFE5y1bZqKLXB7pWJuCydNQKEOoaEzHf3ir+t0Ng==";
-const rest_endpoint = "https://rest-api.telesign.com";
-const timeout = 1000; // 10 secs
-
-var client = new TeleSignSDK( customerId,
-		apiKey,
-		rest_endpoint,
-		timeout // optional
-		// userAgent
-);
 
 
 /*function messageCallback(error, responseBody, req, res) {
@@ -750,34 +738,49 @@ exports.sendSMS10 = function(req, res) {
 //"/n No responda a este mensaje";
 const messageType = "ARN";
 var referenceId = null;
+var Client = require('node-rest-client').Client;
+
+
 
 exports.sendSMS = function(req, res){
-	var Client = require('node-rest-client').Client;
 
-var client = new Client();
+const customerId = "69088F88-661C-45BE-BFA6-4F42A4451D1E";
+const apiKey = "TN+9C3H2t60tZw0+gr8Rx9CeKMch8tAddZ93h02VAVJaTjwFE5y1bZqKLXB7pWJuCydNQKEOoaEzHf3ir+t0Ng==";
+
+var options_auth = {
+    user: customerId,
+    password: apiKey,
+    mimetypes: {
+        json: ["application/json", "application/json;charset=utf-8"]
+    }
+};
+
+var client = new Client(options_auth);
 let data = customerId+":"+apiKey;
 let buf = Buffer.from(data);
 let encodedData = buf.toString('base64');
 
 var phoneNumber = req.params.phoneNumber
 var patientName = req.params.patientName
+var message = req.params.message
 
-const message = "LACOR informa que ya se encuentran los resultados de "+ patientName.toUpperCase()+ "." +
-'\n'+ "Puede retirarlos de LUNES a VIERNES de 17:30 a 20:00 hs, en calle 10 número 240."+
-'\n'+ "No responda a este mensaje";
+//const message = "LACOR informa: sus resultados están listos.Retirar LUN-VIE 17:30-20 hs" //70caract
+//const message1 = "LACOR informa: Puede retirar sus resultados de LUN a VIERN de 17-19 hs" //70 cara
+
 
 if (!phoneNumber.startsWith("54")){
 	phoneNumber = "54" + phoneNumber
 }
-console.log("COMO MANDA EL TELEFONO " + message)
+//console.log("COMO MANDA EL TELEFONO " + message)
 var args = {
 	 data: { message: message, message_type:messageType, phone_number: phoneNumber },
-	 headers: { "Content-Type":"application/x-www-form-urlencoded", "Authorization": 'Basic '+ encodedData}
+	 headers: { "Content-Type":"application/x-www-form-urlencoded"},
 };
+
 
 client.post("https://rest-api.telesign.com/v1/messaging", args, function (data, response) {
     // parsed response body as js object
-    console.log(data);
+
 		var sms = new SMS({
 			phoneNumber: phoneNumber,
 			fecha:  new Date(),
@@ -788,6 +791,7 @@ client.post("https://rest-api.telesign.com/v1/messaging", args, function (data, 
 
 			});
 
+    console.log(data)
 		sms.save(function(err, sms) {});
 			if(data.status.code == 290 || data.status.code == 200  || data.status.code == 10033){
 
@@ -805,8 +809,16 @@ client.post("https://rest-api.telesign.com/v1/messaging", args, function (data, 
 						};
 							smsQueue.notify(data1)
 					}*/
-
 					res.status(200).jsonp(data.status.description);
+
+				/*	var args1 = {
+						 data: { reference_id: data.reference_id, status: {code: data.status.code, description:data.status.description }  },
+						 headers: { "Content-Type":"application/x-www-form-urlencoded", "Authorization": 'Basic '+ encodedData},
+					};
+
+					client.post("https://rest-api.telesign.com/v1/messaging", args1, function (data1, response1) {
+						console.log("callback " + data1)
+					})*/
 
 			}
 			else{
@@ -816,5 +828,7 @@ client.post("https://rest-api.telesign.com/v1/messaging", args, function (data, 
 });
 
 }
+
+
 
 //var smsQueue = require('./src/lib/queue');
