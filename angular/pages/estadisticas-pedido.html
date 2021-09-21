@@ -20,7 +20,7 @@
 	  <option ng-selected="mesNumero == 12" ng-value="12">Diciembre</option>
      </select>
   </div>
-  
+
   <div class="form-group row">
     <label  for="tipo">Año:</label>
     <select class="form-control" id="anio" ng-model="anio" ng-change="getPedidosPorMes(mesNumero, anio)">
@@ -28,13 +28,15 @@
 	  <option>2018</option>
 	  <option>2019</option>
       <option>2020</option>
+      <option>2021</option>
+      <option>2022</option>
      </select>
   </div>
-  
+
 
 <div class="col-lg-12 col-md-12" >
 <div class="panel panel-default">
-    <div class="panel-heading" style="background-color:#a10684;color:#FFFFFF"><b>{{pedidosNuevosCount}}  PEDIDOS DURANTE EL MES</b></div>                    
+    <div class="panel-heading" style="background-color:#a10684;color:#FFFFFF"><b>{{pedidosNuevosCount}}  PEDIDOS DURANTE EL MES</b></div>
 	<div class="panel-body" style="max-height:450px; overflow-y:scroll">
 
 	<table class="table table-striped" >
@@ -55,15 +57,13 @@
                 <td>{{pedido.fechaModified}}</td>
 				<td>{{pedido.paciente.apellido}}, {{pedido.paciente.nombre}}</td>
 				<td>{{pedido.medico.nombre}}</td>
-				
+
 			</tr>
-		</tbody>	
+		</tbody>
 	</table>
 </div>
 </div>
 </div>
 </div>
-  
+
 </div>
-
-
