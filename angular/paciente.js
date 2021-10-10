@@ -110,7 +110,7 @@ starter.factory("servicio", function(){
 	$scope.getPacientes = function (page){
 	//	for(var x = 0; x <2000; x++){
 	//	console.log('pacientes '+ x);
-		$http.get('/api/pacientes', { headers:{"authorization":$scope.token }})
+		$http.get('/api/pacientes/'+page, { headers:{"authorization":$scope.token }})
 		.success(function(data) {
 			$scope.pacienteList = data;
 		})
