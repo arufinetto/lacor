@@ -24,27 +24,27 @@ Pedido.aggregate([
 	{ $lookup: { from: "pacientes", localField: "paciente", as:"paciente",foreignField: "_id"}},
 	{ $lookup: { from: "animals", localField: "animal", as:"animal",foreignField: "_id"}},
 	{ $project: {
-        fechaModified: { $dateToString: { format: "%d/%m/%Y", date: "$fecha" } },
-		fecha:1,
-		//'analisisList.analisis': 1,
-		//'analisisList.resultado': 1,
-		analisisList: 1,
-		//analisisList: {$array:['$analisisList']},
 		paciente: {$arrayElemAt: [ '$paciente', 0 ]},
+    fechaModified: { $dateToString: { format: "%d/%m/%Y", date: "$fecha" } },
+		animal:{$arrayElemAt: [ '$animal', 0 ]},
+		animalModified:{ $arrayElemAt: ["$animal.nombre", 0] },
+		pacienteModified: { $concat: [ {$arrayElemAt: ["$paciente.apellido",0]}, ", ", {$arrayElemAt: ["$paciente.nombre",0]} ] },
+		fecha:1,
+		analisisList: 1,
 		medico: {$arrayElemAt: [ '$medico', 0 ]},
 		estado:1,
 		protocolo:1,
 		protocoloAnimal:1,
 		diagnostico:1,
 		derivadorDescripcion:1,
-		obrasocial:1,
-		animal:{$arrayElemAt: [ '$animal', 0 ]}
+		obrasocial:1
+
 		  }
-       },
+   },
 
 	{$sort:{protocolo:1}},
-	{$skip: skip},
-		{$limit: perPage}
+//	{$skip: skip},
+	//	{$limit: perPage}
 	], function (err, pedido) {
 		Analisis.populate(pedido, {path: "analisisList.analisis", select:{determinaciones:1,codigo:1,formula:1,valorReferencia:1,unidad:1,muestraDefault:1,metodoDefault:1,multiple:1,valorReferenciaAnimal:1}},function(err,labs){
 
@@ -634,6 +634,7 @@ exports.nuevosPedidos = function(req, res) {
 			fecha:1,
 			protocolo:1,
 			paciente:1,
+			animal:1,
 			medico:1,
 			mes:{$month:'$fecha'},
 			anio:{$year:'$fecha'},
@@ -648,6 +649,7 @@ exports.nuevosPedidos = function(req, res) {
 
 				if(err) res.send(500, err);
 				else{
+					Animal.populate(data, {path: "animal",select:{nombre:1}},function(err,data){
 					Paciente.populate(data, {path: "paciente",select:{nombre:1,apellido:1,ciudad:1}},function(err,data){
 					//Analisis.populate(data, {path: "analisisList.analisis"},function(err,data){
 					Medico.populate(data, {path: "medico"},function(err,data){
@@ -655,7 +657,7 @@ exports.nuevosPedidos = function(req, res) {
 							res.status(200).jsonp(data);
 							});
 
-				//});
+				});
 
 		});
 	}

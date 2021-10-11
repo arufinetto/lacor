@@ -15,7 +15,10 @@ starter.factory("servicio", function(){
 	$scope.animalsFilteredList = {};
 	$scope.nombreAnimal =""
 	$scope.token= "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTQ5MjcyYWZlN2ZkMjYxNzk0MDcxNGIiLCJleHAiOjE2NjM3MjAxMDYsImlhdCI6MTYzMjE4NDEwNn0.oN9a97hM4MfwBTF6UpgCrVqlB_tWxECEqdJDq2zgcRw";
+<<<<<<< HEAD
 
+=======
+>>>>>>> 51b04054b0f7f2378bf41c35eba0feb78de5fb9e
 
 
 	$scope.getAnimalsByName = function (name){

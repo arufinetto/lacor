@@ -180,7 +180,7 @@ exports.nuevosPacientes = function(req, res) {
 		 }
 		},
 
-		{$match: {$and:[{mes: parseInt(today.getMonth()+1) },{anio:parseInt(today.getFullYear())}]}},
+		{$match: {$and:[{mes: parseInt(req.query.mes) },{anio:parseInt(req.query.anio)}]}},
 		//{$group:{_id:'$fechaModified', gasto:{"$push": {motivo:"$motivo",referencia:"$referencia",costo:"$costo"}}}},
 
 

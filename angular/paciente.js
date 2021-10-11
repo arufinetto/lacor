@@ -33,7 +33,11 @@ starter.factory("servicio", function(){
 	$scope.nombrePaciente= null;
 	$scope.obraSocialPacienteSelected = null;
 	$scope.pacienteEdited = null;
+<<<<<<< HEAD
     $scope.token= "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTQ5MjcyYWZlN2ZkMjYxNzk0MDcxNGIiLCJleHAiOjE2NjM3MjAxMDYsImlhdCI6MTYzMjE4NDEwNn0.oN9a97hM4MfwBTF6UpgCrVqlB_tWxECEqdJDq2zgcRw";
+=======
+	$scope.token= "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTQ5MjcyYWZlN2ZkMjYxNzk0MDcxNGIiLCJleHAiOjE2NjM3MjAxMDYsImlhdCI6MTYzMjE4NDEwNn0.oN9a97hM4MfwBTF6UpgCrVqlB_tWxECEqdJDq2zgcRw";
+>>>>>>> 51b04054b0f7f2378bf41c35eba0feb78de5fb9e
 
 
 	$scope.removePaciente = function(id){
@@ -110,7 +114,7 @@ starter.factory("servicio", function(){
 	$scope.getPacientes = function (page){
 	//	for(var x = 0; x <2000; x++){
 	//	console.log('pacientes '+ x);
-		$http.get('/api/pacientes', { headers:{"authorization":$scope.token }})
+		$http.get('/api/pacientes/'+page, { headers:{"authorization":$scope.token }})
 		.success(function(data) {
 			$scope.pacienteList = data;
 		})

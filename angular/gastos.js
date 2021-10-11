@@ -5,12 +5,12 @@ starter.factory("servicio", function(){
 }).controller("gastoController", function ($scope,$http,servicio){
 			$scope.gastos={};
 			$scope.motivosgastos = {};
-		
+
 			$scope.init= function(){
 				var fecha = new Date();
 				$scope.anio = fecha.getFullYear();
 				$scope.mesNumero = fecha.getMonth() +1;
-	
+
 			}
 			$scope.calcularGasto = function(){
 				var costoTotal = 0;
@@ -22,7 +22,7 @@ starter.factory("servicio", function(){
 			$scope.getGastos = function(mes,anio){
 				$http.get('/api/gastos?mes='+mes+'&anio='+anio)
 					.success(function(data) {
-						$scope.gastos = data; 
+						$scope.gastos = data;
 					}).error(function(err) {
 						console.log('Error: '+err);
 					});
@@ -30,20 +30,20 @@ starter.factory("servicio", function(){
 			$scope.getMotivos = function(){
 				$http.get('/api/motivos')
 					.success(function(data) {
-						$scope.motivosgastos = data; 
+						$scope.motivosgastos = data;
 					}).error(function(err) {
 						console.log('Error: '+err);
 					});
 			}
-			
+
 			$scope.newGasto = {
 				fecha: new Date(),
 				motivo:'',
 				referencia:'',
 				costo:0,
-				
+
 			}
-			
+
 			$scope.getTotalPorMes = function(currentLibro){
 				var subtotal = 0;
 				for(var i=0;i<$scope.gastos.length;i++){
@@ -55,18 +55,18 @@ starter.factory("servicio", function(){
 				}
 				return subtotal;
 			}
-			
+
 			$scope.clean = function(){
 				$scope.newGasto = {
 								fecha: new Date(),
 								motivo:'',
 								referencia:'',
 								costo:0
-								
+
 							}
 			}
 			$scope.createGasto = function(librogasto){
-		
+
 				$http.post('/api/gasto', $scope.newGasto)
 					.success(function(data) {
 						alert("Se creo el gasto")
@@ -74,9 +74,7 @@ starter.factory("servicio", function(){
 					}).error(function(err) {
 						alert('No se creo el gasto debido a un error: '+err);
 					});
-				
+
 			}
-			
+
 })
-			
-		
