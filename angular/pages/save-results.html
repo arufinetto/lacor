@@ -15,6 +15,7 @@
 				<th>Derivador</th>
 				<th>Paciente</th>
 				<th>Diagnostico</th>
+				<th>Identificador</th>
 
 			</tr>
 		</thead> <!--ng-class-odd="'odd'" ng-class-even="'even'"-->
@@ -28,6 +29,7 @@
 				<td ng-show="pedido.paciente !=null"><div>{{pedido.paciente.apellido}}, {{pedido.paciente.nombre}}</div></td>
 				<td ng-show="pedido.animal !=null">{{pedido.animal.tipo}} - {{pedido.animal.nombre}}</td>
 				<td>{{pedido.diagnostico}}</td>
+				<td><input ng-model="pedido.identificador"></input>&nbsp;&nbsp;<button ng-click="updateIdentifier(pedido._id,pedido.identificador)">Guardar</button></td>
 
 				<!--<td><div class="progress" ng-init="progreso=calcularProgreso(pedido)" data-toggle="collapse"> <div class="progress-bar progress-bar-warning" role="progressbar" style="width:100%">Progreso {{progreso}} %</div></div></td>-->
 				<td>
@@ -37,6 +39,7 @@
 				</td>
 
 				<td><button ng-click="#row($index)" class="btn btn-xs  btn-info" data-toggle="collapse" data-target="#row{{$index}}">Editar</button></td>
+				<td><button ng-click="loadCM200(pedido._id,pedido.identificador)" class="btn btn-xs  btn-info">Cargar CM200 </button></td>
 				<td><button class="btn btn-xs  btn-info" ng-click="confirmCambiarEstado(pedido,'Para Entregar')">Completar</button></td>
 				<td><button ng-click="confirmCambiarEstado(pedido,'Invalido')" class="btn btn-xs  btn-info" >Invalidar</button></td>
 				<td><button ng-click="generatePDF(pedido,false)" class="btn btn-xs  btn-info">Ver Informe</button></td>
@@ -46,7 +49,6 @@
 			<tr id="row{{$index}}" class="collapse" >
 
 				<td colspan="10">
-
 
 					<table class="table table-responsive" style="font-family: Verdana;font-size:12px;">
 						<thead>
@@ -199,8 +201,10 @@
 
 							<td><button class='btn btn-xs btn-warning' ng-click="selectEstudioPaciente(lab.analisis.determinaciones,pedido.paciente.apellido,pedido.paciente.nombre);getLastResults(pedido.paciente._id,lab.analisis._id,pedido.protocolo)" data-toggle="modal" data-target="#ultimosResultados">Ver ultimos!</button></td>
 
+							<td><button ng-show="lab.analisis.codigo == 0475 || lab.analisis.codigo == 0746" class='btn btn-xs btn-warning' ng-click="loadCounter19(lab,pedido.identificador,pedido.fechaModified)" data-toggle="modal" data-target="#counter19Result">Cargar ounter 19</button></td>
+
 							<td>
-							<button ng-click="confirmDeleteAnalisis(pedido._id,lab.analisis._id)"  class='btn btn-xs btn-danger'>Eliminar!</button>
+							<button ng-click="confirmDeleteAnalisis(pedido._id,lab.analisis._id)"  class='btn btn-xs btn-danger'>Eliminar!</button></ng-if>
 							</td>
 
 						</tr>
@@ -424,6 +428,40 @@
 					  </div>
 
 					</div>
-				  </div>
+	 </div>
+ 
+ <div class="modal fade" id="counter19Result" role="dialog" >
+					<div class="modal-dialog">
 
+					  <!-- Modal content-->
+					  <div class="modal-content">
+						<div class="modal-header">
+						  <button type="button" class="close" data-dismiss="modal">&times;</button>
+						  <h4 class="modal-title">{{counter19Result.patient}}</h4>
+						</div>
+						<div class="modal-body">
+							
+							<table class="table table-hover" >
+								<thead>
+									<tr>
+										<th>Nombre</th>
+										<th>Valor</th>
+									</tr>
+								</thead>
+								<tbody ng-repeat="(key, value) in counter19Result.result">
+									<tr>
+										<td>{{key}}</td>
+										<td>{{value}}</td>
+									</tr>
+								</tbody>
+								</table>
+						</div>
+					
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+						  </div>
+					  </div>
+
+					</div>
+	 </div>			  
  </div>
