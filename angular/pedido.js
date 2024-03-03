@@ -1,3 +1,4 @@
+
 starter.factory("servicio", function(){
 				return {
 					data: {
@@ -5,7 +6,7 @@ starter.factory("servicio", function(){
 				} ;
 }).controller("pedidoController",  function($route,$scope, $http,servicio,$ngBootbox, $rootScope) {
 		//	var TeleSignSDK = require('telesignsdk');
-			$scope.pedidosAbiertosList = {}
+		   $scope.pedidosAbiertosList = {}
 			$scope.pedidosCompletosList = {}
 			$scope.created=false
 			$scope.valorHalladoList = []
@@ -29,9 +30,11 @@ starter.factory("servicio", function(){
 			$scope.entregadosCount =0;
 			$scope.invalidosCount =0;
 			$scope.creadosCount =0;
-			$scope.nombreAnimal = ""
+			$scope.nombreAnimal = "";
+			$scope.newResultCounter19 = "";
 			//$scope.pedidoFinanza = {};
 	        $scope.token= "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTQ5MjcyYWZlN2ZkMjYxNzk0MDcxNGIiLCJleHAiOjE2NjM3MjAxMDYsImlhdCI6MTYzMjE4NDEwNn0.oN9a97hM4MfwBTF6UpgCrVqlB_tWxECEqdJDq2zgcRw";
+
 
 			$scope.sendSMS = function(phoneNumber, protocol) {
 			$http.get('/api/send-sms/' + phoneNumber + '/protocol/'+ protocol)
@@ -57,6 +60,12 @@ starter.factory("servicio", function(){
 	};
 
 
+
+
+	//var x= "AAAI10P190000000maru10032220231009009000350007004839008053042413903380971032713441103850821503150505000000000000001000000100801022550261910182360000000000000000000000000000000000000000000000000000001002004007009010013015017020021023026029034042051056064073082095109122131143157171186193199204218230234240241249252255250246244237235233229223218213203196189176168160152141136129120115110106100100094092090086081079078074074075075076079079081082085088091094094097101105112111117122129131132135138142143146147152157161159161165167174175175171175177178177172173173174172168164158157155155153153150149146144140137135128129130126120120118116116113108110111107106108107102100101097097096090089088087082083080075073070068065062057054053051052048046044042041040040038038037036034035033027026026024024023022021020019018018016016014013014012010010010009010009009009009008007007006005005006005004003003004004004003003004004004003003003003003000000000000000000000000000000000000000000000000000000000000000000000000000001002003003004005006006005005004004003002002002002002001001001001001002002002002003004005006007009011015019023029036043052063075087100113128142156169182197209221230239246252255255255249246241236228219209198190179168155144134124116107100092087083078075072069067065065063062061060058056055052051049047045043042040039036036034033031030029027026024023022021019018017017016015013012011011010009009008008008007007006005005005005005004004004004004003003003003003003003002002002003003003003003003003003003003002002002002002002002002002002002002002002002002002002001001002002002001002001001001001001001001000001001001001001001001001001001001000000000000000000001001001001001001001001001000000000000000000000000000000000000000000000000000000000000000000000001002004006009013017022027033040046053061069077086095104114125135145155165173182189196202208213219223228232237239242244247248250251253254255255255254253252251250249247246243241237234229225220216211206203200197194190187183180176173170167164161159157153149146143139135131127124122119116113111108105102100097095093091088086082079076074071068065062060058056054052051050050049048047047047047047047046046046046045044043042040039037035034033032031030030029028027026025024023023023023022022022022021021020020019019018018017017017017016016015015014014014014013013013013012011010010010010009009009010010010010010010010010010010010010010010010009009009009008008007006006006005005005005004004004004004004004004004004004004004AAAI10P1900valentino10032320231111006400230005003636707655742613803400953032313540502560831542120494000000000000001000000100801102550261810182360000000000000000000000000000000000000000000000000000001004006009011015020024025028031035039038041046057064075084096108120138152175193209221233244252255251239245248251251250251246248233223214205192181173164153147139131125114105105105100093091087087085079074073071068066062059058057054057055053055058058060061060061062062064066065065067066067068067067068067067068070072072071070075079081082080080082086086084085088092096097097099097098094093093098103100106107109114118115116119121127129126127134135134134138143145148145149149149152149156156156156161164163165168168173174179178176176175171168165159157154151146141132126120112107101094093094089087085082077076074067067064064059060058051050046042039038033028029029028027025025023023020016016014012010011009011010010011013013012012012012012000000000000000000000000000000000000000000000000000000000000000000000000000001002003004004005005005005004004003003003003002002002002002002002002002003003003004005006007010011014018022028035043052061072083097112126141155171185200214224233238245251254255251246239232224213202192181172162154143132124116110103099092088084080075071068066064062060060058057055052051051050046044043040039038035033032030029027026024023022021020019018018016015014013013012011011011010009009009008007006006006005005004004004004004004003004004004004003003003003003003003003002002002002002002002002002002002002002002002002002002002002002002002002002002002002001001001001001001001001001001001001001001001001001001001001001001001001001001000000000000000000000000000000000000000001001001001001001001000000000000000000000000000000000000000000000000001001001002004007011016022029037045054062071079088096105114123132142151161169178186194201208213219223228233238241244247251253255255255254253250248245242238235232229226223220217214211208205203201198196194193191189187185182180177174170167164162159157154151147144139134128123117112108104100096094092090088086084083082080079078077076076076076075075075075073072070068066064061058056054052051049048046045043042041040038037036035035035034034034034033033032031030029028028027027027027027028028028028028027027027027027028027027027027026026025025024024023022021020019018017017016016016016015015015015014014013012012012011011011011010010009009009009008008008008008008008008008008007007007007006006006006006006006006006006006006006"
+	//$scope.newResultCounter19 = x.substring(0,2464)
+
+
 	$scope.getPedidoPorPaciente = function(id_paciente){
 		$http.get('/api/pedidosByPaciente/'+id_paciente,{headers:{"authorization":$scope.token}})
 		.success(function(data) {
@@ -67,7 +76,77 @@ starter.factory("servicio", function(){
 		});
 	}
 
+	$scope.loadCounter19 = function(lab,identifier, date){
+		if (identifier.length < 10){
+			while(identifier.length < 10){
+				identifier = "0" + identifier
+			}
+		}
 
+		$http.get('/api/result/counter19/patient/'+identifier + '?date=' + date.replace('/','').replace('/',''), {headers:{"authorization":$scope.token}})
+		.success(function(data) {
+			$scope.counter19Result = data
+			
+			if (lab.analisis._id =="58f5638c68837d08020020c9"){
+				console.log("ver...." + lab.analisis._id )
+				lab.resultado[0].valorHallado[0] = parseInt($scope.counter19Result.result["PLT"])*1000
+
+			}else{
+					for(var j=0; j< lab.resultado.length;j++){
+						if (lab.resultado[j].formula== "G. Rojos:"){
+							lab.resultado[j].valorHallado[0] = (parseInt($scope.counter19Result.result["RBC"])*10000).toString()
+						}
+						if 	(lab.resultado[j].formula== "Hemoglobina:"){
+							lab.resultado[j].valorHallado[0] = (parseInt($scope.counter19Result.result["HGB"])/10).toString()
+						}
+						if 	(lab.resultado[j].formula== "Hematocrito:"){
+							lab.resultado[j].valorHallado[0] = (parseInt($scope.counter19Result.result["HCT"])/10).toString()
+						}
+						if 	(lab.resultado[j].formula== "Vol.Corp.Med.:"){
+							lab.resultado[j].valorHallado[0] = (parseInt($scope.counter19Result.result["MCV"])/10).toString()
+						}
+						if 	(lab.resultado[j].formula== "H.C.M:"){
+							lab.resultado[j].valorHallado[0] = (parseInt($scope.counter19Result.result["MCH"])/10).toString()
+						}
+						if 	(lab.resultado[j].formula== "C.H.C.M:"){
+							lab.resultado[j].valorHallado[0] = (parseInt($scope.counter19Result.result["MCHC"])/10).toString()
+						}
+						if 	(lab.resultado[j].formula== "RDW:"){
+							lab.resultado[j].valorHallado[0] = (parseInt($scope.counter19Result.result["RDW-CV"])/10).toString()
+						}
+						if 	(lab.resultado[j].formula== "G.Blancos:"){
+							lab.resultado[j].valorHallado[0] = (parseInt($scope.counter19Result.result["WBC"])*100).toString()
+						}
+
+						if 	(lab.resultado[j].formula== "Neut.Segmentados:"){
+							lab.resultado[j].valorHallado[0] = (parseInt($scope.counter19Result.result["Gran%"])/10).toString()
+						}
+						if 	(lab.resultado[j].formula== "Linfocitos:"){
+							lab.resultado[j].valorHallado[0] = parseInt($scope.counter19Result.result["Lymph%"]/10).toString()
+						}
+						if 	(lab.resultado[j].formula== "Eosinofilos:"){
+							lab.resultado[j].valorHallado[0] = "0"
+						}
+						if 	(lab.resultado[j].formula== "Basofilos:"){
+							lab.resultado[j].valorHallado[0] = "0"
+						}
+						if 	(lab.resultado[j].formula== "Neut. en Banda:"){
+							lab.resultado[j].valorHallado[0] = "0"
+						}
+						if 	(lab.resultado[j].formula== "Monocitos:"){
+							lab.resultado[j].valorHallado[0] = parseInt($scope.counter19Result.result["Mid%"]/10).toString()
+						}
+				
+			
+					}
+				}
+			
+		}).error(function(err) {
+			console.log('Error: '+err);
+		});
+	}
+
+	
 	$scope.selectPedido = function(pedido){
 		$scope.pedidoFinanza = pedido;
 		console.log($scope.pedidoFinanza.paciente.apellido)
@@ -139,6 +218,34 @@ starter.factory("servicio", function(){
 
 	}
 
+	$scope.updateIdentifier = function(pedidoId, identifier){
+		$http.put('/api/pedidos/'+ pedidoId +'/update-identifier',{identificador:identifier},{headers:{"authorization":$scope.token}})
+			.success(function(data) {
+				console.log('Data: '+data);
+			})
+			.error(function(err) {
+				console.log('Error: '+err);
+			});
+
+	}
+
+
+	$scope.loadCM200 = function(pedidoId, identifier){
+		$http.post('/api/analisis/' + pedidoId + '/load-cm200',{identificador:identifier},{headers:{"authorization":$scope.token}})
+			.success(function(data) {
+				console.log('Data: '+data);
+				$ngBootbox.confirm("Resultado: " + data.message)
+
+			})
+			.error(function(err) {
+				console.log('Error: '+err.message);
+
+				$ngBootbox.confirm("Error al leer resultados del CM 200: " + err.message)
+				
+			});
+
+	}
+
 	$scope.calcularEdad1 = function(birthday,datePedido){
 			var hoy = new Date(datePedido);
 			var cumpleanos = new Date(birthday);
@@ -181,7 +288,9 @@ starter.factory("servicio", function(){
 
 	 $scope.generatePDFExtraccion = function(pedido){
 		 var doc = new jsPDF("p", "mm", "a4");
-		 	var item = pedido.analisisList;
+		   doc.setFont("helvetica");
+					  
+			var item = pedido.analisisList;
 			doc.setFontSize(10);
 			doc.setTextColor(45,46,47);
 			doc.text(10,8,"Protocolo:"+pedido.protocolo)
@@ -203,7 +312,8 @@ starter.factory("servicio", function(){
 	 $scope.generatePDF = function (pedido, descargar) {
 
 			//a4
-			var doc = new jsPDF("p", "mm", "a4");
+			var doc = new  jsPDF("p", "mm", "a4");
+			
 			//letter
 			//var doc = new jsPDF("p", "mm", [216,279]);
 			//oficio
@@ -211,6 +321,20 @@ starter.factory("servicio", function(){
 
 			doc.setFont('helvetica');
 			//$scope.insertImage(doc);
+              
+			
+		   // doc.addFileToVFS('B612-Bold-bold.ttf', lato);
+			//doc.addFont('B612-Bold-bold.ttf', 'amiri', 'bold');
+			//doc.setFont("symbol");
+			//doc.addFont('Amiri-Regular.ttf', 'amiri', 'normal', 'Identity-H');
+			//doc.setFont("amiri");	
+
+	
+			//doc.addFileToVFS('NotoSansJP-VariableFont_wght-normal.ttf', font);
+             //doc.addFont('NotoSansJP-VariableFont_wght-normal.ttf', 'NotoSansJP-VariableFont_wght', 'normal');
+				
+				//doc.setFont('NotoSansJP-VariableFont_wght');
+
 			doc.setTextColor(45,46,47);
 			doc.setFontSize(10);
 
@@ -467,15 +591,25 @@ starter.factory("servicio", function(){
 							initial=40;
 						}
 
-						if(item[i].resultado[r].formula == "")
-						{doc.text(20,position+5,item[i].resultado[r].valorHallado[0])
-							position = position+5;}
-						else{
 
-							doc.text(20,position+5,item[i].resultado[r].formula)
-							doc.text(35,position+5,item[i].resultado[r].valorHallado[0]+"  "+item[i].analisis.formula[r].unidad)
-							position = position+5;
-						}
+
+							if(item[i].resultado[r].formula == "")
+							{doc.text(20,position+5,item[i].resultado[r].valorHallado[0])
+								position = position+5;}
+							else{
+
+								if(item[i].analisis.codigo == "2401"){
+									doc.text(20,position+5,item[i].resultado[r].formula)
+									doc.text(95,position+5,item[i].resultado[r].valorHallado[0])
+									doc.text(105,position+5,item[i].analisis.formula[r].unidad)
+
+									position = position+5;
+								}else{
+								doc.text(20,position+5,item[i].resultado[r].formula)
+								doc.text(35,position+5,item[i].resultado[r].valorHallado[0]+"  "+item[i].analisis.formula[r].unidad)
+								position = position+5;
+							}
+							}
 
 
 					}
@@ -586,7 +720,7 @@ starter.factory("servicio", function(){
 			doc.text(86,280, 'CARLOS B. AGUILAR');
 			doc.text(93,283, 'BIOQUÍMICO');
 			doc.text(95,286, 'M.P. 1773');
-			doc.text(13,295, 'Laboratorio autorizado por el Colegio de Bioquímicos de la provincia de Córdoba según la resolución N° 12818/2019. Válido hasta 20/02/2022.');
+			doc.text(13,295, 'Laboratorio autorizado por el Colegio de Bioquímicos de la provincia de Córdoba según la resolución N° 17828/2022. Válido hasta 19/04/2025.');
 
 			if(descargar){
 				doc.save('protocolo-'+pedido.protocolo);

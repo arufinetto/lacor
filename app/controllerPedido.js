@@ -554,7 +554,7 @@ exports.saveResults = function(req, res) {
 
    		},function(err,pedido){
 
-				Pedido.find(function(err,pedido){
+				Pedido.find({estado:'Abierto'},function(err,pedido){
 					if(err) res.status(500).json("Error " +err)
 					res.json(pedido);
 				});
@@ -599,7 +599,7 @@ exports.saveObservaciones = function(req, res) {
 
    		},function(err,pedido){
 
-				Pedido.find(function(err,pedido){
+				Pedido.find({estado:'Abierto'},function(err,pedido){
 					if(err) res.status(500).json("Error " +err)
 					res.json(pedido);
 				});

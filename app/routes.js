@@ -20,7 +20,7 @@ var jwt = require('jsonwebtoken');
 });*/
 
 var verifyToken = function (req, res, next) {
-  const authHeader = req.headers['authorization']
+/* const authHeader = req.headers['authorization']
   if(typeof authHeader !== 'undefined'){
     const token = authHeader.split(' ')
    jwt.verify(token[1],"MY_SECRET",(err, authData) => {
@@ -32,7 +32,7 @@ var verifyToken = function (req, res, next) {
     });
   }else{
     return res.status(403).send({"message":'Forbidden'});
-  }
+  }*/
 }
 
 /*var expiredToken = function(req, res){
@@ -51,139 +51,139 @@ module.exports = function(app,passport) {
 	/**Controler Analisis**/
 	//app.get('/api/expired-token', expiredToken);
 
-	app.get('/api/analisis/:page', verifyToken, ControllerAnalisis.findAllAnalysis);
+	app.get('/api/analisis/:page', ControllerAnalisis.findAllAnalysis);
 
-	app.get('/api/analisis/:id',  verifyToken, ControllerAnalisis.find);
+	app.get('/api/analisis/:id', ControllerAnalisis.find);
 
-	app.get('/api/analisisByCode/:codigo', verifyToken, ControllerAnalisis.findByCode);
+	app.get('/api/analisisByCode/:codigo', ControllerAnalisis.findByCode);
 
-	app.post('/api/analisis', verifyToken,ControllerAnalisis.addAnalysis);
+	app.post('/api/analisis',ControllerAnalisis.addAnalysis);
 
-	app.put('/api/analisis/:id', verifyToken,ControllerAnalisis.update);
+	app.put('/api/analisis/:id',ControllerAnalisis.update);
 
-	app.put('/api/unidad-bioquimica/precio', verifyToken, ControllerAnalisis.updatePrice);
+	app.put('/api/unidad-bioquimica/precio', ControllerAnalisis.updatePrice);
 
-	app.get('/api/excel', verifyToken, ControllerAnalisis.convertExcelToJson);
+	app.get('/api/excel', ControllerAnalisis.convertExcelToJson);
 
-  app.get('/api/analisis', verifyToken, ControllerAnalisis.findAllAnalysisWithoutPag)
+  app.get('/api/analisis', ControllerAnalisis.findAllAnalysisWithoutPag)
 
 
 	/**Fin Controler Analisis**/
 
 	 /**Controler Muestra Metodos**/
-	app.get('/api/muestras',verifyToken,ControllerMuestraMetodo.findMuestra);
+	app.get('/api/muestras',ControllerMuestraMetodo.findMuestra);
 
-	app.get('/api/metodos', verifyToken, ControllerMuestraMetodo.findMetodo);
+	app.get('/api/metodos', ControllerMuestraMetodo.findMetodo);
 
-	app.post('/api/muestra', verifyToken, ControllerMuestraMetodo.createMuestra);
+	app.post('/api/muestra', ControllerMuestraMetodo.createMuestra);
 
-	app.post('/api/metodo', verifyToken, ControllerMuestraMetodo.createMetodo);
+	app.post('/api/metodo', ControllerMuestraMetodo.createMetodo);
 
-	app.delete('/api/metodo/:id', verifyToken, ControllerMuestraMetodo.deleteMetodo);
+	app.delete('/api/metodo/:id', ControllerMuestraMetodo.deleteMetodo);
 
-	app.delete('/api/muestra/:id', verifyToken, ControllerMuestraMetodo.deleteMuestra);
+	app.delete('/api/muestra/:id', ControllerMuestraMetodo.deleteMuestra);
 
 	/**Controler perfil **/
 
-	 app.post('/api/perfil', verifyToken, ControllerPerfil.createPerfil);
+	 app.post('/api/perfil', ControllerPerfil.createPerfil);
 
-	 app.get('/api/perfils', verifyToken, ControllerPerfil.findPerfils);
+	 app.get('/api/perfils', ControllerPerfil.findPerfils);
 
-	 app.get('/api/perfil', verifyToken,ControllerPerfil.findPerfil);
+	 app.get('/api/perfil',ControllerPerfil.findPerfil);
 
 	 /**Controler Paciente**/
-	app.get('/api/pacientes/:page', verifyToken, ControllerPacientes.findAll);
+	app.get('/api/pacientes/:page', ControllerPacientes.findAll);
 
-	app.get('/api/pacienteBy', verifyToken, ControllerPacientes.filter);
+	app.get('/api/pacienteBy', ControllerPacientes.filter);
 
-	app.delete('/api/paciente/:id', verifyToken, ControllerPacientes.deletePaciente);
+	app.delete('/api/paciente/:id', ControllerPacientes.deletePaciente);
 
-  app.get('/api/paciente/:id', verifyToken,ControllerPacientes.findPacienteById);
+  app.get('/api/paciente/:id',ControllerPacientes.findPacienteById);
 
-	app.post('/api/paciente',verifyToken, ControllerPacientes.add);
+	app.post('/api/paciente', ControllerPacientes.add);
 
-	app.put('/api/paciente/:id', verifyToken, ControllerPacientes.update);
+	app.put('/api/paciente/:id', ControllerPacientes.update);
 
-	app.put('/api/paciente/:id/obrasocial/:ob_id', verifyToken, ControllerPacientes.updateObraSocial);
+	app.put('/api/paciente/:id/obrasocial/:ob_id', ControllerPacientes.updateObraSocial);
 
-	app.get('/api/paciente/ciudad', verifyToken, ControllerPacientes.getPacienteByCiudad);
-	app.get('/api/nuevos/pacientes', verifyToken, ControllerPacientes.nuevosPacientes);
+	app.get('/api/paciente/ciudad', ControllerPacientes.getPacienteByCiudad);
+	app.get('/api/nuevos/pacientes', ControllerPacientes.nuevosPacientes);
 
-	app.get('/api/pacientes', verifyToken,ControllerPacientes.findAllWithoutPag);
+	app.get('/api/pacientes',ControllerPacientes.findAllWithoutPag);
 
   app.get('/api/animal', ControllerAnimal.getByName)
-  app.post('/api/animal', verifyToken, ControllerAnimal.create)
+  app.post('/api/animal', ControllerAnimal.create)
   app.get('/api/animales', ControllerAnimal.find)
-  app.put('/api/valor-referencia-animal/:id', verifyToken, ControllerAnalisis.updateValorReferenciaAnimal);
+  app.put('/api/valor-referencia-animal/:id', ControllerAnalisis.updateValorReferenciaAnimal);
   app.put('/api/animal/:id', ControllerAnimal.update);
 
 	/**fin controler paciente**/
 
 	/**Controler pedido**/
-	app.get('/api/pedidos/count', verifyToken, ControllerPedidos.count);
+	app.get('/api/pedidos/count', ControllerPedidos.count);
 
-	app.put('/api/pedido/:id/analisis/:analisis/include', verifyToken, ControllerPedidos.includeAnalysis);
+	app.put('/api/pedido/:id/analisis/:analisis/include', ControllerPedidos.includeAnalysis);
 
-	app.get('/api/pedidos', verifyToken, ControllerPedidos.findAll);
+	app.get('/api/pedidos', ControllerPedidos.findAll);
 
-	app.get('/api/pedidosBy', verifyToken, ControllerPedidos.filter);
+	app.get('/api/pedidosBy' , ControllerPedidos.filter);
 
-  app.get('/api/pedidos/open', verifyToken, ControllerPedidos.findAllOpens);
+  app.get('/api/pedidos/open', ControllerPedidos.findAllOpens);
 
-	app.post('/api/pedidos', verifyToken, ControllerPedidos.add);
+	app.post('/api/pedidos', ControllerPedidos.add);
 
-	app.put('/api/loadResults/pedido/:id/analisis/:analisis_id', verifyToken, ControllerPedidos.saveResults);
+	app.put('/api/loadResults/pedido/:id/analisis/:analisis_id', ControllerPedidos.saveResults);
 
-	app.put('/api/saveObservaciones/pedido/:id/analisis/:analisis_id', verifyToken, ControllerPedidos.saveObservaciones);
+	app.put('/api/saveObservaciones/pedido/:id/analisis/:analisis_id', ControllerPedidos.saveObservaciones);
 
-	app.put('/api/updateState/pedido/:id', verifyToken, ControllerPedidos.updateState);
+	app.put('/api/updateState/pedido/:id', ControllerPedidos.updateState);
 
-	app.post('/api/ciudad', verifyToken, ControllerPedidos.createCiudad);
+	app.post('/api/ciudad', ControllerPedidos.createCiudad);
 
-	app.delete('/api/pedido/:id',verifyToken, ControllerPedidos.deletePedido);
+	app.delete('/api/pedido/:id', ControllerPedidos.deletePedido);
 
-	app.get('/api/pedidosByPaciente/:paciente', verifyToken, ControllerPedidos.getPedidoByPaciente);
+	app.get('/api/pedidosByPaciente/:paciente', ControllerPedidos.getPedidoByPaciente);
 
-	app.get('/api/pedidos/:id', verifyToken, ControllerPedidos.getPedido);
+	app.get('/api/pedidos/:id', ControllerPedidos.getPedido);
 
-	app.get('/api/ciudades', verifyToken, ControllerPedidos.getCiudades);
+	app.get('/api/ciudades', ControllerPedidos.getCiudades);
 
-	app.get('/api/prestadores', verifyToken, ControllerPedidos.getPrestadores);
+	app.get('/api/prestadores', ControllerPedidos.getPrestadores);
 
-	app.post('/api/prestadores', verifyToken, ControllerPedidos.createPrestadores);
+	app.post('/api/prestadores', ControllerPedidos.createPrestadores);
 
-	app.get('/api/pedidos/:id/analisis', verifyToken, ControllerPedidos.retrieveAnalisis);
+	app.get('/api/pedidos/:id/analisis', ControllerPedidos.retrieveAnalisis);
 
-	app.put('/api/pedidos/:id/add-analisis', verifyToken, ControllerPedidos.addAnalysis);
+	app.put('/api/pedidos/:id/add-analisis', ControllerPedidos.addAnalysis);
 
-	app.put('/api/pedidos/:id/remove-analisis', verifyToken, ControllerPedidos.removeAnalisis);
+	app.put('/api/pedidos/:id/remove-analisis', ControllerPedidos.removeAnalisis);
 
-	app.get('/api/pedidoByMedico', verifyToken, ControllerPedidos.filterPedidoByFechaAndMedico);
+	app.get('/api/pedidoByMedico', ControllerPedidos.filterPedidoByFechaAndMedico);
 
-	app.get('/api/pedidoByAnalisis', verifyToken, ControllerPedidos.filterPedidoByAnalisis);
+	app.get('/api/pedidoByAnalisis', ControllerPedidos.filterPedidoByAnalisis);
 
-	app.get('/api/pedidoByDiagnostico', verifyToken, ControllerPedidos.filterPedidoByDiagnostico);
+	app.get('/api/pedidoByDiagnostico', ControllerPedidos.filterPedidoByDiagnostico);
 
-	app.get('/api/pedidoByObraSocial', verifyToken, ControllerPedidos.filterPedidoByObraSocial);
+	app.get('/api/pedidoByObraSocial', ControllerPedidos.filterPedidoByObraSocial);
 
-	app.get('/api/last-result/:paciente/analisis/:analisis/protocolo/:protocolo', verifyToken, ControllerPedidos.getLastResult)
+	app.get('/api/last-result/:paciente/analisis/:analisis/protocolo/:protocolo', ControllerPedidos.getLastResult)
 
-	app.get('/api/pedidos/proporcion-estudios-derivados', verifyToken, ControllerPedidos.proporcionEstudiosDerivados)
+	app.get('/api/pedidos/proporcion-estudios-derivados', ControllerPedidos.proporcionEstudiosDerivados)
 
-	app.get('/api/pedidos-estadisticas', verifyToken, ControllerPedidos.nuevosPedidos)
+	app.get('/api/pedidos-estadisticas', ControllerPedidos.nuevosPedidos)
   app.get('/api/send-sms/:phoneNumber/protocol/:protocolo/patient/:patientName/message/:message', ControllerPedidos.sendSMS);
 	/**fin controler pedido**/
 
 	/**Controler Medico**/
-	app.post('/api/medico', verifyToken, ControllerMedico.addMedico);
+	app.post('/api/medico', ControllerMedico.addMedico);
 
-	app.get('/api/medico/cargamasiva',verifyToken, ControllerMedico.convertExcelToJson);
+	app.get('/api/medico/cargamasiva', ControllerMedico.convertExcelToJson);
 
-	app.get('/api/medicos', verifyToken,ControllerMedico.findAllMedicos);
+	app.get('/api/medicos',ControllerMedico.findAllMedicos);
 
-	app.put('/api/medico/:id', verifyToken,ControllerMedico.updateMedico);
+	app.put('/api/medico/:id',ControllerMedico.updateMedico);
 
-	app.delete('/api/medico/:id', verifyToken,ControllerMedico.deleteMedico);
+	app.delete('/api/medico/:id',ControllerMedico.deleteMedico);
 	/**fin controler medico**/
 
 	/**Controller Finanza**/
@@ -198,13 +198,13 @@ module.exports = function(app,passport) {
 	//app.get('/api/gasto-motivo/:id', ControllerGasto.agruparGastoPorMotivo);
 
 	/**Controller Payment**/
-  app.post('/api/payment', verifyToken, ControllerPayment.addPayment);
-  app.put('/api/payment/:id', verifyToken, ControllerPayment.updatePayment);
-  app.get('/api/payment/:id', verifyToken, ControllerPayment.findPaymentByOrder);
+  app.post('/api/payment', ControllerPayment.addPayment);
+  app.put('/api/payment/:id', ControllerPayment.updatePayment);
+  app.get('/api/payment/:id', ControllerPayment.findPaymentByOrder);
 
-  app.post('/api/payment-health-insurance', verifyToken, ControllerPayment.addPaymentHealthInsurance);
-  app.put('/api/payment-health-insurance/:id', verifyToken, ControllerPayment.updatePaymentHealthInsurance);
-  app.get('/api/payment-health-insurance/:id', verifyToken, ControllerPayment.findPaymentHealthInsuranceByOrder);
+  app.post('/api/payment-health-insurance', ControllerPayment.addPaymentHealthInsurance);
+  app.put('/api/payment-health-insurance/:id', ControllerPayment.updatePaymentHealthInsurance);
+  app.get('/api/payment-health-insurance/:id', ControllerPayment.findPaymentHealthInsuranceByOrder);
 
   /*Controller SMS*/
   app.get('/api/sent-sms/:protocolo', ControllerSms.findSentSMSbyProtocol);

@@ -1,0 +1,1 @@
+cd E:/Backup-automatico-%date:~-10,2%%date:~-7,2%%date:~-4,4%cipher /eblat -s "Backup sistema" -to lacorlaboratorio@proton.me -body "backup automatico" -attach 
