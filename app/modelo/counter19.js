@@ -5,7 +5,8 @@ var counter19Schema = new Schema({
    originalResult:{type:String},
    parsedResult:{ type: String},
    patientId:{type: String},
-   date:{type: String}
+   date:{type: String},
+   hour:{type: String}
 
 	
 });

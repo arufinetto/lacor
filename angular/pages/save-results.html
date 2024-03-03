@@ -431,15 +431,24 @@
 	 </div>
  
  <div class="modal fade" id="counter19Result" role="dialog" >
+			
 					<div class="modal-dialog">
-
 					  <!-- Modal content-->
 					  <div class="modal-content">
 						<div class="modal-header">
 						  <button type="button" class="close" data-dismiss="modal">&times;</button>
-						  <h4 class="modal-title">{{counter19Result.patient}}</h4>
+						  <h4 class="modal-title">{{counter19Result[0].patient}} - {{counter19Result[0].date}}</h4>
 						</div>
+						<div>
+						
+
 						<div class="modal-body">
+							<div class="form-group">
+							<label class="control-label"><p>Hora</p></label>
+							<div>
+							  <select class="form-control" ng-change="counter19ResultByHour(counter19Result, item.hour)" ng-model="item" ng-options="item.hour for item in counter19Result"></select>
+							</div>
+							</div>
 							
 							<table class="table table-hover" >
 								<thead>
@@ -448,7 +457,7 @@
 										<th>Valor</th>
 									</tr>
 								</thead>
-								<tbody ng-repeat="(key, value) in counter19Result.result">
+								<tbody ng-repeat="(key, value) in selectedCounter19.result">
 									<tr>
 										<td>{{key}}</td>
 										<td>{{value}}</td>
@@ -458,7 +467,8 @@
 						</div>
 					
 						<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+							<button type="button" class="btn btn-primary" ng-click="loadSelectedResultCounter19(lab)" data-dismiss="modal">Cargar</button>
+							<button type="button" class="btn btn-default" ng-click="cancelCounter19ResultByHour()" data-dismiss="modal">Cancelar</button>
 						  </div>
 					  </div>
 

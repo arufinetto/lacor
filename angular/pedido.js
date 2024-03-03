@@ -1,3 +1,4 @@
+//const counter19 = require("../app/modelo/counter19");
 
 starter.factory("servicio", function(){
 	return {
@@ -32,6 +33,8 @@ $scope.invalidosCount =0;
 $scope.creadosCount =0;
 $scope.nombreAnimal = "";
 $scope.newResultCounter19 = "";
+$scope.selectedCounter19 = undefined;
+$scope.labCounter19 = {};
 //$scope.pedidoFinanza = {};
 $scope.token= "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTQ5MjcyYWZlN2ZkMjYxNzk0MDcxNGIiLCJleHAiOjE2NjM3MjAxMDYsImlhdCI6MTYzMjE4NDEwNn0.oN9a97hM4MfwBTF6UpgCrVqlB_tWxECEqdJDq2zgcRw";
 
@@ -83,67 +86,79 @@ while(identifier.length < 10){
 }
 }
 
-$http.get('/api/result/counter19/patient/'+identifier + '?date=' + date.replace('/','').replace('/',''), {headers:{"authorization":$scope.token}})
-.success(function(data) {
-$scope.counter19Result = data
-
-if (lab.analisis._id =="58f5638c68837d08020020c9"){
-	console.log("ver...." + lab.analisis._id )
-	lab.resultado[0].valorHallado[0] = parseInt($scope.counter19Result.result["PLT"])*1000
-
-}else{
-		for(var j=0; j< lab.resultado.length;j++){
-			if (lab.resultado[j].formula== "G. Rojos:"){
-				lab.resultado[j].valorHallado[0] = (parseInt($scope.counter19Result.result["RBC"])*10000).toString()
-			}
-			if 	(lab.resultado[j].formula== "Hemoglobina:"){
-				lab.resultado[j].valorHallado[0] = (parseInt($scope.counter19Result.result["HGB"])/10).toString()
-			}
-			if 	(lab.resultado[j].formula== "Hematocrito:"){
-				lab.resultado[j].valorHallado[0] = (parseInt($scope.counter19Result.result["HCT"])/10).toString()
-			}
-			if 	(lab.resultado[j].formula== "Vol.Corp.Med.:"){
-				lab.resultado[j].valorHallado[0] = (parseInt($scope.counter19Result.result["MCV"])/10).toString()
-			}
-			if 	(lab.resultado[j].formula== "H.C.M:"){
-				lab.resultado[j].valorHallado[0] = (parseInt($scope.counter19Result.result["MCH"])/10).toString()
-			}
-			if 	(lab.resultado[j].formula== "C.H.C.M:"){
-				lab.resultado[j].valorHallado[0] = (parseInt($scope.counter19Result.result["MCHC"])/10).toString()
-			}
-			if 	(lab.resultado[j].formula== "RDW:"){
-				lab.resultado[j].valorHallado[0] = (parseInt($scope.counter19Result.result["RDW-CV"])/10).toString()
-			}
-			if 	(lab.resultado[j].formula== "G.Blancos:"){
-				lab.resultado[j].valorHallado[0] = (parseInt($scope.counter19Result.result["WBC"])*100).toString()
-			}
-
-			if 	(lab.resultado[j].formula== "Neut.Segmentados:"){
-				lab.resultado[j].valorHallado[0] = (parseInt($scope.counter19Result.result["Gran%"])/10).toString()
-			}
-			if 	(lab.resultado[j].formula== "Linfocitos:"){
-				lab.resultado[j].valorHallado[0] = parseInt($scope.counter19Result.result["Lymph%"]/10).toString()
-			}
-			if 	(lab.resultado[j].formula== "Eosinofilos:"){
-				lab.resultado[j].valorHallado[0] = "0"
-			}
-			if 	(lab.resultado[j].formula== "Basofilos:"){
-				lab.resultado[j].valorHallado[0] = "0"
-			}
-			if 	(lab.resultado[j].formula== "Neut. en Banda:"){
-				lab.resultado[j].valorHallado[0] = "0"
-			}
-			if 	(lab.resultado[j].formula== "Monocitos:"){
-				lab.resultado[j].valorHallado[0] = parseInt($scope.counter19Result.result["Mid%"]/10).toString()
-			}
-	
-
-		}
-	}
+	$http.get('/api/result/counter19/patient/'+identifier + '?date=' + date.replace('/','').replace('/',''), {headers:{"authorization":$scope.token}})
+	.success(function(data) {
+	$scope.counter19Result = data
+	$scope.labCounter19 = lab;
 
 }).error(function(err) {
 console.log('Error: '+err);
 });
+}
+
+$scope.cancelCounter19ResultByHour = function(){
+	$scope.selectedCounter19 = {};
+	$scope.counter19Result = {};
+}
+
+$scope.loadSelectedResultCounter19 = function(){
+	var lab = $scope.labCounter19;
+	if (lab.analisis._id =="58f5638c68837d08020020c9"){
+		console.log("ver...." + lab.analisis._id )
+		lab.resultado[0].valorHallado[0] = parseInt($scope.counter19Result.result["PLT"])*1000
+	
+	}else{
+			for(var j=0; j< lab.resultado.length;j++){
+				if (lab.resultado[j].formula== "G. Rojos:"){
+					lab.resultado[j].valorHallado[0] = (parseInt($scope.selectedCounter19.result["RBC"])*10000).toString()
+				}
+				if  (lab.resultado[j].formula== "Hemoglobina:"){
+					lab.resultado[j].valorHallado[0] = (parseInt($scope.selectedCounter19.result["HGB"])/10).toString()
+				}
+				if  (lab.resultado[j].formula== "Hematocrito:"){
+					lab.resultado[j].valorHallado[0] = (parseInt($scope.selectedCounter19.result["HCT"])/10).toString()
+				}
+				if  (lab.resultado[j].formula== "Vol.Corp.Med.:"){
+					lab.resultado[j].valorHallado[0] = (parseInt($scope.selectedCounter19.result["MCV"])/10).toString()
+				}
+				if  (lab.resultado[j].formula== "H.C.M:"){
+					lab.resultado[j].valorHallado[0] = (parseInt($scope.selectedCounter19.result["MCH"])/10).toString()
+				}
+				if  (lab.resultado[j].formula== "C.H.C.M:"){
+					lab.resultado[j].valorHallado[0] = (parseInt($scope.selectedCounter19.result["MCHC"])/10).toString()
+				}
+				if  (lab.resultado[j].formula== "RDW:"){
+					lab.resultado[j].valorHallado[0] = (parseInt($scope.selectedCounter19.result["RDW-CV"])/10).toString()
+				}
+				if  (lab.resultado[j].formula== "G.Blancos:"){
+					lab.resultado[j].valorHallado[0] = (parseInt($scope.selectedCounter19.result["WBC"])*100).toString()
+				}
+	
+				if  (lab.resultado[j].formula== "Neut.Segmentados:"){
+					lab.resultado[j].valorHallado[0] = (parseInt($scope.selectedCounter19.result["Gran%"])/10).toString()
+				}
+				if  (lab.resultado[j].formula== "Linfocitos:"){
+					lab.resultado[j].valorHallado[0] = parseInt($scope.selectedCounter19.result["Lymph%"]/10).toString()
+				}
+				if  (lab.resultado[j].formula== "Eosinofilos:"){
+					lab.resultado[j].valorHallado[0] = "0"
+				}
+				if  (lab.resultado[j].formula== "Basofilos:"){
+					lab.resultado[j].valorHallado[0] = "0"
+				}
+				if  (lab.resultado[j].formula== "Neut. en Banda:"){
+					lab.resultado[j].valorHallado[0] = "0"
+				}
+				if  (lab.resultado[j].formula== "Monocitos:"){
+					lab.resultado[j].valorHallado[0] = parseInt($scope.selectedCounter19.result["Mid%"]/10).toString()
+				}
+		
+	
+			}
+		
+	}
+	$scope.selectedCounter19 = {}
+	$scope.counter19Result = {}
 }
 
 
@@ -244,6 +259,15 @@ $http.post('/api/analisis/' + pedidoId + '/load-cm200',{identificador:identifier
 	
 });
 
+}
+
+$scope.counter19ResultByHour = function(counter19Result, hour){
+	console.log("ENTRA AL SELECT COUNTER " + hour)
+	for(var i =0; i<counter19Result.length;i++){
+		if(counter19Result[i].hour == hour){
+			$scope.selectedCounter19= counter19Result[i]
+		}
+	}
 }
 
 $scope.calcularEdad1 = function(birthday,datePedido){
