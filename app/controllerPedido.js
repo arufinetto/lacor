@@ -871,7 +871,6 @@ exports.saveObservaciones = function(req, res) {
 }
 
 exports.updateIdentifier = function(req, res) {
-
     Pedido.update({
     	_id:req.params.id,
 		estado: 'Abierto',
@@ -881,7 +880,7 @@ exports.updateIdentifier = function(req, res) {
 
    		},function(err,pedido){
 
-				Pedido.find({estado:'Abierto'},function(err,pedido){
+				Pedido.find({_id:ObjectId(req.params.id)},function(err,pedido){
 					if(err) res.status(500).json("Error " +err)
 					res.json(pedido);
 				});

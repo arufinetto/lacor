@@ -15,6 +15,7 @@ var pedidoSchema = new Schema({
 	derivadorDescripcion:{type:String},
 	diagnostico:{type:String},
 	estado: { type: String, enum: ['Creado','Abierto','Para Entregar','Entregado','Invalido']},
+	identificador:{type:String},
 	analisisList : [{"analisis": { type: Schema.Types.ObjectId, ref: "analisis"},
 	"metodo":{type:String},
 	"muestra":{type:String},
